@@ -1,4 +1,4 @@
-public class Dictionnaire extends Support_numerique {
+public class Dictionnaire extends Document {
 
     private String langue;
 

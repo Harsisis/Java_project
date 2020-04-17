@@ -1,4 +1,4 @@
-public class Livre extends Support_numerique {
+public class Livre extends Document {
 
     private String auteur;
 
