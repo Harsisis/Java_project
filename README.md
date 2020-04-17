@@ -1,2 +1,2 @@
 # Java_project
-Projet d'école de Java sur la gestion d'une "videotèque" bienvenue en 2004 !
+Projet d'école de Java sur la gestion d'une "vidéotèque" bienvenue en 2004 !
