@@ -3,7 +3,7 @@ public class Dictionnaire extends Document {
     private String langue;
 
     public Dictionnaire(int id_produit, String titre, double tarif_journalier, String langue) {
-        super(id_produit, titre, tarif_journalier,"CD");
+        super(id_produit, titre, tarif_journalier,"Dictionnaire");
         this.langue = langue;
     }
 

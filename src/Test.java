@@ -11,5 +11,11 @@ public class Test {
 
         Livre mockingbird = new Livre (4,"To kill a mocking bird",8, "Harper Lee");
         System.out.println(mockingbird);
+
+        Fidele martin =new Fidele(1, "Martin", "Lucie");
+        System.out.println(martin);
+
+        Occasionnel dupont =new Occasionnel(2, "Dupont", "Jean");
+        System.out.println(dupont);
     }
 }

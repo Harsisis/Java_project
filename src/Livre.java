@@ -3,7 +3,7 @@ public class Livre extends Document {
     private String auteur;
 
     public Livre(int id_produit, String titre, double tarif_journalier, String auteur) {
-        super(id_produit, titre, tarif_journalier,"CD");
+        super(id_produit, titre, tarif_journalier,"Livre");
         this.auteur = auteur;
     }
 
