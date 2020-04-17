@@ -1,3 +1,3 @@
-public Dictionnaires () {
+public class Dictionnaires {
 
         }

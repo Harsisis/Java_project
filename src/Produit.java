@@ -1,3 +1,3 @@
-public abstract Produit () {
+public abstract class Produit {
 
         }

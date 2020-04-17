@@ -1,3 +1,3 @@
-public Supports_numeriques () {
+public class Supports_numeriques {
 
         }

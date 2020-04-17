@@ -1,3 +1,3 @@
-public Manuels () {
+public class Manuels {
 
         }

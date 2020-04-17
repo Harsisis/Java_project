@@ -1,3 +1,3 @@
-public Documents () {
+public class Documents {
 
         }

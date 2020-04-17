@@ -1,3 +1,3 @@
-public DVD () {
+public class DVD {
 
         }

@@ -1,3 +1,3 @@
-public CD () {
+public class CD {
 
         }
