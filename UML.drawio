@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-04-17T13:31:43.992Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36" etag="plvgz2odgz2F9yQrX6Mx" version="12.9.14" type="github">
+<mxfile host="app.diagrams.net" modified="2020-04-17T13:35:03.344Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36" etag="hOTrT_97jtTuEDxZbgi7" version="12.9.14" type="github">
   <diagram id="Si2locz9k4Dn_10qz3O4" name="Page-1">
     <mxGraphModel dx="1422" dy="1862" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -145,7 +145,7 @@
         <mxCell id="tzq9qLVQ6whCQIbnyR1z-35" value="+ SetTarif_journalier(double)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="rb-MqD_NAWT4kMZUoV1C-1">
           <mxGeometry y="242" width="180" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="tzq9qLVQ6whCQIbnyR1z-37" value=" Affichage()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="rb-MqD_NAWT4kMZUoV1C-1">
+        <mxCell id="tzq9qLVQ6whCQIbnyR1z-37" value=" Affichage() // abstract" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="rb-MqD_NAWT4kMZUoV1C-1">
           <mxGeometry y="268" width="180" height="26" as="geometry" />
         </mxCell>
         <mxCell id="tzq9qLVQ6whCQIbnyR1z-5" value="" style="endArrow=classic;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="rb-MqD_NAWT4kMZUoV1C-13" target="meF54CxMP4Rzf3T3WrZb-1">
