@@ -14,25 +14,25 @@ public abstract class Client {
         this.id = UUID.randomUUID();
         this.nom = nom;
         this.prenom = prenom;
-        this.reduction = GetReduction();
+        this.reduction = getReduction();
     }
 
-    public UUID GetId (){
+    public UUID getId (){
         return id;
     }
 
-    String GetNom (){
+    public String getNom() {
         return nom;
     }
 
-    String GetPrenom (){
+    public String getPrenom() {
         return prenom;
     }
 
-    public abstract double GetReduction();
+    public abstract double getReduction();
 
     @Override
     public String toString() {
-        return "\nInformations client n° " + GetId() + " :\nnom : " + GetNom() + "\nprénom : " + GetPrenom() + "\nréduction : " + GetReduction();
+        return "\nInformations client n° " + getId() + " :\nnom : " + getNom() + "\nprénom : " + getPrenom() + "\nréduction : " + getReduction();
     }
 }
