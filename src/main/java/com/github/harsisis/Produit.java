@@ -1,32 +1,38 @@
 package com.github.harsisis;
 
+import java.util.UUID;
+
 public abstract class Produit {
-    private int id_produit;
+    private final UUID id;
     private String titre;
-    private double tarif_journalier;
+    private double tarifJournalier;
     private String categorie;
 
-    public Produit(int id_produit, String titre, double tarif_journalier, String categorie) {
-        this.id_produit = id_produit;
+    public Produit(String titre, double tarifJournalier, String categorie) {
+        this.id = UUID.randomUUID();
         this.titre = titre;
-        this.tarif_journalier = tarif_journalier;
+        this.tarifJournalier = tarifJournalier;
         this.categorie = categorie;
     }
 
-    public int getId_produit() {
-        return id_produit;
+    public UUID getId() {
+        return this.id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public double getTarifJournalier() {
+        return tarifJournalier;
     }
 
     public String getCategorie() {
         return categorie;
     }
 
-    abstract String getTitre(String titre);
-
-    abstract double getTarif_journalier(double tarif_journalier);
-
     @Override
     public String toString() {
-        return "\nNuméro de produit : " + id_produit + "\nTitre : " + titre + "\nTarif journalier : " + tarif_journalier + "€" + "\nCatégorie : " + categorie;
+        return "\nNuméro de produit : " + getId() + "\nTitre : " + titre + "\nTarif journalier : " + getTarifJournalier() + "€" + "\nCatégorie : " + getCategorie();
     }
 }

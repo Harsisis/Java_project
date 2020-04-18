@@ -2,15 +2,15 @@ package com.github.harsisis;
 
 import com.github.harsisis.CD;
 import com.github.harsisis.DVD;
-import com.github.harsisis.Dictionnaire;
-import com.github.harsisis.Livre;
+//import com.github.harsisis.Dictionnaire;
+//import com.github.harsisis.Livre;
 import com.github.harsisis.Occasionnel;
 
 public class Main {
     public static void main(String[] args) {
-        CD hello = new CD (1, "Hello", 3, 2000);
+        CD hello = new CD ("Hello", 3, 2000);
         System.out.println(hello);
-
+/*
         DVD lion = new DVD (2,"Lion King 2019", 4, "Jon Favreau");
         System.out.println(lion);
 
@@ -24,6 +24,6 @@ public class Main {
         System.out.println(martin);
 
         Occasionnel dupont =new Occasionnel(2, "Dupont", "Jean");
-        System.out.println(dupont);
+        System.out.println(dupont);*/
     }
 }

@@ -1,5 +1,5 @@
 package com.github.harsisis;
-
+/*
 public class Livre extends Document {
 
     private String auteur;
@@ -28,4 +28,4 @@ public class Livre extends Document {
         return super.toString() + "\nAuteur : " + getAuteur();
     }
 
-}
+}*/

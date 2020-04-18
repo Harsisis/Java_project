@@ -1,31 +1,21 @@
 package com.github.harsisis;
 
-public class DVD extends Support_numerique {
+public class DVD extends Produit {
 
-    private String realisateur;
+    private int anneeSortie;
 
-    public DVD(int id_produit, String titre, double tarif_journalier, String realisateur) {
-        super(id_produit, titre, tarif_journalier,"CD");
-        this.realisateur = realisateur;
+    public DVD(String titre, double tarifJournalier, int anneeSortie) {
+        super(titre, tarifJournalier,"Support numérique");
+        this.anneeSortie = anneeSortie;
     }
 
-    public String getRealisateur() {
-        return realisateur;
-    }
-
-    @Override
-    String getTitre(String titre) {
-        return titre;
-    }
-
-    @Override
-    double getTarif_journalier(double tarif_journalier) {
-        return tarif_journalier;
+    public int getAnnee_sortie() {
+        return anneeSortie;
     }
 
     @Override
     public String toString() {
-        return super.toString() + "\nRéalisateur : " + getRealisateur();
+        return super.toString() + "\nAnnée sortie : " + getAnnee_sortie();
     }
 
 }

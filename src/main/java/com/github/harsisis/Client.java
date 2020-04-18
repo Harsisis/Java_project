@@ -1,21 +1,24 @@
 package com.github.harsisis;
 
+import java.util.UUID;
+
 public abstract class Client {
 
-    private int id_client;
+    private final UUID id;
     private String nom;
     private String prenom;
     private double reduction;
+    private boolean typeClient;
 
-    public Client(int id_client, String nom, String prenom) {
-        this.id_client = id_client;
+    public Client(int id, String nom, String prenom) {
+        this.id = UUID.randomUUID();
         this.nom = nom;
         this.prenom = prenom;
         this.reduction = GetReduction();
     }
 
-    int GetId_client (){
-        return id_client;
+    public UUID GetId (){
+        return id;
     }
 
     String GetNom (){
@@ -30,6 +33,6 @@ public abstract class Client {
 
     @Override
     public String toString() {
-        return "\nInformations client n° " + id_client + " :\nnom : " + nom + "\nprénom : " + prenom + "\nréduction : " + GetReduction();
+        return "\nInformations client n° " + GetId() + " :\nnom : " + GetNom() + "\nprénom : " + GetPrenom() + "\nréduction : " + GetReduction();
     }
 }

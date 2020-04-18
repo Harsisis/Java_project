@@ -1,5 +1,5 @@
 package com.github.harsisis;
-
+/*
 public class Dictionnaire extends Document {
 
     private String langue;
@@ -28,4 +28,4 @@ public class Dictionnaire extends Document {
         return super.toString() + "\nLangue : " + getLangue();
     }
 
-}
+}*/
