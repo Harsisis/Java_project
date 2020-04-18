@@ -1,3 +1,5 @@
+package com.github.harsisis;
+
 public abstract class Produit {
     private int id_produit;
     private String titre;
@@ -11,11 +13,13 @@ public abstract class Produit {
         this.categorie = categorie;
     }
 
+    public int getId_produit() {
+        return id_produit;
+    }
+
     public String getCategorie() {
         return categorie;
     }
-
-    abstract int getId_produit(int id_produit);
 
     abstract String getTitre(String titre);
 

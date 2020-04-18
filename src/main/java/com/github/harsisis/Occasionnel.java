@@ -1,4 +1,8 @@
-public class Occasionnel extends Client{
+package com.github.harsisis;
+
+import com.github.harsisis.Client;
+
+public class Occasionnel extends Client {
 
     private double reduction = 0;
 
@@ -7,8 +11,9 @@ public class Occasionnel extends Client{
     }
 
     @Override
-    double GetReduction() {
+    public double GetReduction() {
         return reduction;
     }
+
 
 }

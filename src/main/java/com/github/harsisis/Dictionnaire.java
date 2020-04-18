@@ -1,3 +1,5 @@
+package com.github.harsisis;
+
 public class Dictionnaire extends Document {
 
     private String langue;
@@ -9,11 +11,6 @@ public class Dictionnaire extends Document {
 
     public String getLangue() {
         return langue;
-    }
-
-    @Override
-    int getId_produit(int id_produit) {
-        return id_produit;
     }
 
     @Override

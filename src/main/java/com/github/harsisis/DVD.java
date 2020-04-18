@@ -1,3 +1,5 @@
+package com.github.harsisis;
+
 public class DVD extends Support_numerique {
 
     private String realisateur;
@@ -9,11 +11,6 @@ public class DVD extends Support_numerique {
 
     public String getRealisateur() {
         return realisateur;
-    }
-
-    @Override
-    int getId_produit(int id_produit) {
-        return id_produit;
     }
 
     @Override

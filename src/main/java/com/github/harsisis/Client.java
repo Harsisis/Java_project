@@ -1,3 +1,5 @@
+package com.github.harsisis;
+
 public abstract class Client {
 
     private int id_client;
@@ -24,7 +26,7 @@ public abstract class Client {
         return prenom;
     }
 
-    abstract double GetReduction ();
+    public abstract double GetReduction();
 
     @Override
     public String toString() {

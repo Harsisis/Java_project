@@ -1,4 +1,8 @@
-public class Fidele extends Client{
+package com.github.harsisis;
+
+import com.github.harsisis.Client;
+
+public class Fidele extends Client {
 
     private double reduction = 0.1;
 
@@ -7,7 +11,8 @@ public class Fidele extends Client{
     }
 
     @Override
-    double GetReduction() {
-        return reduction;
+    public double GetReduction() {
+        return 0;
     }
+
 }

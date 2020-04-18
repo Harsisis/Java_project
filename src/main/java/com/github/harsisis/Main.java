@@ -1,4 +1,12 @@
-public class Test {
+package com.github.harsisis;
+
+import com.github.harsisis.CD;
+import com.github.harsisis.DVD;
+import com.github.harsisis.Dictionnaire;
+import com.github.harsisis.Livre;
+import com.github.harsisis.Occasionnel;
+
+public class Main {
     public static void main(String[] args) {
         CD hello = new CD (1, "Hello", 3, 2000);
         System.out.println(hello);

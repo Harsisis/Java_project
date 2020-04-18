@@ -1,3 +1,5 @@
+package com.github.harsisis;
+
 public class CD extends Support_numerique {
 
     private int annee_sortie;
@@ -9,11 +11,6 @@ public class CD extends Support_numerique {
 
     public int getAnnee_sortie() {
         return annee_sortie;
-    }
-
-    @Override
-    int getId_produit(int id_produit) {
-        return id_produit;
     }
 
     @Override

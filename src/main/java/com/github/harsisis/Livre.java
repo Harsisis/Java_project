@@ -1,3 +1,5 @@
+package com.github.harsisis;
+
 public class Livre extends Document {
 
     private String auteur;
@@ -9,11 +11,6 @@ public class Livre extends Document {
 
     public String getAuteur() {
         return auteur;
-    }
-
-    @Override
-    int getId_produit(int id_produit) {
-        return id_produit;
     }
 
     @Override
