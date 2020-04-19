@@ -1,15 +1,18 @@
 package com.github.harsisis;
 
-import com.github.harsisis.CD;
-import com.github.harsisis.DVD;
 //import com.github.harsisis.Dictionnaire;
 //import com.github.harsisis.Livre;
-import com.github.harsisis.Occasionnel;
+
 
 public class Main {
     public static void main(String[] args) {
         CD hello = new CD ("Hello", 3, 2000);
         System.out.println(hello);
+
+        Client mm = new Client("DUPONT", "Martin", true);
+
+        System.out.println(mm);
+
 /*
         DVD lion = new DVD (2,"Lion King 2019", 4, "Jon Favreau");
         System.out.println(lion);
