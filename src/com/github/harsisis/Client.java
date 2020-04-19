@@ -2,7 +2,7 @@ package com.github.harsisis;
 
 import java.util.UUID;
 
-public class Client {
+public abstract class Client {
 
     private final UUID id;
     private String nom;
@@ -10,11 +10,10 @@ public class Client {
     private double reduction;
     private boolean typeClient;
 
-    public Client(String nom, String prenom, boolean typeClient) {
+    public Client(int id, String nom, String prenom) {
         this.id = UUID.randomUUID();
         this.nom = nom;
         this.prenom = prenom;
-        this.typeClient = typeClient;
         this.reduction = GetReduction();
     }
 
@@ -30,13 +29,7 @@ public class Client {
         return prenom;
     }
 
-    public double GetReduction() {
-        if (this.typeClient)
-            this.reduction = 0.1;
-        else
-            this.reduction = 0;
-        return this.reduction;
-    }
+    public abstract double GetReduction();
 
     @Override
     public String toString() {
