@@ -1,10 +1,10 @@
-package com.github.harsisis;
+package com.github.harsisis.videotheque;
 
-public class CD extends Produit {
+public class DVD extends Produit {
 
     private int anneeSortie;
 
-    public CD(String titre, double tarifJournalier, int anneeSortie) {
+    public DVD(String titre, double tarifJournalier, int anneeSortie) {
         super(titre, tarifJournalier,"Support numérique");
         this.anneeSortie = anneeSortie;
     }

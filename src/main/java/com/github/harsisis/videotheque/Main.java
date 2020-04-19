@@ -1,4 +1,4 @@
-package com.github.harsisis;
+package com.github.harsisis.videotheque;
 
 //import com.github.harsisis.Dictionnaire;
 //import com.github.harsisis.Livre;

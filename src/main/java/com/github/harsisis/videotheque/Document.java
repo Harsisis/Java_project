@@ -1,4 +1,4 @@
-package com.github.harsisis;
+package com.github.harsisis.videotheque;
 
 public class Document extends Produit {
     private String selection;
