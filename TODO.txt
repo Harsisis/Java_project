@@ -6,3 +6,9 @@ Fonctions à implémenter :
 - modifier une commande en supprimant un emprunt/produit
 - calculer le montant total d'une commande d'un client avec réduction ou sans
 - ajouter un produit au stock
+
+A fixer :
+- separer les classes dans des packages distinct pour organiser le code, par exemple :
+        - regrouper les composants graphiques tels que Fenetre.java dans un package dedié
+        - creer un autre package dedié pour tous les objets du domaine (Client, Videotheque, DVD, etc.)
+        - ne devrait rester dans le package com.github.harsisis.videotheque que la classe Main.java
