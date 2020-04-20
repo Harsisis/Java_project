@@ -2,7 +2,7 @@ package com.github.harsisis.videotheque;
 
 import java.util.UUID;
 
-public class Client {
+public class Client extends Videotheque{
 
     private final UUID id;
     private String nom;
