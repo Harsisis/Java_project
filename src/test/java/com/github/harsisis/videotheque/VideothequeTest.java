@@ -1,6 +1,19 @@
 package com.github.harsisis.videotheque;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
+
 public class VideothequeTest {
 
-    //TODO : add tests when Videotheque class will implement features
+    @Test
+    public void given_validInputParams_when_ajoutClient_then_true() {
+        Videotheque videotheque = new Videotheque();
+
+        boolean result = videotheque.ajoutClient("John", "Smith", true);
+
+        assertTrue(result);
+    }
+
+
 }
