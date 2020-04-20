@@ -1,16 +1,15 @@
 package com.github.harsisis.videotheque;
 
-public abstract class Videotheque {
+import java.util.HashSet;
 
-    private double reducFidele;
+public class Videotheque {
 
-    public abstract boolean isFidele();
+    private static final double reducFidele = 0.1;
 
-    public double getReduction () {
-        if (isFidele())
-            this.reducFidele = 0.1;
-        else
-            this.reducFidele = 0;
-        return this.reducFidele;
+    HashSet<Client> listClient = new HashSet<>();
+
+    public boolean ajoutClient (String nom, String prenom, boolean fidele) {
+        Client client = new Client(nom, prenom, fidele);
+        return listClient.add(client);
     }
 }

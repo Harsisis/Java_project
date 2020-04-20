@@ -1,8 +1,9 @@
 package com.github.harsisis.videotheque;
 
+import java.util.Objects;
 import java.util.UUID;
 
-public class Client extends Videotheque{
+public class Client {
 
     private final UUID id;
     private String nom;
@@ -32,4 +33,16 @@ public class Client extends Videotheque{
         return fidele;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id.equals(client.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
