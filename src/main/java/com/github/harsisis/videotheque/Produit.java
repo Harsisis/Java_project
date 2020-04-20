@@ -33,6 +33,9 @@ public abstract class Produit {
 
     @Override
     public String toString() {
-        return "\nNuméro de produit : " + getId() + "\nTitre : " + titre + "\nTarif journalier : " + getTarifJournalier() + "€" + "\nCatégorie : " + getCategorie();
+        return "\nNuméro de produit : " + getId() +
+                "\nTitre : " + titre +
+                "\nTarif journalier : " + getTarifJournalier() + "€" +
+                "\nCatégorie : " + getCategorie();
     }
 }
