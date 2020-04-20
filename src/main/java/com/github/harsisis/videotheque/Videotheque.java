@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Videotheque {
 
-    private static final double reducFidele = 0.1;
+    private static final double REDUC_FIDELE = 0.1;
 
     HashSet<Client> listClient = new HashSet<>();
 

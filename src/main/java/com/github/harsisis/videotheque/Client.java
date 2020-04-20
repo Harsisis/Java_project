@@ -5,20 +5,20 @@ import java.util.UUID;
 
 public class Client {
 
-    private final UUID id;
+    private final UUID clientId;
     private String nom;
     private String prenom;
     private boolean fidele;
 
     public Client(String nom, String prenom, boolean fidele) {
-        this.id = UUID.randomUUID();
+        this.clientId = UUID.randomUUID();
         this.nom = nom;
         this.prenom = prenom;
         this.fidele = fidele;
     }
 
-    public String getId() {
-        return id.toString();
+    public String getClientId() {
+        return clientId.toString();
     }
 
     public String getNom() {
@@ -38,11 +38,11 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id.equals(client.id);
+        return clientId.equals(client.clientId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(clientId);
     }
 }
