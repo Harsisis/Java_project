@@ -6,13 +6,13 @@ public abstract class Produit {
     private final UUID id;
     private String titre;
     private double tarifJournalier;
-    private CategorieProduit categorie;
+    private CategorieProduit categorieProduit;
 
-    public Produit(String titre, double tarifJournalier, CategorieProduit categorie) {
+    public Produit(String titre, double tarifJournalier, CategorieProduit categorieProduit) {
         this.id = UUID.randomUUID();
         this.titre = titre;
         this.tarifJournalier = tarifJournalier;
-        this.categorie = categorie;
+        this.categorieProduit = categorieProduit;
     }
 
     public UUID getId() {
@@ -27,8 +27,8 @@ public abstract class Produit {
         return tarifJournalier;
     }
 
-    public CategorieProduit getCategorie() {
-        return categorie;
+    public CategorieProduit getCategorieProduit() {
+        return categorieProduit;
     }
 
 }
