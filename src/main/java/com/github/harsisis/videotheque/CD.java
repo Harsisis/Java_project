@@ -9,8 +9,7 @@ public class CD extends Produit {
         this.anneeSortie = anneeSortie;
     }
 
-    public int getAnnee_sortie() {
+    public int getAnneeSortie() {
         return anneeSortie;
     }
-
 }
