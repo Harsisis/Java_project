@@ -2,20 +2,14 @@ package com.github.harsisis.videotheque;
 
 public class DVD extends Produit {
 
-    private int anneeSortie;
+    private String realisateur;
 
-    public DVD(String titre, double tarifJournalier, int anneeSortie) {
-        super(titre, tarifJournalier,"Support numérique");
-        this.anneeSortie = anneeSortie;
+    public DVD(String titre, double tarifJournalier, String realisateur) {
+        super(titre, tarifJournalier, CategorieProduit.SUPPORT_NUMERIQUE);
+        this.realisateur = realisateur;
     }
 
-    public int getAnnee_sortie() {
-        return anneeSortie;
+    public String getRealisateur() {
+        return realisateur;
     }
-
-    @Override
-    public String toString() {
-        return super.toString() + "\nAnnée sortie : " + getAnnee_sortie();
-    }
-
 }

@@ -6,9 +6,9 @@ public abstract class Produit {
     private final UUID id;
     private String titre;
     private double tarifJournalier;
-    private String categorie;
+    private CategorieProduit categorie;
 
-    public Produit(String titre, double tarifJournalier, String categorie) {
+    public Produit(String titre, double tarifJournalier, CategorieProduit categorie) {
         this.id = UUID.randomUUID();
         this.titre = titre;
         this.tarifJournalier = tarifJournalier;
@@ -27,15 +27,8 @@ public abstract class Produit {
         return tarifJournalier;
     }
 
-    public String getCategorie() {
+    public CategorieProduit getCategorie() {
         return categorie;
     }
 
-    @Override
-    public String toString() {
-        return "\nNuméro de produit : " + getId() +
-                "\nTitre : " + getTitre() +
-                "\nTarif journalier : " + getTarifJournalier() + "€" +
-                "\nCatégorie : " + getCategorie();
-    }
 }
