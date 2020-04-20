@@ -1,6 +1,6 @@
 Fonctions à implémenter :
 - ajouter un client
 - ajouter une commande
-- ajouter un emprunte à la commande
-- modifier une commande en ajoutant un emprunte
-- modifier une commande en supprimant un emprunte
+- ajouter un emprunt/produit à la commande
+- modifier une commande en ajoutant un emprunt/produit
+- modifier une commande en supprimant un emprunt/produit
