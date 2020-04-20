@@ -1,5 +1,9 @@
 package com.github.harsisis.videotheque;
 
+//import com.github.harsisis.Dictionnaire;
+//import com.github.harsisis.Livre;
+import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,6 +15,8 @@ public class Main {
         Client cl02 = new Client("Maurice", "Pat", true);
         //System.out.println(cl02.getReduction());
 
+        //je crée une fenêtre
+        Fenetre video = new Fenetre();
 
     }
 }
