@@ -2,8 +2,10 @@ package com.github.harsisis.videotheque;
 
 //import com.github.harsisis.Dictionnaire;
 //import com.github.harsisis.Livre;
-import javax.swing.*;
-import java.awt.*;
+import com.github.harsisis.graphique.Fenetre;
+import com.github.harsisis.objet.CategorieLivre;
+import com.github.harsisis.objet.Client;
+import com.github.harsisis.objet.Livre;
 
 public class Main {
     public static void main(String[] args) {

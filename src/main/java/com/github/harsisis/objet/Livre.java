@@ -1,4 +1,4 @@
-package com.github.harsisis.videotheque;
+package com.github.harsisis.objet;
 
 public class Livre extends Produit {
 

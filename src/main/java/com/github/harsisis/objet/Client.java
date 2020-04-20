@@ -1,4 +1,4 @@
-package com.github.harsisis.videotheque;
+package com.github.harsisis.objet;
 
 import java.util.Objects;
 import java.util.UUID;
