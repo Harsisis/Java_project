@@ -15,22 +15,22 @@ public class Client {
         this.nom = nom;
         this.prenom = prenom;
         this.fidele = fidele;
-        this.reduction = GetReduction();
+        this.reduction = getReduction();
     }
 
     public String getId() {
         return id.toString();
     }
 
-    String GetNom (){
+    public String getNom() {
         return nom;
     }
 
-    String GetPrenom (){
+    public String getPrenom() {
         return prenom;
     }
 
-    public double GetReduction() {
+    public double getReduction() {
         if (this.fidele)
             this.reduction = 0.1;
         else
@@ -44,6 +44,9 @@ public class Client {
 
     @Override
     public String toString() {
-        return "\nInformations client n° " + " :\nnom : " + GetNom() + "\nprénom : " + GetPrenom() + "\nréduction : " + GetReduction();
+        return "\nInformations client n° " + getId() +
+                "\nNom : " + getNom() +
+                "\nPrénom : " + getPrenom() +
+                "\nRéduction : " + getReduction();
     }
 }
