@@ -15,7 +15,7 @@ public class Main {
         Client cl02 = new Client("Maurice", "Pat", true);
         //System.out.println(cl02.getReduction());
 
-        //je crée une fenêtre
+        //created window
         Fenetre video = new Fenetre();
 
     }
