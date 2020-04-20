@@ -9,9 +9,8 @@ public class Main {
         CD hello = new CD ("Hello", 3, 2000);
         System.out.println(hello);
 
-        Client mm = new Client("DUPONT", "Martin", true);
-
-        System.out.println(mm);
+        Client dm = new Client("DUPONT", "Martin", true);
+        System.out.println(dm);
 
 /*
         DVD lion = new DVD (2,"Lion King 2019", 4, "Jon Favreau");
