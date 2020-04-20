@@ -4,9 +4,9 @@ import java.util.HashSet;
 
 public class Videotheque {
 
-    private static double reducFidele;
+    private static final double reducFidele = 0.1;
 
-    HashSet<Client> listClient = new HashSet<Client>();
+    HashSet<Client> listClient = new HashSet<>();
 
     public boolean ajoutClient (String nom, String prenom, boolean fidele) {
         Client client = new Client(nom, prenom, fidele);

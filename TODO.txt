@@ -4,3 +4,5 @@ Fonctions à implémenter :
 - ajouter un emprunte à la commande
 - modifier une commande en ajoutant un emprunte
 - modifier une commande en supprimant un emprunte
+- calculer le montant total d'une commande d'un client avec réduction ou sans
+- ajouter un produit au stock
