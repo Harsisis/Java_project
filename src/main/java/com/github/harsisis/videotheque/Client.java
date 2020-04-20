@@ -7,7 +7,6 @@ public class Client {
     private final UUID id;
     private String nom;
     private String prenom;
-    private double reduction;
     private boolean fidele;
 
     public Client(String nom, String prenom, boolean fidele) {
