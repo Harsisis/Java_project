@@ -11,6 +11,8 @@ import com.github.harsisis.videotheque.domaine.Livre;
 //  Label : abcLbl
 //  Button : abcBtn
 //  Panel : abcPnl
+//  Check Box : abcdeCbx
+//  Text Field : abcdeJtf
 //  Autre : abcDef
 
 public class Main {
