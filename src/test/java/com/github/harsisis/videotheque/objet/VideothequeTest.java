@@ -1,6 +1,5 @@
-package com.github.harsisis.videotheque;
+package com.github.harsisis.videotheque.objet;
 
-import com.github.harsisis.objet.Videotheque;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

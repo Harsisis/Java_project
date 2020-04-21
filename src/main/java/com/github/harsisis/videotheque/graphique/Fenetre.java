@@ -1,4 +1,4 @@
-package com.github.harsisis.graphique;
+package com.github.harsisis.videotheque.graphique;
 
 import javax.swing.*;
 import java.awt.*;

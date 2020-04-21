@@ -1,4 +1,4 @@
-package com.github.harsisis.objet;
+package com.github.harsisis.videotheque.objet;
 
 import java.time.LocalDate;
 import java.util.UUID;
