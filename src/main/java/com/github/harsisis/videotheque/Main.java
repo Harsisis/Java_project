@@ -1,9 +1,9 @@
 package com.github.harsisis.videotheque;
 
-import com.github.harsisis.videotheque.graphique.Fenetre;
-import com.github.harsisis.videotheque.objet.CategorieLivre;
-import com.github.harsisis.videotheque.objet.Client;
-import com.github.harsisis.videotheque.objet.Livre;
+import com.github.harsisis.videotheque.iu.Fenetre;
+import com.github.harsisis.videotheque.domaine.CategorieLivre;
+import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.Livre;
 
 public class Main {
     public static void main(String[] args) {

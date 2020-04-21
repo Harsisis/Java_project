@@ -1,4 +1,4 @@
-package com.github.harsisis.videotheque.objet;
+package com.github.harsisis.videotheque.domaine;
 
 public class DVD extends Produit {
 

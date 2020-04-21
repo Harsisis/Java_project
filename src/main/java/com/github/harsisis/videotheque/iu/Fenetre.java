@@ -1,4 +1,4 @@
-package com.github.harsisis.videotheque.graphique;
+package com.github.harsisis.videotheque.iu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class Fenetre extends JFrame{
     private JButton addClient = new JButton("Ajouter un client");
     private JLabel labelApp = new JLabel("Vidéothèque");
     private JLabel labelClient = new JLabel("client");
-
+// Jtextfield, Jcheckbox
 
     public Fenetre(){
         this.setTitle("Application");
