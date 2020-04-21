@@ -6,13 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Fenetre extends JFrame{
-    private JPanel displayPnl = new JPanel();// display all the panels, buttons...
-    private JPanel titlePnl = new JPanel();// panel with title label
-    private JPanel workPlaceLbl = new JPanel();// panel with a list of all customers registered
-
+    private JPanel displayPnl = new JPanel();
+    private JPanel titlePnl = new JPanel();
+    private JPanel workPlaceLbl = new JPanel();
     private JButton addClientBtn = new JButton("Ajouter un client");
-    private JLabel AppLbl = new JLabel("Vidéothèque");
-    private JLabel ClientLbl = new JLabel("client");
+    private JLabel appLbl = new JLabel("Vidéothèque");
+    private JLabel clientLbl = new JLabel("client");
 // Jtextfield, Jcheckbox
 
     public Fenetre(){
@@ -23,14 +22,14 @@ public class Fenetre extends JFrame{
 
         addClientBtn.addActionListener(new addClientBtnListener());
 
-        Font arial = new Font("arial", Font.BOLD, 18);
-        AppLbl.setFont(arial);
+        Font montserrat = new Font("Montserrat", Font.BOLD, 18);
+        appLbl.setFont(montserrat);
 
-        workPlaceLbl.add(ClientLbl);
+        workPlaceLbl.add(clientLbl);
 
         titlePnl.setBackground(Color.LIGHT_GRAY);
         titlePnl.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.black));
-        titlePnl.add(AppLbl);
+        titlePnl.add(appLbl);
 
         displayPnl.setBackground(Color.WHITE);
         displayPnl.setLayout(new BorderLayout());
@@ -49,7 +48,8 @@ public class Fenetre extends JFrame{
     }
     class addClientBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-            CreateClient video = new CreateClient();
+            clientLbl.setText("ici le client");
         }
     }
+
 }
