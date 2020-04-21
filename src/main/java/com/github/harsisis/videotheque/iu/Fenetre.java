@@ -41,9 +41,11 @@ public class Fenetre extends JFrame{
         this.setContentPane(displayPnl);
         //this.setContentPane(new Panel());
         this.setVisible(true);
+        //what does this do ?
         go();
     }
 
+    //what is this ?
     private void go() {
 
     }
