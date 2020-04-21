@@ -5,6 +5,14 @@ import com.github.harsisis.videotheque.domaine.CategorieLivre;
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Livre;
 
+//Convention nommage
+//  CSTE : ABC_DEF
+//  Class : Abcd
+//  Label : abcLbl
+//  Button : abcBtn
+//  Panel : abcPnl
+//  Autre : abcDef
+
 public class Main {
     public static void main(String[] args) {
         Livre l01 = new Livre("Garfield", 2.5, "Martin", CategorieLivre.BD);
