@@ -9,6 +9,10 @@ Fonctions à implémenter :
 
 A fixer :
 - separer les classes dans des packages distinct pour organiser le code, par exemple : DONE
-        - regrouper les composants graphiques tels que Fenetre.java dans un package dedié
-        - creer un autre package dedié pour tous les objets du domaine (Client, Videotheque, DVD, etc.)
-        - ne devrait rester dans le package com.github.harsisis.videotheque que la classe Main.java
+       x- regrouper les composants graphiques tels que Fenetre.java dans un package dedié
+       x- creer un autre package dedié pour tous les objets du domaine (Client, Videotheque, DVD, etc.)
+       x- ne devrait rester dans le package com.github.harsisis.videotheque que la classe Main.java
+  
+- ui
+        - pouvoir créer avec les champs un objet de type client
+        - empêcher un utilisateur de créer plusieurs fenêtres de création client
