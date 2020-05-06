@@ -16,6 +16,7 @@ public class Fenetre extends JFrame{
 // Jtextfield, Jcheckbox
 
     public Fenetre(){
+
         this.setTitle("Application");
         this.setSize(400, 300);
         this.setLocationRelativeTo(null);
@@ -41,14 +42,9 @@ public class Fenetre extends JFrame{
         this.setContentPane(displayPnl);
         //this.setContentPane(new Panel());
         this.setVisible(true);
-        //what does this do ?
-        go();
     }
 
     //what is this ?
-    private void go() {
-
-    }
     class addClientBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
             CreateClient video = new CreateClient();

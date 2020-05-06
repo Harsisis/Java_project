@@ -18,8 +18,8 @@ public class CreateClient extends JFrame {
     private JLabel prenomLbl = new JLabel("Prénom :");
     private JLabel fideleLbl = new JLabel("Fidèle :");
 
-    private static JFormattedTextField saisiNomJtf = new JFormattedTextField("saisir Nom");
-    private static JFormattedTextField saisiPrenomJtf = new JFormattedTextField("saisir Prénom");
+    private static JTextField saisiNomJtf = new JTextField("saisir Nom");
+    private static JTextField saisiPrenomJtf = new JTextField("saisir Prénom");
 
     private JCheckBox fideleCbx = new JCheckBox();
 
@@ -30,9 +30,10 @@ public class CreateClient extends JFrame {
     public CreateClient(){
         // windows settings
         this.setTitle("Ajout d'un Client");
-        this.setSize(800, 600);
+        this.setSize(600, 200);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         // add to Action Listener
         cancelClientBtn.addActionListener(new cancelClientBtnListener());
@@ -78,16 +79,12 @@ public class CreateClient extends JFrame {
         this.setContentPane(displayPnl);
         //this.setContentPane(new Panel());
         this.setVisible(true);
-        go();
     }
 
-    private void go() {
-
-    }
 
     public static class cancelClientBtnListener implements ActionListener {
         public void actionPerformed(ActionEvent actionEvent) {
-            System.exit(0);
+            //I want to close this windows but keep the main open
         }
     }
 
