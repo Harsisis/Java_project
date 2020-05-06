@@ -16,3 +16,4 @@ A fixer :
 - ui
         - pouvoir créer avec les champs un objet de type client
         - empêcher un utilisateur de créer plusieurs fenêtres de création client
+        - cf. CODE_SAMPLES.md
