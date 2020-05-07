@@ -4,8 +4,7 @@ import com.github.harsisis.videotheque.domaine.Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.*;
 
 public class CreateClient extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
@@ -26,6 +25,10 @@ public class CreateClient extends JFrame {
     private JButton cancelClientBtn = new JButton("Annuler");
     private JButton confirmClientBtn = new JButton("Valider");
 
+    private JOptionPane jop3 = new JOptionPane();
+
+    ArrayList<Client> clients = new ArrayList<Client>();
+
 
     public CreateClient(){
         // windows settings
@@ -35,10 +38,20 @@ public class CreateClient extends JFrame {
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
+
         // add to Action Listener
-        cancelClientBtn.addActionListener(new cancelClientBtnListener());
-        confirmClientBtn.addActionListener(new confirmClientBtnListener());
-        fideleCbx.addActionListener(new StateListener());
+        cancelClientBtn.addActionListener(e -> this.dispose());
+        confirmClientBtn.addActionListener(e -> {
+            //if (saisiNomJtf.getText() != "saisir Nom" && saisiPrenomJtf.getText() != "saisir Prénom")
+            if (saisiNomJtf.getText() == "Nom" || saisiPrenomJtf.getText() == "Prénom") {       // condition isn't working
+                System.out.println("nom: " + saisiNomJtf.getText() + "\nprénom: " + saisiPrenomJtf.getText() + "\nfidèle: " + fideleCbx.isSelected());
+                Client cl = new Client(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
+                clients.add(cl);
+                this.dispose();
+            }
+            else
+                jop3.showMessageDialog(null, "Message d'erreur", "Erreur", JOptionPane.ERROR_MESSAGE);
+        });
 
         // font settings
         Font arial = new Font("arial", Font.BOLD, 16);
@@ -56,8 +69,6 @@ public class CreateClient extends JFrame {
         // workplace panel
         saisiPrenomJtf.setPreferredSize(new Dimension(150, 30));
         saisiNomJtf.setPreferredSize(new Dimension(150, 30));
-        saisiPrenomJtf.setForeground(Color.lightGray);
-        saisiNomJtf.setForeground(Color.lightGray);
 
         workplacePnl.add(nomLbl);
         workplacePnl.add(saisiNomJtf);
@@ -79,25 +90,5 @@ public class CreateClient extends JFrame {
         this.setContentPane(displayPnl);
         //this.setContentPane(new Panel());
         this.setVisible(true);
-    }
-
-
-    public static class cancelClientBtnListener implements ActionListener {
-        public void actionPerformed(ActionEvent actionEvent) {
-            //I want to close this windows but keep the main open
-        }
-    }
-
-    public static class confirmClientBtnListener implements ActionListener {
-        public void actionPerformed(ActionEvent actionEvent) {
-            System.out.println("nom : " + saisiNomJtf.getText() + "\nprénom : " + saisiPrenomJtf.getText());
-            Client client = new Client(saisiNomJtf.getText(), saisiPrenomJtf.getText(), ((JCheckBox)actionEvent.getSource()).isSelected());// doesn't work for now
-        }
-    }
-
-    public static class StateListener implements ActionListener {
-        public void actionPerformed(ActionEvent actionEvent) {
-            System.out.println("etat case : " + ((JCheckBox)actionEvent.getSource()).isSelected());
-        }
     }
 }
