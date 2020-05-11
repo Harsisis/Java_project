@@ -1,9 +1,11 @@
 package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.util.*;
 
 public class CreateClient extends JFrame {
@@ -17,40 +19,42 @@ public class CreateClient extends JFrame {
     private JLabel prenomLbl = new JLabel("Prénom :");
     private JLabel fideleLbl = new JLabel("Fidèle :");
 
-    private static JTextField saisiNomJtf = new JTextField("saisir Nom");
-    private static JTextField saisiPrenomJtf = new JTextField("saisir Prénom");
+    private static JTextField saisiNomJtf = new JTextField();
+    private static JTextField saisiPrenomJtf = new JTextField();
 
     private JCheckBox fideleCbx = new JCheckBox();
 
     private JButton cancelClientBtn = new JButton("Annuler");
     private JButton confirmClientBtn = new JButton("Valider");
 
+
     private JOptionPane jop3 = new JOptionPane();
 
-    ArrayList<Client> clients = new ArrayList<Client>();
 
-
-    public CreateClient(){
+    public CreateClient(Videotheque app){
         // windows settings
-        this.setTitle("Ajout d'un Client");
-        this.setSize(600, 200);
-        this.setLocationRelativeTo(null);
-        this.setLayout(new BorderLayout());
-        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setTitle("Ajout d'un Client");
+        setSize(600, 200);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-
+        saisiNomJtf.setText("");
+        saisiPrenomJtf.setText("");
         // add to Action Listener
-        cancelClientBtn.addActionListener(e -> this.dispose());
+        cancelClientBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
         confirmClientBtn.addActionListener(e -> {
-            //if (saisiNomJtf.getText() != "saisir Nom" && saisiPrenomJtf.getText() != "saisir Prénom")
-            if (saisiNomJtf.getText() == "Nom" || saisiPrenomJtf.getText() == "Prénom") {       // condition isn't working
+            if (!saisiNomJtf.getText().equals("") && !saisiPrenomJtf.getText().equals("")) {
                 System.out.println("nom: " + saisiNomJtf.getText() + "\nprénom: " + saisiPrenomJtf.getText() + "\nfidèle: " + fideleCbx.isSelected());
-                Client cl = new Client(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
-                clients.add(cl);
-                this.dispose();
+                app.ajoutClient(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             }
             else
                 jop3.showMessageDialog(null, "Message d'erreur", "Erreur", JOptionPane.ERROR_MESSAGE);
+
+            /*for(Client client : app.getClient()){
+                System.out.println(client);
+            }*/
         });
 
         // font settings
@@ -87,8 +91,8 @@ public class CreateClient extends JFrame {
         displayPnl.add(workplacePnl, BorderLayout.CENTER);
         displayPnl.add(confirmPnl, BorderLayout.SOUTH);
 
-        this.setContentPane(displayPnl);
+        setContentPane(displayPnl);
         //this.setContentPane(new Panel());
-        this.setVisible(true);
+        setVisible(true);
     }
 }

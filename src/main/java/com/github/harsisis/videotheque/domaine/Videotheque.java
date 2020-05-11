@@ -8,7 +8,7 @@ public class Videotheque {
 
     private static final Videotheque INSTANCE = new Videotheque();
 
-    private Videotheque() {
+    public Videotheque() {
     }
 
     public static final double REDUC_FIDELE = 0.1;

@@ -1,16 +1,17 @@
 package com.github.harsisis.videotheque.iu;
 
+import com.github.harsisis.videotheque.domaine.Videotheque;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Fenetre extends JFrame{
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel titlePnl = new JPanel();// panel with title label
-    private JPanel workPlaceLbl = new JPanel();// panel with a list of all customers registered
+    private JPanel workPlacePnl = new JPanel();// panel with a list of all customers registered
 
     private JButton addClientBtn = new JButton("Ajouter un client");
+    private JButton addOrderBtn = new JButton("Ajouter une Commande");
     private JLabel AppLbl = new JLabel("Vidéothèque");
     private JLabel ClientLbl = new JLabel("client");
 
@@ -24,23 +25,30 @@ public class Fenetre extends JFrame{
     private JMenu listCommand = new JMenu("liste des commandes");
     private JMenu listProduct = new JMenu("liste des produits");
     private JMenu Help = new JMenu("Aide");
-    private JMenu Quit = new JMenu("Quitter");
+    private JRadioButtonMenuItem Quit = new JRadioButtonMenuItem("Quitter");
+
+
+    public Videotheque application;
+
 // Jtextfield, Jcheckbox
 
     public Fenetre() {
 
-        this.setTitle("Application");
-        this.setSize(400, 300);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Application");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        addClientBtn.addActionListener(e -> new CreateClient());
+        application = new Videotheque();
+
+        addClientBtn.addActionListener(e -> new CreateClient(application));
+        addOrderBtn.addActionListener(e -> new CreateOrder(application));
 
         Font arial = new Font("arial", Font.BOLD, 18);
         AppLbl.setFont(arial);
 
         //panel Workplace
-        workPlaceLbl.add(ClientLbl);
+        workPlacePnl.add(ClientLbl);
 
         //panel title
         titlePnl.setBackground(Color.LIGHT_GRAY);
@@ -66,17 +74,19 @@ public class Fenetre extends JFrame{
         this.setJMenuBar(menuBar);
 
 
+        //panel buttons
+
 
         //panel display
         displayPnl.setBackground(Color.WHITE);
         displayPnl.setLayout(new BorderLayout());
         displayPnl.add(titlePnl, BorderLayout.NORTH);
         displayPnl.add(addClientBtn, BorderLayout.SOUTH);
-        displayPnl.add(workPlaceLbl, BorderLayout.CENTER);
+        displayPnl.add(workPlacePnl, BorderLayout.CENTER);
 
         // set visible
-        this.setContentPane(displayPnl);
+        setContentPane(displayPnl);
         //this.setContentPane(new Panel());
-        this.setVisible(true);
+        setVisible(true);
     }
 }
