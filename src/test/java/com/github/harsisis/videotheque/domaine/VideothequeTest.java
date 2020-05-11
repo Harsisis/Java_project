@@ -28,7 +28,7 @@ public class VideothequeTest {
     }
 
     @Test
-    public void given_produitAndQuantity_when_ajoutStockProduit_then_noError() {
+    public void given_produitAndQuantity_when_ajoutStockProduit_then_produitShouldExists() {
         // GIVEN
         Produit p1 = new CD("titre", 10D, 1983);
         int quantity = 10;
