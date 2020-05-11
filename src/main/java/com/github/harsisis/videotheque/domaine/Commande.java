@@ -30,10 +30,15 @@ public class Commande {
         return client;
     }
 
-
     public boolean ajoutEmprunt (Produit produit, int dureeLocation) {
         Emprunt emprunt = new Emprunt(produit, dureeLocation);
-        return listEmprunt.add(emprunt);
+        if (1 == 0)
+            return listEmprunt.add(emprunt);
+        else return false;
+    }
+
+    public void supEmprunt (int numeroEmprunt) {
+        listEmprunt.remove(numeroEmprunt);
     }
 
     // peut etre autre methode plus simple a comprendre

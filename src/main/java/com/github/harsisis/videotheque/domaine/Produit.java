@@ -1,5 +1,6 @@
 package com.github.harsisis.videotheque.domaine;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public abstract class Produit {
@@ -31,4 +32,16 @@ public abstract class Produit {
         return categorieProduit;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produit produit = (Produit) o;
+        return produitId.equals(produit.produitId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(produitId);
+    }
 }
