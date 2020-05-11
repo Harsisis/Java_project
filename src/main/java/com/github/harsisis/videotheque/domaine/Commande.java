@@ -30,6 +30,7 @@ public class Commande {
         return client;
     }
 
+    // unfinished
     public boolean ajoutEmprunt (Produit produit, int dureeLocation) {
         Emprunt emprunt = new Emprunt(produit, dureeLocation);
         if (1 == 0)

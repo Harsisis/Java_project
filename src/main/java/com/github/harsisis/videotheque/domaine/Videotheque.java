@@ -8,7 +8,9 @@ public class Videotheque {
 
     private static final Videotheque INSTANCE = new Videotheque();
 
-    public Videotheque() {
+    // this should stay private because only one instance can existe
+    // use Videotheque.getInstance()
+    private Videotheque() {
     }
 
     public static final double REDUC_FIDELE = 0.1;
@@ -27,8 +29,8 @@ public class Videotheque {
         return listCommande.add(commande);
     }
 
-    //public void
-
+    // initialize map
+    // same action twice
     public void ajoutStockProduit (Produit produit, int quantity) {
         if (quantity > 0) {
             if (produitExist(produit)) {
@@ -40,6 +42,7 @@ public class Videotheque {
         }
     }
 
+    // remove if and else
     public boolean produitExist (Produit produit) {
         if (listStockProduit.containsKey(produit)) {
             return true;
