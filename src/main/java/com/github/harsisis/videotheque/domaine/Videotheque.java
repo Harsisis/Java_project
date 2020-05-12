@@ -1,8 +1,6 @@
 package com.github.harsisis.videotheque.domaine;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class Videotheque {
 
@@ -14,10 +12,90 @@ public class Videotheque {
     }
 
     public static final double REDUC_FIDELE = 0.1;
-    private Map<Produit, Integer> listStockProduit;
+
+    // not sure about this
+    private Map<UUID, Integer> listStockProduit = new Map<UUID, Integer>() {
+        @Override
+        public int size() {
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean containsKey(Object o) {
+            return false;
+        }
+
+        @Override
+        public boolean containsValue(Object o) {
+            return false;
+        }
+
+        @Override
+        public Integer get(Object o) {
+            return null;
+        }
+
+        @Override
+        public Integer put(UUID uuid, Integer integer) {
+            return null;
+        }
+
+        @Override
+        public Integer remove(Object o) {
+            return null;
+        }
+
+        @Override
+        public void putAll(Map<? extends UUID, ? extends Integer> map) {
+
+        }
+
+        @Override
+        public void clear() {
+
+        }
+
+        @Override
+        public Set<UUID> keySet() {
+            return null;
+        }
+
+        @Override
+        public Collection<Integer> values() {
+            return null;
+        }
+
+        @Override
+        public Set<Entry<UUID, Integer>> entrySet() {
+            return null;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+    };
 
     private HashSet<Client> listClient = new HashSet<Client>();
     private HashSet<Commande> listCommande = new HashSet<Commande>();
+
+    public HashSet<Client> getListClient() {
+        return listClient;
+    }
+
+    public HashSet<Commande> getListCommande() {
+        return listCommande;
+    }
 
     public boolean ajoutClient (String nom, String prenom, boolean fidele) {
         Client client = new Client(nom, prenom, fidele);
@@ -29,29 +107,10 @@ public class Videotheque {
         return listCommande.add(commande);
     }
 
-    // initialize map
-    // same action twice
-    public void ajoutStockProduit (Produit produit, int quantity) {
-        if (quantity > 0) {
-            if (produitExist(produit)) {
-                listStockProduit.put(produit, quantity + listStockProduit.get(produit));
+    public void ajoutStockProduit (UUID produitId, int quantity) {
+            if (listStockProduit.containsKey(produitId)) {
+                listStockProduit.put(produitId, quantity + listStockProduit.get(produitId));
             }
-            else {
-                listStockProduit.put(produit, quantity);
-            }
-        }
-    }
-
-    // remove if and else
-    public boolean produitExist (Produit produit) {
-        if (listStockProduit.containsKey(produit)) {
-            return true;
-        }
-        else return false;
-    }
-
-    public void supCommande (int numeroCommande) {
-        listCommande.remove(numeroCommande);
     }
 
     public static Videotheque getInstance() {

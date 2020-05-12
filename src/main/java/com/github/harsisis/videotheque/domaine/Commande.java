@@ -10,7 +10,8 @@ public class Commande {
     private UUID commandeId;
     private LocalDate debutDate;
     private Client client;
-    ArrayList<Emprunt> listEmprunt = new ArrayList<>();
+
+    private ArrayList<Emprunt> listEmprunt = new ArrayList<>();
 
     public Commande(Client client, ArrayList<Emprunt> empruntList) {
         this.commandeId = UUID.randomUUID();
@@ -30,15 +31,12 @@ public class Commande {
         return client;
     }
 
-    // unfinished
     public boolean ajoutEmprunt (Produit produit, int dureeLocation) {
         Emprunt emprunt = new Emprunt(produit, dureeLocation);
-        if (1 == 0)
-            return listEmprunt.add(emprunt);
-        else return false;
+        return listEmprunt.add(emprunt);
     }
 
-    public void supEmprunt (int numeroEmprunt) {
+    public void supEmprunt (UUID numeroEmprunt) {
         listEmprunt.remove(numeroEmprunt);
     }
 
