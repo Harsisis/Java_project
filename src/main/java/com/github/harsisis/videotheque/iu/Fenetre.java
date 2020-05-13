@@ -4,89 +4,93 @@ import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 
 public class Fenetre extends JFrame{
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
-    private JPanel titlePnl = new JPanel();// panel with title label
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers registered
+    private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
 
     private JButton addClientBtn = new JButton("Ajouter un client");
-    private JButton addOrderBtn = new JButton("Ajouter une Commande");
-    private JLabel AppLbl = new JLabel("Vidéothèque");
-    private JLabel ClientLbl = new JLabel("client");
+    private JButton addOrderBtn = new JButton("Ajouter une commande");
+    private JButton addProductBtn = new JButton("Ajouter un produit");
 
     private JMenuBar menuBar = new JMenuBar();
-    private JMenu Add = new JMenu("Ajouter");
-    private JMenu AddUser = new JMenu("ajouter un client");
-    private JMenu AddCommand = new JMenu("ajouter une commande");
-    private JMenu AddProduct = new JMenu("ajouter un produit");
     private JMenu Li = new JMenu("Liste");
-    private JMenu listUser = new JMenu("liste des clients");
-    private JMenu listCommand = new JMenu("liste des commandes");
-    private JMenu listProduct = new JMenu("liste des produits");
+    private JRadioButtonMenuItem listUser = new JRadioButtonMenuItem("liste des clients");
+    private JRadioButtonMenuItem listCommand = new JRadioButtonMenuItem("liste des commandes");
+    private JRadioButtonMenuItem listProduct = new JRadioButtonMenuItem("liste des produits");
     private JMenu Help = new JMenu("Aide");
     private JRadioButtonMenuItem Quit = new JRadioButtonMenuItem("Quitter");
-
-
-    public Videotheque application;
 
 // Jtextfield, Jcheckbox
 
     public Fenetre() {
 
+        // set window settings --------------------------------------------------------------------
         setTitle("Application");
-        setSize(400, 300);
+        setSize(900, 600);
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        application = new Videotheque();
+        addClientBtn.addActionListener(e -> new CreateClient(Videotheque.getInstance()));//add procedure to addClientBtn
+        addOrderBtn.addActionListener(e -> {
+            new CreateOrder();
+            System.out.println("test");
+        });
+        //addProductBtn.addActionListener(e -> new CreateProduct());
 
-        addClientBtn.addActionListener(e -> new CreateClient(application));
-        addOrderBtn.addActionListener(e -> new CreateOrder(application));
-
-        Font arial = new Font("arial", Font.BOLD, 18);
-        AppLbl.setFont(arial);
-
-        //panel Workplace
-        workPlacePnl.add(ClientLbl);
-
-        //panel title
-        titlePnl.setBackground(Color.LIGHT_GRAY);
-        titlePnl.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.black));
-        titlePnl.add(AppLbl);
-
-        //items menu
-        menuBar.add(Add);
-        menuBar.add(Li);
+        //items menu ------------------------------------------------------------------------------
+        //create a menu with 2 items, Liste to pull down a menu with three buttons that display list of customers, order and product
+        // and the second one Aide to pull down another menu with the exit button
+        menuBar.add(Li);//add Li item to menu
         menuBar.add(Help);
-        menuBar.add(Quit);
 
-        Add.add(AddUser);
-        Add.add(AddCommand);
-        Add.add(AddProduct);
+        Help.add(Quit);
 
         Li.add(listUser);
         Li.add(listCommand);
         Li.add(listProduct);
 
-        Quit.addActionListener(e -> this.dispose());
+        //don't delete should be define when we are able to display list from videotheque
+        //listUser.addActionListener(e ->);
+        //listCommand.addActionListener(e ->);
+        //listProduct.addActionListener(e ->);
 
-        this.setJMenuBar(menuBar);
+        Quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+
+        setJMenuBar(menuBar);
 
 
-        //panel buttons
+        //panel buttons (workplace)----------------------------------------------------------------
+        //buttons to create customers, orders and products, they are stocked in a gridLayout
+        addClientBtn.setBackground(Color.white);
+        addClientBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addClientBtn.setPreferredSize(new Dimension(140, 30));
+        addOrderBtn.setBackground(Color.white);
+        addOrderBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addOrderBtn.setPreferredSize(new Dimension(140, 30));
+        addProductBtn.setBackground(Color.white);
+        addProductBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addProductBtn.setPreferredSize(new Dimension(140, 20));
+        //panel
+        workPlacePnl.setBackground(Color.darkGray);
+        workPlacePnl.setPreferredSize(new Dimension(180, 600));
+        //workPlacePnl.setLayout(new BoxLayout(workPlacePnl, BoxLayout.PAGE_AXIS));
+        workPlacePnl.setLayout(new GridLayout(8,1,0,5));
+        workPlacePnl.add(addClientBtn);
+        workPlacePnl.add(addOrderBtn);
+        workPlacePnl.add(addProductBtn);
 
-
-        //panel display
+        //panel display----------------------------------------------------------------------------
+        // I can display only one panel then all the other panels are stocked in displayPnl
         displayPnl.setBackground(Color.WHITE);
         displayPnl.setLayout(new BorderLayout());
-        displayPnl.add(titlePnl, BorderLayout.NORTH);
-        displayPnl.add(addClientBtn, BorderLayout.SOUTH);
-        displayPnl.add(workPlacePnl, BorderLayout.CENTER);
+        displayPnl.add(workPlacePnl, BorderLayout.WEST);
 
-        // set visible
+        // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
-        //this.setContentPane(new Panel());
         setVisible(true);
     }
 }

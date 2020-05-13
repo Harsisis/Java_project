@@ -5,6 +5,7 @@ import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.util.*;
 
 public class CreateOrder extends JFrame{
@@ -23,12 +24,20 @@ public class CreateOrder extends JFrame{
     private static JTextField saisiCodeJtf = new JTextField();
    ---------------- if we want to manage promotional code */
 
-    public CreateOrder(Videotheque app){
-
+    public CreateOrder(){
+        // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'une Commande");
         setSize(600, 200);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+
+
+
+
+        // set visible------------------------------------------------------------------------------
+        setContentPane(displayPnl);
+        setVisible(true);
     }
 }
