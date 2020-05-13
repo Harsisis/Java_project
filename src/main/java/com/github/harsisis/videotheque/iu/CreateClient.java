@@ -90,6 +90,8 @@ public class CreateClient extends JFrame {
         // confirm panel------------------------------------------------------------------------------
         confirmPnl.add(confirmClientBtn);
         confirmPnl.add(cancelClientBtn);
+        confirmClientBtn.setBackground(Color.white);
+        cancelClientBtn.setBackground(Color.white);
 
         // display panel------------------------------------------------------------------------------
         displayPnl.add(titlePnl, BorderLayout.NORTH);

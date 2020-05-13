@@ -35,10 +35,7 @@ public class Fenetre extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         addClientBtn.addActionListener(e -> new CreateClient(Videotheque.getInstance()));//add procedure to addClientBtn
-        addOrderBtn.addActionListener(e -> {
-            new CreateOrder();
-            System.out.println("test");
-        });
+        addOrderBtn.addActionListener(e -> new CreateOrder());
         //addProductBtn.addActionListener(e -> new CreateProduct());
 
         //items menu ------------------------------------------------------------------------------
