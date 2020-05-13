@@ -51,7 +51,6 @@ public class Commande {
         for (Emprunt emprunt: listEmprunt) {
             total += emprunt.getProduit().getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
         }
-
         return total;
 
         // solution plus moderne

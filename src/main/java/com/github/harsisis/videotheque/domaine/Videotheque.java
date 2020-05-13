@@ -14,7 +14,8 @@ public class Videotheque {
     public static final double REDUC_FIDELE = 0.1;
 
     // not sure about this
-    private Map<UUID, Integer> listStockProduit = new Map<UUID, Integer>() {
+    private Map<Produit, Integer> listStockProduit = new Map<Produit, Integer>() {
+
         @Override
         public int size() {
             return 0;
@@ -41,7 +42,7 @@ public class Videotheque {
         }
 
         @Override
-        public Integer put(UUID uuid, Integer integer) {
+        public Integer put(Produit produit, Integer integer) {
             return null;
         }
 
@@ -51,7 +52,7 @@ public class Videotheque {
         }
 
         @Override
-        public void putAll(Map<? extends UUID, ? extends Integer> map) {
+        public void putAll(Map<? extends Produit, ? extends Integer> map) {
 
         }
 
@@ -61,7 +62,7 @@ public class Videotheque {
         }
 
         @Override
-        public Set<UUID> keySet() {
+        public Set<Produit> keySet() {
             return null;
         }
 
@@ -71,18 +72,8 @@ public class Videotheque {
         }
 
         @Override
-        public Set<Entry<UUID, Integer>> entrySet() {
+        public Set<Entry<Produit, Integer>> entrySet() {
             return null;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            return 0;
         }
     };
 
@@ -90,11 +81,26 @@ public class Videotheque {
     private HashSet<Commande> listCommande = new HashSet<Commande>();
 
     public HashSet<Client> getListClient() {
-        return listClient;
+        return new HashSet<Client>(listClient);
     }
 
     public HashSet<Commande> getListCommande() {
-        return listCommande;
+        return new HashSet<Commande>(listCommande);
+    }
+
+    public Map<Produit, Integer> getListStockProduit() {
+        return new HashMap<Produit, Integer>(listStockProduit);
+    }
+
+    public List<Produit> listProduitEnStock() {
+        List<Produit> resultat = new ArrayList<Produit>();
+        for (Map.Entry<Produit, Integer> entry : listStockProduit.entrySet()
+             ) {
+            if (entry.getValue() > 0) {
+                resultat.add(entry.getKey());
+            }
+        }
+        return resultat;
     }
 
     public boolean ajoutClient (String nom, String prenom, boolean fidele) {
@@ -107,7 +113,7 @@ public class Videotheque {
         return listCommande.add(commande);
     }
 
-    public void ajoutStockProduit (UUID produitId, int quantity) {
+    public void ajoutStockProduit (Produit produitId, int quantity) {
             if (listStockProduit.containsKey(produitId)) {
                 listStockProduit.put(produitId, quantity + listStockProduit.get(produitId));
             }
