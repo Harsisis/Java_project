@@ -14,86 +14,25 @@ public class Videotheque {
     public static final double REDUC_FIDELE = 0.1;
 
     // not sure about this
-    private Map<Produit, Integer> listStockProduit = new Map<Produit, Integer>() {
+    private Map<Produit, Integer> listStockProduit = new HashMap<>();
 
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean containsKey(Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsValue(Object o) {
-            return false;
-        }
-
-        @Override
-        public Integer get(Object o) {
-            return null;
-        }
-
-        @Override
-        public Integer put(Produit produit, Integer integer) {
-            return null;
-        }
-
-        @Override
-        public Integer remove(Object o) {
-            return null;
-        }
-
-        @Override
-        public void putAll(Map<? extends Produit, ? extends Integer> map) {
-
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public Set<Produit> keySet() {
-            return null;
-        }
-
-        @Override
-        public Collection<Integer> values() {
-            return null;
-        }
-
-        @Override
-        public Set<Entry<Produit, Integer>> entrySet() {
-            return null;
-        }
-    };
-
-    private HashSet<Client> listClient = new HashSet<Client>();
-    private HashSet<Commande> listCommande = new HashSet<Commande>();
+    private HashSet<Client> listClient = new HashSet<>();
+    private HashSet<Commande> listCommande = new HashSet<>();
 
     public HashSet<Client> getListClient() {
-        return new HashSet<Client>(listClient);
+        return listClient;
     }
 
     public HashSet<Commande> getListCommande() {
-        return new HashSet<Commande>(listCommande);
+        return listCommande;
     }
 
     public Map<Produit, Integer> getListStockProduit() {
-        return new HashMap<Produit, Integer>(listStockProduit);
+        return listStockProduit;
     }
 
     public List<Produit> listProduitEnStock() {
-        List<Produit> resultat = new ArrayList<Produit>();
+        List<Produit> resultat = new ArrayList<>();
         for (Map.Entry<Produit, Integer> entry : listStockProduit.entrySet()
              ) {
             if (entry.getValue() > 0) {
