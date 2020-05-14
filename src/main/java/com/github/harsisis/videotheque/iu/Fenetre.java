@@ -23,7 +23,6 @@ public class Fenetre extends JFrame{
     private JMenu Help = new JMenu("Aide");
     private JRadioButtonMenuItem Quit = new JRadioButtonMenuItem("Quitter");
 
-// Jtextfield, Jcheckbox
 
     public Fenetre() {
 
@@ -50,10 +49,10 @@ public class Fenetre extends JFrame{
         Li.add(listCommand);
         Li.add(listProduct);
 
-        //don't delete should be define when we are able to display list from videotheque
-        //listUser.addActionListener(e ->);
-        //listCommand.addActionListener(e ->);
-        //listProduct.addActionListener(e ->);
+        //don't delete, it should be define when we are able to display list from videotheque
+        //listUser.addActionListener(e -> );
+        //listCommand.addActionListener(e -> );
+        //listProduct.addActionListener(e -> );
 
         Quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 

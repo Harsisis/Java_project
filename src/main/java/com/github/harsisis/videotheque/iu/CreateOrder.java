@@ -16,7 +16,7 @@ public class CreateOrder extends JFrame{
     private JPanel titlePnl = new JPanel();//panel to display the title
     private JPanel selectPnl = new JPanel();//panel with list to select a customer and add button
     private JPanel confirmPnl = new JPanel();// panel with button to cancel or confirm
-    private JPanel liProdPnl = new JPanel();//list with all the product includes in the order
+    private JPanel listProdPnl = new JPanel();//list with all the product includes in the order
     private JPanel totalPnl = new JPanel();// display total price
 
     private JLabel titleLbl = new JLabel("Enregistrer une nouvelle commande :");
@@ -38,12 +38,13 @@ public class CreateOrder extends JFrame{
         setTitle("Ajout d'une Commande");
         setSize(900, 600);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         //manage panel left side of the model-------------------------------------------------------
         managePnl.setPreferredSize(new Dimension(200,600));
         managePnl.setLayout(new BorderLayout());
+        managePnl.setOpaque(true);
+        managePnl.setBackground(Color.gray);
         managePnl.add(titlePnl, BorderLayout.NORTH);
         managePnl.add(selectPnl, BorderLayout.CENTER);
         managePnl.add(confirmPnl, BorderLayout.SOUTH);
@@ -55,14 +56,8 @@ public class CreateOrder extends JFrame{
         titlePnl.setPreferredSize(new Dimension());
         titlePnl.setBackground(Color.darkGray);
 
-
-        //display panel-----------------------------------------------------------------------------
-        displayPnl.setLayout(new BorderLayout());
-        displayPnl.add(managePnl, BorderLayout.WEST);
-        displayPnl.add(workplacePnl, BorderLayout.EAST);
-
         //select panel------------------------------------------------------------------------------
-        selectPnl.setLayout(new GridLayout(8,1,0,5));
+        selectPnl.setLayout(new GridLayout(8,1,15,5));
         selectPnl.add(choiceClLbl);
         //selectPnl.add(); display dropdown list (https://www.roseindia.net/struts/struts2/struts2uitags/select-tag.shtml) (https://stackoverrun.com/fr/q/633764)
         selectPnl.add(productAddLbl);
@@ -74,6 +69,30 @@ public class CreateOrder extends JFrame{
         confirmPnl.add(cancelOrderBtn);
         confirmOrderBtn.setBackground(Color.white);
         cancelOrderBtn.setBackground(Color.white);
+
+        cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+
+        //workplace panel---------------------------------------------------------------------------
+        workplacePnl.setLayout(new BorderLayout());
+        workplacePnl.add(listProdPnl, BorderLayout.NORTH);
+        workplacePnl.add(totalPnl, BorderLayout.SOUTH);
+
+        //liste produit panel-----------------------------------------------------------------------
+
+        //total panel-------------------------------------------------------------------------------
+        totalPnl.setLayout(new BoxLayout(totalPnl, BoxLayout.X_AXIS));
+        totalPnl.add(amountLbl);
+        totalPnl.setPreferredSize(new Dimension(700,100));
+        amountLbl.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        amountLbl.setPreferredSize(new Dimension(200,100));
+
+        //display panel-----------------------------------------------------------------------------
+        displayPnl.setBackground(Color.white);
+        displayPnl.setOpaque(true);
+        displayPnl.setLayout(new BoxLayout(displayPnl, BoxLayout.X_AXIS));
+        displayPnl.add(managePnl);
+        displayPnl.add(workplacePnl);
+
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);

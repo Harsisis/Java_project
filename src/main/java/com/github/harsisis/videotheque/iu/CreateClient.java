@@ -37,7 +37,6 @@ public class CreateClient extends JFrame {
         setSize(280, 400);
         setLocationRelativeTo(null);
         setResizable(false);
-        setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         // add to Action Listener-------------------------------------------------------------------
