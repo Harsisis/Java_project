@@ -38,6 +38,7 @@ public class CreateOrder extends JFrame{
         setTitle("Ajout d'une Commande");
         setSize(900, 600);
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         //manage panel left side of the model-------------------------------------------------------

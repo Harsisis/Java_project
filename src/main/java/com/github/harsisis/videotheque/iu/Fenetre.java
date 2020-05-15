@@ -35,6 +35,7 @@ public class Fenetre extends JFrame{
 
         addClientBtn.addActionListener(e -> new CreateClient(Videotheque.getInstance()));//add procedure to addClientBtn
         addOrderBtn.addActionListener(e -> new CreateOrder());
+        addProductBtn.addActionListener(e -> new CreateProduct());
         //addProductBtn.addActionListener(e -> new CreateProduct());
 
         //items menu ------------------------------------------------------------------------------
