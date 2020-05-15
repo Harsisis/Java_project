@@ -6,7 +6,7 @@ public class Videotheque {
 
     private static final Videotheque INSTANCE = new Videotheque();
 
-    // this should stay private because only one instance can existe
+    // this should stay private because only one instance can exist
     // use Videotheque.getInstance()
     private Videotheque() {
     }
@@ -54,10 +54,14 @@ public class Videotheque {
 
     public void ajoutStockProduit (Produit produitId, int quantity) {
             if (listStockProduit.containsKey(produitId)) {
-                listStockProduit.put(produitId, quantity + listStockProduit.get(produitId));
+                listStockProduit.put(produitId, listStockProduit.get(produitId) + quantity);
             }
+            else listStockProduit.put(produitId, listStockProduit.get(produitId));
     }
 
+    public void retirerStockProduit (Produit produitId, int quantity) {
+        listStockProduit.put(produitId, listStockProduit.get(produitId) - quantity);
+    }
     public static Videotheque getInstance() {
         return INSTANCE;
     }

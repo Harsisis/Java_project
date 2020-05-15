@@ -31,12 +31,13 @@ public class Commande {
         return client;
     }
 
-    public boolean ajoutEmprunt (Produit produit, int dureeLocation) {
+    public boolean ajoutEmprunt (Produit produit, int dureeLocation, int quantity) {
         Emprunt emprunt = new Emprunt(produit, dureeLocation);
+        Videotheque.getInstance().retirerStockProduit(produit, quantity);
         return listEmprunt.add(emprunt);
     }
 
-    public void supEmprunt (UUID numeroEmprunt) {
+    public void supEmprunt (Produit numeroEmprunt) {
         listEmprunt.remove(numeroEmprunt);
     }
 
