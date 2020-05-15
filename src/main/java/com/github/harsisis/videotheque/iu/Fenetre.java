@@ -14,6 +14,7 @@ public class Fenetre extends JFrame{
     private JButton addClientBtn = new JButton("Ajouter un client");
     private JButton addOrderBtn = new JButton("Ajouter une commande");
     private JButton addProductBtn = new JButton("Ajouter un produit");
+    private JButton addQtyProductBtn = new JButton("Ajouter du stock");
 
     private JMenuBar menuBar = new JMenuBar();
     private JMenu Li = new JMenu("Liste");
@@ -22,6 +23,7 @@ public class Fenetre extends JFrame{
     private JRadioButtonMenuItem listProduct = new JRadioButtonMenuItem("liste des produits");
     private JMenu Help = new JMenu("Aide");
     private JRadioButtonMenuItem Quit = new JRadioButtonMenuItem("Quitter");
+    public Videotheque videothq = Videotheque.getInstance();
 
 
     public Fenetre() {
@@ -33,10 +35,10 @@ public class Fenetre extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        addClientBtn.addActionListener(e -> new CreateClient(Videotheque.getInstance()));//add procedure to addClientBtn
-        addOrderBtn.addActionListener(e -> new CreateOrder());
+        addClientBtn.addActionListener(e -> new CreateClient(videothq));//add procedure to addClientBtn
+        addOrderBtn.addActionListener(e -> new CreateOrder(videothq));
         addProductBtn.addActionListener(e -> new CreateProduct());
-        //addProductBtn.addActionListener(e -> new CreateProduct());
+        //addQtyProductBtn.addActionListener(e -> new CreateProduct());
 
         //items menu ------------------------------------------------------------------------------
         //create a menu with 2 items, Liste to pull down a menu with three buttons that display list of customers, order and product
@@ -71,6 +73,9 @@ public class Fenetre extends JFrame{
         addProductBtn.setBackground(Color.white);
         addProductBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         addProductBtn.setPreferredSize(new Dimension(140, 20));
+        addQtyProductBtn.setBackground(Color.white);
+        addQtyProductBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addQtyProductBtn.setPreferredSize(new Dimension(140, 20));
         //panel
         workPlacePnl.setBackground(Color.darkGray);
         workPlacePnl.setPreferredSize(new Dimension(180, 600));
@@ -79,6 +84,7 @@ public class Fenetre extends JFrame{
         workPlacePnl.add(addClientBtn);
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
+        workPlacePnl.add(addQtyProductBtn);
 
         //panel display----------------------------------------------------------------------------
         // I can display only one panel then all the other panels are stocked in displayPnl

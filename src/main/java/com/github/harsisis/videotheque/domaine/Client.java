@@ -45,4 +45,9 @@ public class Client {
     public int hashCode() {
         return Objects.hash(clientId);
     }
+
+    @Override
+    public String toString() {
+        return clientId + " | " + nom + " | " + prenom;
+    }
 }
