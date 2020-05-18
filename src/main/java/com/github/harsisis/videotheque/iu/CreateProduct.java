@@ -1,10 +1,11 @@
 package com.github.harsisis.videotheque.iu;
 
+import com.github.harsisis.videotheque.domaine.Videotheque;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-import java.util.*;
 
 public class CreateProduct extends JFrame {
 
@@ -38,7 +39,7 @@ public class CreateProduct extends JFrame {
 
     private JOptionPane jop3 = new JOptionPane();
 
-    public CreateProduct(){
+    public CreateProduct(Videotheque videothq){
         setTitle("Ajout d'un produit");
         setSize(600,400);
         setLocationRelativeTo(null);

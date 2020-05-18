@@ -37,8 +37,8 @@ public class Fenetre extends JFrame{
 
         addClientBtn.addActionListener(e -> new CreateClient(videothq));//add procedure to addClientBtn
         addOrderBtn.addActionListener(e -> new CreateOrder(videothq));
-        addProductBtn.addActionListener(e -> new CreateProduct());
-        //addQtyProductBtn.addActionListener(e -> new CreateProduct());
+        addProductBtn.addActionListener(e -> new CreateProduct(videothq));
+        addQtyProductBtn.addActionListener(e -> new CreateStock(videothq));
 
         //items menu ------------------------------------------------------------------------------
         //create a menu with 2 items, Liste to pull down a menu with three buttons that display list of customers, order and product
