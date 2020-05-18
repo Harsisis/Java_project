@@ -1,6 +1,8 @@
 package com.github.harsisis.videotheque.domaine;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Videotheque {
 
@@ -57,6 +59,22 @@ public class Videotheque {
                 listStockProduit.put(produitId, listStockProduit.get(produitId) + quantity);
             }
             else listStockProduit.put(produitId, listStockProduit.get(produitId));
+    }
+
+    public void creeCd (String titre, double tarifJournalier, int anneeSortie) {
+        CD disk = new CD(titre, tarifJournalier, anneeSortie);
+    }
+
+    public void creeDictionnaire (String titre, double tarifJournalier, String langue) {
+        Dictionnaire papier = new Dictionnaire(titre, tarifJournalier, langue);
+    }
+
+    public void creeDVD (String titre, double tarifJournalier, String realisateur) {
+        DVD disk = new DVD(titre, tarifJournalier, realisateur);
+    }
+
+    public void creeLivre(String titre, double tarifJournalier, String auteur, CategorieLivre categorieLivre) {
+        Livre papier = new Livre(titre, tarifJournalier, auteur, categorieLivre);
     }
 
     public void retirerStockProduit (Produit produitId, int quantity) {
