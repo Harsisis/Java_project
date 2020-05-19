@@ -1,5 +1,6 @@
 package com.github.harsisis.videotheque.iu;
 
+import com.github.harsisis.videotheque.domaine.CategorieLivre;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
@@ -17,16 +18,26 @@ public class CreateProduct extends JFrame {
     private JPanel typeProductPnl = new JPanel();
     private JPanel commonPointsPnl = new JPanel();
     private JPanel placeHolderPnl = new JPanel();
+    private JPanel buttonGrpLivrePnl = new JPanel();
+    private JPanel auteurLivrePnl = new JPanel();
 
-    private JLabel titleLbl = new JLabel("Créer un nouveau produit :");
-    private JLabel titleProductLbl = new JLabel("Titre :");
-    private JLabel priceProductLbl = new JLabel("Tarif Journalier:");
+    private JLabel titleLbl = new JLabel("Créer un nouveau produit : ");
+    private JLabel titleProductLbl = new JLabel("Titre : ");
+    private JLabel priceProductLbl = new JLabel("Tarif Journalier : ");
+    private JLabel autorNameLbl = new JLabel("Nom de l'auteur : ");
+    private JLabel realisatorNameLbl = new JLabel("Nom du réalisateur : ");
+    private JLabel yearReleaseLbl = new JLabel("Année de sortie : ");
+    private JLabel languageLbl = new JLabel("Langue : ");
 
     private static JTextField saisiTitleJtf = new JTextField();
     private static JTextField saisiPriceJtf = new JTextField();
 
+    private static JTextField saisiYearJtf = new JTextField();
+    private static JTextField saisiAutorJtf = new JTextField();
+
     String[] nameCat = new String[] {"CD", "DVD", "Dictionnaire", "Livre"};
-    JComboBox<String> selectCatJcbx = new JComboBox<>(nameCat);
+
+    String[] nameLang = new String[] {"Français", "Anglais", "Espagnol", "Italien", "Allemand"};
 
     private JButton cancelProductBtn = new JButton("Annuler");
     private JButton confirmProductBtn = new JButton("Valider");
@@ -40,6 +51,7 @@ public class CreateProduct extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
     public CreateProduct(Videotheque videothq){
+        // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un produit");
         setSize(600,400);
         setLocationRelativeTo(null);
@@ -48,16 +60,43 @@ public class CreateProduct extends JFrame {
 
         saisiTitleJtf.setText("");
         saisiPriceJtf.setText("");
+        JComboBox<String> selectCatJcbx = new JComboBox<>(nameCat);
+        JComboBox<String> selectLangJcbx = new JComboBox<>(nameLang);
 
         cancelProductBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmProductBtn.addActionListener(e -> {
-            if (!saisiPriceJtf.getText().equals("") && !saisiTitleJtf.getText().equals("")) {
-                System.out.println("Titre: " + saisiTitleJtf.getText() + "\nTarif: " + saisiPriceJtf.getText());
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            if (!saisiTitleJtf.getText().equals("") && !saisiPriceJtf.getText().equals("")) {
+                switch (selectCatJcbx.getSelectedIndex()) {
+                    case 0:
+                        if (!saisiYearJtf.getText().equals("") && saisiYearJtf.getText().length()==4)
+                            videothq.creeCd(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),Integer.parseInt(saisiYearJtf.getText()));
+                        break;
+                    case 1:
+                        if (!saisiAutorJtf.getText().equals(""))
+                            videothq.creeDVD(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),saisiAutorJtf.getText());
+                        break;
+                    case 2:
+                        if (!String.valueOf(selectLangJcbx.getSelectedIndex()).equals(""))
+                            videothq.creeDictionnaire(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),String.valueOf(selectLangJcbx.getSelectedIndex()));
+                        break;
+                    case 3:
+                        CategorieLivre typeLivre = CategorieLivre.ROMAN;
+                        if (!saisiAutorJtf.getText().equals("")) {
+                            if (romanBtn.isSelected())
+                                typeLivre = CategorieLivre.ROMAN;
+                            if (bdBtn.isSelected())
+                                typeLivre = CategorieLivre.BD;
+                            if (manuel_scolaireBtn.isSelected())
+                                typeLivre = CategorieLivre.MANUEL;
+                            videothq.creeLivre(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), saisiAutorJtf.getText(), typeLivre);
+                        }
+                        break;
+
+                }
             }
             else
-                jop3.showMessageDialog(null, "Champs incorrect(s) ou non valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+                jop3.showMessageDialog(null, "Champs incorrect(s) ou non valide, veuillez vérifier la saisie", "Erreur", JOptionPane.ERROR_MESSAGE);
 
             /*for(Client client : app.getClient()){
                 System.out.println(client);
@@ -67,25 +106,42 @@ public class CreateProduct extends JFrame {
         selectCatJcbx.addActionListener(e -> {
             if (selectCatJcbx.getSelectedIndex() == 0){// CD
                 placeHolderPnl.removeAll();
-                //insert date picker
+                //insert textField --> saisiYear
+                placeHolderPnl.add(yearReleaseLbl, BorderLayout.EAST);
+                placeHolderPnl.add(saisiYearJtf, BorderLayout.WEST);
+
             }
             else if (selectCatJcbx.getSelectedIndex() == 1){// DVD
                 placeHolderPnl.removeAll();
-                //insert text field
+                //insert text field --> saisiAutor
+                placeHolderPnl.add(realisatorNameLbl, BorderLayout.EAST);
+                placeHolderPnl.add(saisiAutorJtf, BorderLayout.WEST);
+                saisiAutorJtf.setPreferredSize(new Dimension(100,20));
+
             }
             else if (selectCatJcbx.getSelectedIndex() == 2){// Dictionnaire
                 placeHolderPnl.removeAll();
                 //insert combo box with language
+                placeHolderPnl.add(languageLbl, BorderLayout.EAST);
+                placeHolderPnl.add(selectLangJcbx, BorderLayout.WEST);
 
             }
             else {// livre
                 placeHolderPnl.removeAll();
-                typeProductPnl.add(romanBtn);
-                typeProductPnl.add(bdBtn);
-                typeProductPnl.add(manuel_scolaireBtn);
-                //insert text field
+                //insert type Buttons
+                placeHolderPnl.add(buttonGrpLivrePnl, BorderLayout.NORTH);
+                placeHolderPnl.add(auteurLivrePnl, BorderLayout.SOUTH);
+
+                buttonGrpLivrePnl.add(romanBtn);
+                buttonGrpLivrePnl.add(bdBtn);
+                buttonGrpLivrePnl.add(manuel_scolaireBtn);
+
+                auteurLivrePnl.add(autorNameLbl, BorderLayout.WEST);
+                auteurLivrePnl.add(saisiAutorJtf, BorderLayout.EAST);
 
             }
+            revalidate();
+            placeHolderPnl.repaint();
         });
 
         // font settings-----------------------------------------------------------------------------
@@ -117,7 +173,9 @@ public class CreateProduct extends JFrame {
 
         // place holder panel-------------------------------------------------------------------------
         placeHolderPnl.setBorder(BorderFactory.createTitledBorder("caractéristiques spéciales"));
-
+        placeHolderPnl.add(yearReleaseLbl, BorderLayout.EAST);
+        placeHolderPnl.add(saisiYearJtf, BorderLayout.WEST);
+        saisiYearJtf.setPreferredSize(new Dimension(50,20));
 
         // common points panel-------------------------------------------------------------------------
         commonPointsPnl.setBorder(BorderFactory.createTitledBorder("caractéristiques"));
@@ -134,7 +192,6 @@ public class CreateProduct extends JFrame {
         selectCatJcbx.setBackground(Color.white);
         selectCatJcbx.setAlignmentX(Component.CENTER_ALIGNMENT);
         selectCatJcbx.setAlignmentY(Component.CENTER_ALIGNMENT);
-
 
 
         // confirm panel------------------------------------------------------------------------------

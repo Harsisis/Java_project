@@ -27,7 +27,7 @@ public class CreateStock extends JFrame{
 
     public CreateStock(Videotheque videothq){    // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Stock");
-        setSize(280, 400);
+        setSize(280, 350);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -43,17 +43,7 @@ public class CreateStock extends JFrame{
         saisiQuantityJtf.setText("");
         cancelStockBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
         confirmStockBtn.addActionListener(e -> {
-            if (!saisiQuantityJtf.getText().equals("")) {
-                System.out.println("préProduct: " + saisiQuantityJtf.getText());
-                //videothq.ajoutStockProduit(liProductJcbx.getSelectedIndex(),2);// find product id with index
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            }
-            else
-                jop3.showMessageDialog(null, "Veuillez rentrer un produit et une quantité valide", "Erreur", JOptionPane.ERROR_MESSAGE);
 
-            /*for(Stock Stock : app.getStock()){
-                System.out.println(Stock);
-            }*/
         });
 
         // font settings-----------------------------------------------------------------------------
