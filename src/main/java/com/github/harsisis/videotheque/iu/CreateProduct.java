@@ -70,7 +70,7 @@ public class CreateProduct extends JFrame {
                 switch (selectCatJcbx.getSelectedIndex()) {
                     case 0:
                         if (!saisiYearJtf.getText().equals("") && saisiYearJtf.getText().length()==4)
-                            videothq.creeCd(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),Integer.parseInt(saisiYearJtf.getText()));
+                            videothq.creeCD(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),Integer.parseInt(saisiYearJtf.getText()));
                         break;
                     case 1:
                         if (!saisiAutorJtf.getText().equals(""))

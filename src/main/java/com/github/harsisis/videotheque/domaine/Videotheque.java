@@ -17,7 +17,6 @@ public class Videotheque {
 
     // not sure about this
     private Map<Produit, Integer> listStockProduit = new HashMap<>();
-
     private HashSet<Client> listClient = new HashSet<>();
     private HashSet<Commande> listCommande = new HashSet<>();
 
@@ -61,20 +60,20 @@ public class Videotheque {
             else listStockProduit.put(produitId, listStockProduit.get(produitId));
     }
 
-    public void creeCd (String titre, double tarifJournalier, int anneeSortie) {
-        CD disk = new CD(titre, tarifJournalier, anneeSortie);
+    public void creeCD (String titre, double tarifJournalier, int anneeSortie) {
+        ajoutStockProduit(new CD(titre, tarifJournalier, anneeSortie),1);
     }
 
     public void creeDictionnaire (String titre, double tarifJournalier, String langue) {
-        Dictionnaire papier = new Dictionnaire(titre, tarifJournalier, langue);
+        ajoutStockProduit(new Dictionnaire(titre, tarifJournalier, langue),1);
     }
 
     public void creeDVD (String titre, double tarifJournalier, String realisateur) {
-        DVD disk = new DVD(titre, tarifJournalier, realisateur);
+        ajoutStockProduit(new DVD(titre, tarifJournalier, realisateur),1);
     }
 
     public void creeLivre(String titre, double tarifJournalier, String auteur, CategorieLivre categorieLivre) {
-        Livre papier = new Livre(titre, tarifJournalier, auteur, categorieLivre);
+        ajoutStockProduit(new Livre(titre, tarifJournalier, auteur, categorieLivre),1);
     }
 
     public void retirerStockProduit (Produit produitId, int quantity) {
