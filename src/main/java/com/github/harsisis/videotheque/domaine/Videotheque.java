@@ -1,5 +1,6 @@
 package com.github.harsisis.videotheque.domaine;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -41,6 +42,13 @@ public class Videotheque {
             }
         }
         return resultat;
+    }
+
+    public JComboBox createComboBox(final Map<Produit, Integer> listStockProduit){
+        final JComboBox cBox = new JComboBox();
+        for (Produit product : listStockProduit.keySet())
+            cBox.addItem(product);
+        return cBox;
     }
 
     public boolean ajoutClient (String nom, String prenom, boolean fidele) {

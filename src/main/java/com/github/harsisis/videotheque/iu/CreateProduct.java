@@ -106,6 +106,9 @@ public class CreateProduct extends JFrame {
         selectCatJcbx.addActionListener(e -> {
             if (selectCatJcbx.getSelectedIndex() == 0){// CD
                 placeHolderPnl.removeAll();
+                saisiYearJtf.setText("");
+                saisiTitleJtf.setText("");
+                saisiPriceJtf.setText("");
                 //insert textField --> saisiYear
                 placeHolderPnl.add(yearReleaseLbl, BorderLayout.EAST);
                 placeHolderPnl.add(saisiYearJtf, BorderLayout.WEST);
@@ -113,6 +116,9 @@ public class CreateProduct extends JFrame {
             }
             else if (selectCatJcbx.getSelectedIndex() == 1){// DVD
                 placeHolderPnl.removeAll();
+                saisiAutorJtf.setText("");
+                saisiTitleJtf.setText("");
+                saisiPriceJtf.setText("");
                 //insert text field --> saisiAutor
                 placeHolderPnl.add(realisatorNameLbl, BorderLayout.EAST);
                 placeHolderPnl.add(saisiAutorJtf, BorderLayout.WEST);
@@ -121,6 +127,8 @@ public class CreateProduct extends JFrame {
             }
             else if (selectCatJcbx.getSelectedIndex() == 2){// Dictionnaire
                 placeHolderPnl.removeAll();
+                saisiTitleJtf.setText("");
+                saisiPriceJtf.setText("");
                 //insert combo box with language
                 placeHolderPnl.add(languageLbl, BorderLayout.EAST);
                 placeHolderPnl.add(selectLangJcbx, BorderLayout.WEST);
@@ -128,6 +136,9 @@ public class CreateProduct extends JFrame {
             }
             else {// livre
                 placeHolderPnl.removeAll();
+                saisiAutorJtf.setText("");
+                saisiTitleJtf.setText("");
+                saisiPriceJtf.setText("");
                 //insert type Buttons
                 placeHolderPnl.add(buttonGrpLivrePnl, BorderLayout.NORTH);
                 placeHolderPnl.add(auteurLivrePnl, BorderLayout.SOUTH);
