@@ -68,22 +68,6 @@ public class Videotheque {
             else listStockProduit.put(produitId, listStockProduit.get(produitId));
     }
 
-    public void creeCD (String titre, double tarifJournalier, int anneeSortie) {
-        ajoutStockProduit(new CD(titre, tarifJournalier, anneeSortie),1);
-    }
-
-    public void creeDictionnaire (String titre, double tarifJournalier, String langue) {
-        ajoutStockProduit(new Dictionnaire(titre, tarifJournalier, langue),1);
-    }
-
-    public void creeDVD (String titre, double tarifJournalier, String realisateur) {
-        ajoutStockProduit(new DVD(titre, tarifJournalier, realisateur),1);
-    }
-
-    public void creeLivre(String titre, double tarifJournalier, String auteur, CategorieLivre categorieLivre) {
-        ajoutStockProduit(new Livre(titre, tarifJournalier, auteur, categorieLivre),1);
-    }
-
     public void retirerStockProduit (Produit produitId, int quantity) {
         listStockProduit.put(produitId, listStockProduit.get(produitId) - quantity);
     }

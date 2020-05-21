@@ -1,7 +1,6 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.CategorieLivre;
-import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.domaine.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -50,7 +49,7 @@ public class CreateProduct extends JFrame {
 
     private JOptionPane jop3 = new JOptionPane();
 
-    public CreateProduct(Videotheque videothq){
+    public CreateProduct(){
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un produit");
         setSize(600,400);
@@ -70,15 +69,15 @@ public class CreateProduct extends JFrame {
                 switch (selectCatJcbx.getSelectedIndex()) {
                     case 0:
                         if (!saisiYearJtf.getText().equals("") && saisiYearJtf.getText().length()==4)
-                            videothq.creeCD(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),Integer.parseInt(saisiYearJtf.getText()));
+                            Videotheque.getInstance().ajoutStockProduit(new CD(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),Integer.parseInt(saisiYearJtf.getText())), 1);
                         break;
                     case 1:
                         if (!saisiAutorJtf.getText().equals(""))
-                            videothq.creeDVD(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),saisiAutorJtf.getText());
+                            Videotheque.getInstance().ajoutStockProduit(new DVD(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),saisiAutorJtf.getText()), 1);
                         break;
                     case 2:
                         if (!String.valueOf(selectLangJcbx.getSelectedIndex()).equals(""))
-                            videothq.creeDictionnaire(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),String.valueOf(selectLangJcbx.getSelectedIndex()));
+                            Videotheque.getInstance().ajoutStockProduit(new Dictionnaire(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),String.valueOf(selectLangJcbx.getSelectedIndex())), 1);
                         break;
                     case 3:
                         CategorieLivre typeLivre = CategorieLivre.ROMAN;
@@ -89,7 +88,7 @@ public class CreateProduct extends JFrame {
                                 typeLivre = CategorieLivre.BD;
                             if (manuel_scolaireBtn.isSelected())
                                 typeLivre = CategorieLivre.MANUEL;
-                            videothq.creeLivre(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), saisiAutorJtf.getText(), typeLivre);
+                            Videotheque.getInstance().ajoutStockProduit(new Livre(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), saisiAutorJtf.getText(), typeLivre), 1);
                         }
                         break;
 
