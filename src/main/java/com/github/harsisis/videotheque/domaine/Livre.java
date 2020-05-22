@@ -2,8 +2,9 @@ package com.github.harsisis.videotheque.domaine;
 
 public class Livre extends Produit {
 
+    private static CategorieLivre categorieLivre;
     private String auteur;
-    private CategorieLivre categorieLivre;
+    //private CategorieLivre categorieLivre;
 
     public Livre(String titre, double tarifJournalier, String auteur, CategorieLivre categorieLivre) {
         super(titre, tarifJournalier,CategorieProduit.DOCUMENT);
@@ -15,7 +16,7 @@ public class Livre extends Produit {
         return auteur;
     }
 
-    public CategorieLivre getCategorieLivre() {
+    public static CategorieLivre getCategorieLivre() {
         return categorieLivre;
     }
 }

@@ -168,18 +168,18 @@ public class CreateProduct extends JFrame {
         workPlacePnl.add(typeProductPnl);
         workPlacePnl.add(commonPointsPnl);
         workPlacePnl.add(placeHolderPnl);
-        workPlacePnl.setBorder(BorderFactory.createTitledBorder("espace de travail"));
+        workPlacePnl.setBorder(BorderFactory.createTitledBorder("Espace de travail"));
         workPlacePnl.setPreferredSize(new Dimension(590,250));
 
         // place holder panel-------------------------------------------------------------------------
-        placeHolderPnl.setBorder(BorderFactory.createTitledBorder("caractéristiques spéciales"));
+        placeHolderPnl.setBorder(BorderFactory.createTitledBorder("Caractéristiques spéciales"));
         placeHolderPnl.add(yearReleaseLbl, BorderLayout.EAST);
         placeHolderPnl.add(saisiYearJtf, BorderLayout.WEST);
         saisiAutorJtf.setPreferredSize(new Dimension(100,20));
         saisiYearJtf.setPreferredSize(new Dimension(50,20));
 
         // common points panel-------------------------------------------------------------------------
-        commonPointsPnl.setBorder(BorderFactory.createTitledBorder("caractéristiques"));
+        commonPointsPnl.setBorder(BorderFactory.createTitledBorder("Caractéristiques"));
         commonPointsPnl.setLayout(new GridLayout(2,2));
         commonPointsPnl.add(titleProductLbl);
         commonPointsPnl.add(saisiTitleJtf);
@@ -187,7 +187,7 @@ public class CreateProduct extends JFrame {
         commonPointsPnl.add(saisiPriceJtf);
 
         // type product panel-------------------------------------------------------------------------
-        typeProductPnl.setBorder(BorderFactory.createTitledBorder("type de produit"));
+        typeProductPnl.setBorder(BorderFactory.createTitledBorder("Type de produit"));
         typeProductPnl.setLayout(new GridLayout(2,1));
         typeProductPnl.add(selectCatJcbx);
         selectCatJcbx.setBackground(Color.white);

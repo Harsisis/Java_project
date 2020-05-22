@@ -23,7 +23,6 @@ public class CreateHome extends JFrame{
     private JRadioButtonMenuItem listProduct = new JRadioButtonMenuItem("liste des produits");
     private JMenu Help = new JMenu("Aide");
     private JRadioButtonMenuItem Quit = new JRadioButtonMenuItem("Quitter");
-    public Videotheque videothq = Videotheque.getInstance();
 
 
     public CreateHome() {

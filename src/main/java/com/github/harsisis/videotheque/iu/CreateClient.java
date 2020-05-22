@@ -47,7 +47,7 @@ public class CreateClient extends JFrame {
         cancelClientBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
         confirmClientBtn.addActionListener(e -> {
             if (!saisiNomJtf.getText().equals("") && !saisiPrenomJtf.getText().equals("")) {
-                System.out.println("nom: " + saisiNomJtf.getText() + "\nprénom: " + saisiPrenomJtf.getText() + "\nfidèle: " + fideleCbx.isSelected());
+                System.out.println("Nom: " + saisiNomJtf.getText() + "\nPrénom: " + saisiPrenomJtf.getText() + "\nFidèle: " + fideleCbx.isSelected());
                 Videotheque.getInstance().ajoutClient(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             }

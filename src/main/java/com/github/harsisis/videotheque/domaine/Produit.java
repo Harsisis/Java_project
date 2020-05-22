@@ -32,6 +32,12 @@ public abstract class Produit {
         return categorieProduit;
     }
 
+    public String getClassName() {
+        String on;
+        on = this.getClass().getSimpleName();
+        return on;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

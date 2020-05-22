@@ -46,8 +46,12 @@ public class Videotheque {
 
     public JComboBox createComboBox(final Map<Produit, Integer> listStockProduit){
         final JComboBox cBox = new JComboBox();
-        for (Produit product : listStockProduit.keySet())
-            cBox.addItem(product.getCategorieProduit() + " | " + product.getTitre());
+        for (Produit product : listStockProduit.keySet()) {
+            if (product.getClassName().equals("Livre")) {
+                cBox.addItem(product.getCategorieProduit() + " | " + product.getClassName() + " | " + Livre.getCategorieLivre() + " | " + product.getTitre());
+            }
+            else cBox.addItem(product.getCategorieProduit() + " | " + product.getClassName() + " | " + product.getTitre());
+        }
         return cBox;
     }
 
@@ -71,6 +75,7 @@ public class Videotheque {
     public void retirerStockProduit (Produit produitId, int quantity) {
         listStockProduit.put(produitId, listStockProduit.get(produitId) - quantity);
     }
+
     public static Videotheque getInstance() {
         return INSTANCE;
     }
