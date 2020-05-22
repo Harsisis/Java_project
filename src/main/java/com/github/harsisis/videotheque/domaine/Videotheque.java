@@ -47,7 +47,7 @@ public class Videotheque {
     public JComboBox createComboBox(final Map<Produit, Integer> listStockProduit){
         final JComboBox cBox = new JComboBox();
         for (Produit product : listStockProduit.keySet())
-            cBox.addItem(product);
+            cBox.addItem(product.getCategorieProduit() + " | " + product.getTitre());
         return cBox;
     }
 

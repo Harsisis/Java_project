@@ -59,15 +59,6 @@ public class CreateClient extends JFrame {
             }*/
         });
 
-        // font settings-----------------------------------------------------------------------------
-        Font arial = new Font("arial", Font.BOLD, 16);
-        Font arialSmall = new Font("arial", Font.BOLD, 12);
-        titleLbl.setFont(arial);
-        saisiNomJtf.setFont(arialSmall);
-        saisiPrenomJtf.setFont(arialSmall);
-        nomLbl.setFont(arialSmall);
-        prenomLbl.setFont(arialSmall);
-
         // title panel--------------------------------------------------------------------------------
         titleLbl.setForeground(Color.white);
         titlePnl.add(titleLbl);

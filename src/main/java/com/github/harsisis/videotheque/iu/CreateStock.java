@@ -28,13 +28,14 @@ public class CreateStock extends JFrame{
 
     public CreateStock(){    // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Stock");
-        setSize(350, 300);
+        setSize(500, 400);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 
         JComboBox liProductJcbx = Videotheque.getInstance().createComboBox(Videotheque.getInstance().getListStockProduit());
+        liProductJcbx.setPreferredSize(new Dimension(400, 15));
 
 
         // add to Action Listener-------------------------------------------------------------------
@@ -46,24 +47,16 @@ public class CreateStock extends JFrame{
 
         });
 
-        // font settings-----------------------------------------------------------------------------
-        Font arial = new Font("arial", Font.BOLD, 16);
-        Font arialSmall = new Font("arial", Font.BOLD, 12);
-        titleLbl.setFont(arial);
-        saisiQuantityJtf.setFont(arialSmall);
-        ProductLbl.setFont(arialSmall);
-        QuantityLbl.setFont(arialSmall);
-
         // title panel--------------------------------------------------------------------------------
         titleLbl.setForeground(Color.white);
         titlePnl.add(titleLbl);
         titlePnl.setBackground(Color.darkGray);
-        titlePnl.setPreferredSize(new Dimension(280,30));
+        titlePnl.setPreferredSize(new Dimension(500,30));
 
         // workPlace panel----------------------------------------------------------------------------
         saisiQuantityJtf.setPreferredSize(new Dimension(150, 30));
 
-        workPlacePnl.setLayout(new GridLayout(8,1,0,5));
+        workPlacePnl.setLayout(new GridLayout(4,1,0,5));
         workPlacePnl.add(ProductLbl);
         workPlacePnl.add(liProductJcbx);
         workPlacePnl.add(QuantityLbl);
@@ -73,6 +66,7 @@ public class CreateStock extends JFrame{
         // confirm panel------------------------------------------------------------------------------
         confirmPnl.add(confirmStockBtn);
         confirmPnl.add(cancelStockBtn);
+        confirmPnl.setPreferredSize(new Dimension(500,200));
         confirmStockBtn.setBackground(Color.white);
         cancelStockBtn.setBackground(Color.white);
 

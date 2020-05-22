@@ -43,9 +43,9 @@ public class CreateProduct extends JFrame {
 
     private ButtonGroup bookTypeBg = new ButtonGroup();
 
-    private JRadioButton romanBtn = new JRadioButton("roman");
+    private JRadioButton romanBtn = new JRadioButton("Roman");
     private JRadioButton bdBtn = new JRadioButton("BD");
-    private JRadioButton manuel_scolaireBtn = new JRadioButton("manuel scolaire");
+    private JRadioButton manuel_scolaireBtn = new JRadioButton("Manuel scolaire");
 
     private JOptionPane jop3 = new JOptionPane();
 
@@ -70,6 +70,8 @@ public class CreateProduct extends JFrame {
                     case 0:
                         if (!saisiYearJtf.getText().equals("") && saisiYearJtf.getText().length()==4)
                             Videotheque.getInstance().ajoutStockProduit(new CD(saisiTitleJtf.getText(),Double.parseDouble(saisiPriceJtf.getText()),Integer.parseInt(saisiYearJtf.getText())), 1);
+                        else
+                            jop3.showMessageDialog(null, "Veuillez saisir une année correcte (quatre entiers)", "Attention", JOptionPane.WARNING_MESSAGE);
                         break;
                     case 1:
                         if (!saisiAutorJtf.getText().equals(""))
@@ -91,13 +93,13 @@ public class CreateProduct extends JFrame {
                             Videotheque.getInstance().ajoutStockProduit(new Livre(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), saisiAutorJtf.getText(), typeLivre), 1);
                         }
                         break;
-
                 }
                 System.out.println("Titre : " + saisiTitleJtf.getText() + "\nPrix : " + saisiPriceJtf.getText());
                 saisiYearJtf.setText("");
                 saisiTitleJtf.setText("");
                 saisiPriceJtf.setText("");
                 saisiAutorJtf.setText("");
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             }
             else
                 jop3.showMessageDialog(null, "Champs incorrect(s) ou non valide, veuillez vérifier la saisie", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -123,7 +125,6 @@ public class CreateProduct extends JFrame {
                 //insert text field --> saisiAutor
                 placeHolderPnl.add(realisatorNameLbl, BorderLayout.EAST);
                 placeHolderPnl.add(saisiAutorJtf, BorderLayout.WEST);
-                saisiAutorJtf.setPreferredSize(new Dimension(100,20));
 
             }
             else if (selectCatJcbx.getSelectedIndex() == 2){// Dictionnaire
@@ -156,19 +157,6 @@ public class CreateProduct extends JFrame {
             placeHolderPnl.repaint();
         });
 
-        // font settings-----------------------------------------------------------------------------
-        Font arial = new Font("arial", Font.BOLD, 16);
-        Font arialSmall = new Font("arial", Font.BOLD, 12);
-        titleLbl.setFont(arial);
-        saisiTitleJtf.setFont(arialSmall);
-        saisiPriceJtf.setFont(arialSmall);
-        titleProductLbl.setFont(arialSmall);
-        priceProductLbl.setFont(arialSmall);
-
-        bookTypeBg.add(romanBtn);
-        bookTypeBg.add(bdBtn);
-        bookTypeBg.add(manuel_scolaireBtn);
-
         // title panel--------------------------------------------------------------------------------
         titlePnl.add(titleLbl);
         titleLbl.setForeground(Color.white);
@@ -187,6 +175,7 @@ public class CreateProduct extends JFrame {
         placeHolderPnl.setBorder(BorderFactory.createTitledBorder("caractéristiques spéciales"));
         placeHolderPnl.add(yearReleaseLbl, BorderLayout.EAST);
         placeHolderPnl.add(saisiYearJtf, BorderLayout.WEST);
+        saisiAutorJtf.setPreferredSize(new Dimension(100,20));
         saisiYearJtf.setPreferredSize(new Dimension(50,20));
 
         // common points panel-------------------------------------------------------------------------
