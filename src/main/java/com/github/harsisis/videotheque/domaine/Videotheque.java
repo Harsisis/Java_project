@@ -74,4 +74,15 @@ public class Videotheque {
     public static Videotheque getInstance() {
         return INSTANCE;
     }
+
+    public static boolean isValidDouble(String str) {
+        boolean isValid = false;
+        try {
+            Integer newInput = Integer.valueOf(str);
+            double i = newInput.floatValue();
+            isValid = true;
+        } finally {
+            return isValid;
+        }
+    }
 }

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
-public class Fenetre extends JFrame{
+public class CreateHome extends JFrame{
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
@@ -26,7 +26,7 @@ public class Fenetre extends JFrame{
     public Videotheque videothq = Videotheque.getInstance();
 
 
-    public Fenetre() {
+    public CreateHome() {
 
         // set window settings --------------------------------------------------------------------
         setTitle("Application");

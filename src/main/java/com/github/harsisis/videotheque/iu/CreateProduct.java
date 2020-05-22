@@ -65,7 +65,7 @@ public class CreateProduct extends JFrame {
         cancelProductBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmProductBtn.addActionListener(e -> {
-            if (!saisiTitleJtf.getText().equals("") && !saisiPriceJtf.getText().equals("")) {
+            if (!saisiTitleJtf.getText().equals("") && !saisiPriceJtf.getText().equals("") && Videotheque.getInstance().isValidDouble(saisiPriceJtf.getText())) {// check the condition doesn't work even if it's a double
                 switch (selectCatJcbx.getSelectedIndex()) {
                     case 0:
                         if (!saisiYearJtf.getText().equals("") && saisiYearJtf.getText().length()==4)
