@@ -93,13 +93,15 @@ public class CreateProduct extends JFrame {
                         break;
 
                 }
+                System.out.println("Titre : " + saisiTitleJtf.getText() + "\nPrix : " + saisiPriceJtf.getText());
+                saisiYearJtf.setText("");
+                saisiTitleJtf.setText("");
+                saisiPriceJtf.setText("");
+                saisiAutorJtf.setText("");
             }
             else
                 jop3.showMessageDialog(null, "Champs incorrect(s) ou non valide, veuillez vérifier la saisie", "Erreur", JOptionPane.ERROR_MESSAGE);
 
-            /*for(Client client : app.getClient()){
-                System.out.println(client);
-            }*/
         });
 
         selectCatJcbx.addActionListener(e -> {

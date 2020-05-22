@@ -31,7 +31,7 @@ public class CreateClient extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
 
-    public CreateClient(Videotheque app){
+    public CreateClient(){
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Client");
         setSize(280, 400);
@@ -48,7 +48,7 @@ public class CreateClient extends JFrame {
         confirmClientBtn.addActionListener(e -> {
             if (!saisiNomJtf.getText().equals("") && !saisiPrenomJtf.getText().equals("")) {
                 System.out.println("nom: " + saisiNomJtf.getText() + "\nprénom: " + saisiPrenomJtf.getText() + "\nfidèle: " + fideleCbx.isSelected());
-                app.ajoutClient(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
+                Videotheque.getInstance().ajoutClient(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             }
             else

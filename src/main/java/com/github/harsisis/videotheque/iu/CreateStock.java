@@ -26,15 +26,15 @@ public class CreateStock extends JFrame{
     private JOptionPane jop3 = new JOptionPane();
 
 
-    public CreateStock(Videotheque videothq){    // set window settings --------------------------------------------------------------------
+    public CreateStock(){    // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Stock");
-        setSize(280, 350);
+        setSize(350, 300);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 
-        JComboBox liProductJcbx = videothq.createComboBox(videothq.getListStockProduit());
+        JComboBox liProductJcbx = Videotheque.getInstance().createComboBox(Videotheque.getInstance().getListStockProduit());
 
 
         // add to Action Listener-------------------------------------------------------------------

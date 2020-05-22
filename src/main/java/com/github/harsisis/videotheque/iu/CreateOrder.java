@@ -30,7 +30,7 @@ public class CreateOrder extends JFrame{
     private JButton cancelOrderBtn = new JButton("Annuler");
 
 
-    public CreateOrder(Videotheque app){
+    public CreateOrder(){
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'une Commande");
         setSize(1200, 600);
@@ -40,7 +40,7 @@ public class CreateOrder extends JFrame{
 
         JComboBox<Client> liClientJcbx = new JComboBox<>();
 
-        for (Client client : app.getListClient())
+        for (Client client : Videotheque.getInstance().getListClient())
             liClientJcbx.addItem(client);
 
         //manage panel left side of the model-------------------------------------------------------
