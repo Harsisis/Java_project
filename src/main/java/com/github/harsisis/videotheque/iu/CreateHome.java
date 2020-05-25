@@ -82,10 +82,14 @@ public class CreateHome extends JFrame{
             }
             sb.append("</html>");
             listLbl.setText(sb.toString());
+            revalidate();
+            listPnl.repaint();
         });
         listProduct.addActionListener(e -> {
             listPnl.removeAll();
             listLbl.setText("");
+            revalidate();
+            listPnl.repaint();
         });
 
         listEmpty.addActionListener(e -> {
