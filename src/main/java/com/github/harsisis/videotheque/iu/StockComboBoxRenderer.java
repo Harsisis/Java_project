@@ -14,7 +14,7 @@ public class StockComboBoxRenderer extends DefaultListCellRenderer {
             boolean isSelected,
             boolean cellHasFocus) {
         if (value instanceof Produit) {
-            value = ((Produit)value)get();
+            value = ((Produit)value).getProduitNom(Videotheque.getInstance().getListStockProduit());
         }
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         return this;

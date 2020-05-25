@@ -1,5 +1,6 @@
 package com.github.harsisis.videotheque.domaine;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -26,6 +27,17 @@ public abstract class Produit {
 
     public double getTarifJournalier() {
         return tarifJournalier;
+    }
+
+    public String getProduitNom(Map<Produit, Integer> listStockProduit){
+        String result = "";
+        for (Produit produit : listStockProduit.keySet()) {
+            if (produit.getClassName().equals("Livre")) {
+                result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre() + " | " + produit.getTitre();
+            }
+            else result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + produit.getTitre();
+        }
+        return result;
     }
 
     public CategorieProduit getCategorieProduit() {

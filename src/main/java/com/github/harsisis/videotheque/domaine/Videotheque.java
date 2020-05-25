@@ -54,26 +54,15 @@ public class Videotheque {
             if (listStockProduit.containsKey(produit)) {
                 listStockProduit.put(produit, listStockProduit.get(produit) + quantity);
             }
-            else listStockProduit.put(produit, listStockProduit.get(produit));
+            else listStockProduit.put(produit, quantity);
     }
 
-    public void retirerStockProduit (Produit produitId, int quantity) {
-        listStockProduit.put(produitId, listStockProduit.get(produitId) - quantity);
+    public void retirerStockProduit (Produit produit, int quantity) {
+        listStockProduit.put(produit, listStockProduit.get(produit) - quantity);
     }
 
     public static Videotheque getInstance() {
         return INSTANCE;
-    }
-
-    public String getProduitNom(Map<Produit, Integer> listStockProduit){
-        String result = "";
-        for (Produit produit : listStockProduit.keySet()) {
-            if (produit.getClassName().equals("Livre")) {
-                result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre() + " | " + produit.getTitre();
-            }
-            else result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + produit.getTitre();
-        }
-        return result;
     }
 
     public static boolean isValidDouble(String str) {

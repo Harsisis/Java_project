@@ -33,19 +33,13 @@ public class CreateStock extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-            JComboBox cBox = new JComboBox();
-            cBox.setPreferredSize(new Dimension(400, 15));
+        JComboBox<Produit> cBox = new JComboBox();
+        cBox.setPreferredSize(new Dimension(400, 15));
+        cBox.setRenderer(new StockComboBoxRenderer());
 
-            Map<Produit, Integer> listStockProduit = Videotheque.getInstance().getListStockProduit();
-
-            for (Produit produit : listStockProduit.keySet()) {
-                if (produit.getClassName().equals("Livre")) {
-                    cBox.addItem(produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre() + " | " + produit.getTitre());
-                }
-                else cBox.addItem(produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + produit.getTitre());
-
-                // cBox.addItem(produit);
-            }
+        for (Produit produit : Videotheque.getInstance().getListStockProduit().keySet()) {
+            cBox.addItem(produit);
+        }
 
         // add to Action Listener-------------------------------------------------------------------
         // by default set the text field to blank and add some procedure
@@ -53,8 +47,9 @@ public class CreateStock extends JFrame{
         saisiQuantityJtf.setText("");
         cancelStockBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
         confirmStockBtn.addActionListener(e -> {
-            if (Videotheque.getInstance().isValidInteger(saisiQuantityJtf.getText()))
-                Videotheque.getInstance().ajoutStockProduit((Produit) cBox.getSelectedItem(),Integer.parseInt(saisiQuantityJtf.getText()));
+            if (Videotheque.getInstance().isValidInteger(saisiQuantityJtf.getText())) {
+                Videotheque.getInstance().ajoutStockProduit((Produit) cBox.getSelectedItem(), Integer.parseInt(saisiQuantityJtf.getText()));
+            }
             else
                 jop3.showMessageDialog(null, "Quantité invalide, veuillez saisir un entier", "Erreur", JOptionPane.ERROR_MESSAGE);
         });
