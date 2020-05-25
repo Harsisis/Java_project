@@ -72,6 +72,7 @@ public class CreateProduct extends JFrame {
 
         saisiTitleJtf.setText("");
         saisiPriceJtf.setText("");
+        saisiYearJtf.setText("");
 
         // cancel button event
         cancelProductBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));

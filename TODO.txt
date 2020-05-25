@@ -14,6 +14,8 @@ A fixer :
        x- ne devrait rester dans le package com.github.harsisis.videotheque que la classe Main.java
   
 - ui
-        - pouvoir créer avec les champs un objet de type client
-        - empêcher un utilisateur de créer plusieurs fenêtres de création client
-        - cf. CODE_SAMPLES.md
+        - Créer la liste d'affichage produits avec la quantité en stock
+        - Créer la liste d'affichage des commandes
+        - Créer une commande
+        - Ajouter et enlever un produit à une commande
+        - Modifier une commande

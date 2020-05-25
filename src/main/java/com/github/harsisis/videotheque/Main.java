@@ -11,6 +11,7 @@ import com.github.harsisis.videotheque.iu.CreateHome;
 //  Check Box : abcdeCbx
 //  Text Field : abcdeJtf
 //  Autre : abcDef
+// nom de classe de iu : pas de verbe
 
 public class Main {
     public static void main(String[] args) {
