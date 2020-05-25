@@ -83,8 +83,19 @@ public class Videotheque {
     public static boolean isValidDouble(String str) {
         boolean isValid = false;
         try {
+            Double newInput = Double.parseDouble(str);
+            Double i = newInput.doubleValue();
+            isValid = true;
+        } finally {
+            return isValid;
+        }
+    }
+
+    public static boolean isValidInteger(String str) {
+        boolean isValid = false;
+        try {
             Integer newInput = Integer.valueOf(str);
-            double i = newInput.floatValue();
+            Integer i = newInput.intValue();
             isValid = true;
         } finally {
             return isValid;

@@ -44,7 +44,10 @@ public class CreateStock extends JFrame{
         saisiQuantityJtf.setText("");
         cancelStockBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
         confirmStockBtn.addActionListener(e -> {
-
+            if (Videotheque.getInstance().isValidInteger(saisiQuantityJtf.getText()))
+                Videotheque.getInstance().ajoutStockProduit(Videotheque.getInstance().getListStockProduit()., saisiQuantityJtf.getText());
+            else
+                jop3.showMessageDialog(null, "Quantité invalide, veuillez saisir un entier", "Erreur", JOptionPane.ERROR_MESSAGE);
         });
 
         // title panel--------------------------------------------------------------------------------
