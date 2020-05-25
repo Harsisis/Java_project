@@ -21,13 +21,13 @@ public class CreateHome extends JFrame{
     private JButton addQtyProductBtn = new JButton("Ajouter du stock");
 
     private JMenuBar menuBar = new JMenuBar();
-    private JMenu Li = new JMenu("Liste");
+    private JMenu li = new JMenu("Liste");
     private JMenuItem listUser = new JMenuItem("liste des clients");
     private JMenuItem listCommand = new JMenuItem("liste des commandes");
     private JMenuItem listProduct = new JMenuItem("liste des produits");
     private JMenuItem listEmpty = new JMenuItem("vider le panneau");
-    private JMenuItem Quit = new JMenuItem("Quitter");
-    private JMenu Help = new JMenu("Aide");
+    private JMenuItem quit = new JMenuItem("Quitter");
+    private JMenu help = new JMenu("Aide");
 
 
 
@@ -48,15 +48,15 @@ public class CreateHome extends JFrame{
         //items menu ------------------------------------------------------------------------------
         //create a menu with 2 items, Liste to pull down a menu with three buttons that display list of customers, order and product
         // and the second one Aide to pull down another menu with the exit button
-        menuBar.add(Li);//add Li item to menu
-        menuBar.add(Help);
+        menuBar.add(li);//add Li item to menu
+        menuBar.add(help);
 
-        Help.add(Quit);
+        help.add(quit);
 
-        Li.add(listUser);
-        Li.add(listCommand);
-        Li.add(listProduct);
-        Li.add(listEmpty);
+        li.add(listUser);
+        li.add(listCommand);
+        li.add(listProduct);
+        li.add(listEmpty);
 
         //don't delete, it should be define when we are able to display list from videotheque
         listUser.addActionListener(e -> {
@@ -98,7 +98,7 @@ public class CreateHome extends JFrame{
             listPnl.repaint();
         });
 
-        Quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+        quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         setJMenuBar(menuBar);
 
