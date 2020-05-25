@@ -66,7 +66,7 @@ public abstract class Produit {
     public String toString() {
         String result = "";
         if (this instanceof Livre) {
-            result = this.getCategorieProduit().getLibelle() + " | " + this.getClassName() + " | " + Livre.getCategorieLivre() + " | " + this.getTitre();
+            result = this.getCategorieProduit().getLibelle() + " | " + this.getClassName() + " | " + Livre.getCategorieLivre().getLibelle() + " | " + this.getTitre();
         } else {
             result = this.getCategorieProduit().getLibelle() + " | " + this.getClassName() + " | " + this.getTitre();
         }

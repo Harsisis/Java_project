@@ -34,7 +34,7 @@ public class Videotheque {
         return listStockProduit;
     }
 
-    public List<Produit> listProduitEnStock() {
+    public List<Produit> listProduitDispo() {
         List<Produit> resultat = new ArrayList<>();
         for (Map.Entry<Produit, Integer> entry : listStockProduit.entrySet()) {
             if (entry.getValue() > 0) {
