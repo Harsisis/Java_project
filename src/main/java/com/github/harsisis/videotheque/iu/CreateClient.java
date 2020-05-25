@@ -57,9 +57,6 @@ public class CreateClient extends JFrame {
             } else
                 jop3.showMessageDialog(null, "Veuillez rentrer un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
 
-            /*for(Client client : app.getClient()){
-                System.out.println(client);
-            }*/
         });
 
         // title panel--------------------------------------------------------------------------------

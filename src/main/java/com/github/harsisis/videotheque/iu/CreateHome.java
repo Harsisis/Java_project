@@ -1,22 +1,19 @@
 package com.github.harsisis.videotheque.iu;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.Commande;
+import com.github.harsisis.videotheque.domaine.Videotheque;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 
-public class CreateHome extends JFrame {
+public class CreateHome extends JFrame{
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
+
+    private JLabel listLbl = new JLabel(); // Label where i write all
 
     private JButton addClientBtn = new JButton("Ajouter un client");
     private JButton addOrderBtn = new JButton("Ajouter une commande");
@@ -25,11 +22,13 @@ public class CreateHome extends JFrame {
 
     private JMenuBar menuBar = new JMenuBar();
     private JMenu Li = new JMenu("Liste");
-    private JRadioButtonMenuItem listUser = new JRadioButtonMenuItem("liste des clients");
-    private JRadioButtonMenuItem listCommand = new JRadioButtonMenuItem("liste des commandes");
-    private JRadioButtonMenuItem listProduct = new JRadioButtonMenuItem("liste des produits");
+    private JMenuItem listUser = new JMenuItem("liste des clients");
+    private JMenuItem listCommand = new JMenuItem("liste des commandes");
+    private JMenuItem listProduct = new JMenuItem("liste des produits");
+    private JMenuItem listEmpty = new JMenuItem("vider le panneau");
+    private JMenuItem Quit = new JMenuItem("Quitter");
     private JMenu Help = new JMenu("Aide");
-    private JRadioButtonMenuItem Quit = new JRadioButtonMenuItem("Quitter");
+
 
 
     public CreateHome() {
@@ -57,16 +56,52 @@ public class CreateHome extends JFrame {
         Li.add(listUser);
         Li.add(listCommand);
         Li.add(listProduct);
+        Li.add(listEmpty);
 
         //don't delete, it should be define when we are able to display list from videotheque
-        //listUser.addActionListener(e -> );
-        //listCommand.addActionListener(e -> );
-        //listProduct.addActionListener(e -> );
+        listUser.addActionListener(e -> {
+            listPnl.removeAll();
+            listPnl.add(listLbl);
+            listLbl.setText("");
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html>");
+            for (Client client : Videotheque.getInstance().getListClient()) {
+                sb.append(listLbl.getText()).append("<br>").append(client.toString());
+            }
+            sb.append("</html>");
+            listLbl.setText(sb.toString());
+        });
+        listCommand.addActionListener(e -> {
+            listPnl.removeAll();
+            listPnl.add(listLbl);
+            listLbl.setText("");
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html>");
+            for (Commande commande : Videotheque.getInstance().getListCommande()) {
+                sb.append(listLbl.getText()).append("<br>").append(commande.toString());
+            }
+            sb.append("</html>");
+            listLbl.setText(sb.toString());
+        });
+        listProduct.addActionListener(e -> {
+            listPnl.removeAll();
+            listLbl.setText("");
+        });
+
+        listEmpty.addActionListener(e -> {
+            listPnl.removeAll();
+            revalidate();
+            listPnl.repaint();
+        });
 
         Quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         setJMenuBar(menuBar);
 
+
+        //panel list ------------------------------------------------------------------------------
+        listPnl.setBackground(Color.white);
+        listPnl.setPreferredSize(new Dimension(760,600));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
@@ -86,7 +121,7 @@ public class CreateHome extends JFrame {
         workPlacePnl.setBackground(Color.darkGray);
         workPlacePnl.setPreferredSize(new Dimension(180, 600));
         //workPlacePnl.setLayout(new BoxLayout(workPlacePnl, BoxLayout.PAGE_AXIS));
-        workPlacePnl.setLayout(new GridLayout(8, 1, 0, 5));
+        workPlacePnl.setLayout(new GridLayout(8,1,0,5));
         workPlacePnl.add(addClientBtn);
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
@@ -97,6 +132,7 @@ public class CreateHome extends JFrame {
         displayPnl.setBackground(Color.WHITE);
         displayPnl.setLayout(new BorderLayout());
         displayPnl.add(workPlacePnl, BorderLayout.WEST);
+        displayPnl.add(listPnl, BorderLayout.EAST);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
