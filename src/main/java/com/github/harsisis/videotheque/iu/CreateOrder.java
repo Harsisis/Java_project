@@ -3,11 +3,18 @@ package com.github.harsisis.videotheque.iu;
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
 
-public class CreateOrder extends JFrame{
+public class CreateOrder extends JFrame {
 
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel managePnl = new JPanel();// panel with client list, add button, confirm button and cancel button
@@ -30,7 +37,7 @@ public class CreateOrder extends JFrame{
     private JButton cancelOrderBtn = new JButton("Annuler");
 
 
-    public CreateOrder(){
+    public CreateOrder() {
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'une Commande");
         setSize(1200, 600);
@@ -63,7 +70,7 @@ public class CreateOrder extends JFrame{
 
 
         //select panel------------------------------------------------------------------------------
-        selectPnl.setLayout(new GridLayout(2,1));
+        selectPnl.setLayout(new GridLayout(2, 1));
         selectPnl.setBackground(Color.white);
         selectPnl.setBorder(BorderFactory.createLineBorder(Color.black));
         selectPnl.add(choiceClLbl);
@@ -97,7 +104,7 @@ public class CreateOrder extends JFrame{
 
         //total panel-------------------------------------------------------------------------------
         totalPnl.setBackground(Color.darkGray);
-        totalPnl.setLayout(new GridLayout(1,4));
+        totalPnl.setLayout(new GridLayout(1, 4));
         totalPnl.add(amountLbl);
         //totalPnl.add();
 

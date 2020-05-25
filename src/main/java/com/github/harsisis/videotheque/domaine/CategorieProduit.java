@@ -1,6 +1,16 @@
 package com.github.harsisis.videotheque.domaine;
 
 public enum CategorieProduit {
-    DOCUMENT,
-    SUPPORT_NUMERIQUE
+    DOCUMENT("Document"),
+    SUPPORT_NUMERIQUE("Support Numérique");
+
+    private final String libelle;
+
+    CategorieProduit(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
 }

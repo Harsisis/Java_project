@@ -1,12 +1,19 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.Videotheque;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
 
-public class CreateHome extends JFrame{
+public class CreateHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
@@ -79,7 +86,7 @@ public class CreateHome extends JFrame{
         workPlacePnl.setBackground(Color.darkGray);
         workPlacePnl.setPreferredSize(new Dimension(180, 600));
         //workPlacePnl.setLayout(new BoxLayout(workPlacePnl, BoxLayout.PAGE_AXIS));
-        workPlacePnl.setLayout(new GridLayout(8,1,0,5));
+        workPlacePnl.setLayout(new GridLayout(8, 1, 0, 5));
         workPlacePnl.add(addClientBtn);
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);

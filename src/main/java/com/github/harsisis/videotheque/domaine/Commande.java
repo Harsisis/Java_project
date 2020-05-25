@@ -31,13 +31,13 @@ public class Commande {
         return client;
     }
 
-    public boolean ajoutEmprunt (Produit produit, int dureeLocation, int quantity) {
+    public boolean ajoutEmprunt(Produit produit, int dureeLocation, int quantity) {
         Emprunt emprunt = new Emprunt(produit, dureeLocation);
         Videotheque.getInstance().retirerStockProduit(produit, quantity);
         return listEmprunt.add(emprunt);
     }
 
-    public void supEmprunt (Produit numeroEmprunt) {
+    public void supEmprunt(Produit numeroEmprunt) {
         listEmprunt.remove(numeroEmprunt);
     }
 
@@ -49,7 +49,7 @@ public class Commande {
 
         // solution plus basique
         double total = 0;
-        for (Emprunt emprunt: listEmprunt) {
+        for (Emprunt emprunt : listEmprunt) {
             total += emprunt.getProduit().getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
         }
         return total;

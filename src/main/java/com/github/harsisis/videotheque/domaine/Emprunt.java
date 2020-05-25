@@ -22,6 +22,7 @@ public class Emprunt {
         return dureeLocation;
     }
 
-    public LocalDate getFinLocation (LocalDate debutDate) {
+    public LocalDate getFinLocation(LocalDate debutDate) {
         return debutDate.plusDays(this.dureeLocation);
-    }}
+    }
+}

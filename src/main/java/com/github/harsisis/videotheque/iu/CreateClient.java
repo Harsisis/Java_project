@@ -1,27 +1,31 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
-import java.util.*;
 
 public class CreateClient extends JFrame {
+    private static JTextField saisiNomJtf = new JTextField();
+    private static JTextField saisiPrenomJtf = new JTextField();
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel titlePnl = new JPanel();// panel with title label
     private JPanel workPlacePnl = new JPanel(); // panel with blank to enter customer's data
     private JPanel confirmPnl = new JPanel();// panel with button to cancel or confirm
-
     private JLabel titleLbl = new JLabel("Créer un nouveau client :");
     private JLabel nomLbl = new JLabel("Nom :");
     private JLabel prenomLbl = new JLabel("Prénom :");
     private JLabel fideleLbl = new JLabel("Fidèle :");
-
-    private static JTextField saisiNomJtf = new JTextField();
-    private static JTextField saisiPrenomJtf = new JTextField();
-
     private JCheckBox fideleCbx = new JCheckBox();
 
     private JButton cancelClientBtn = new JButton("Annuler");
@@ -31,7 +35,7 @@ public class CreateClient extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
 
-    public CreateClient(){
+    public CreateClient() {
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Client");
         setSize(280, 400);
@@ -50,8 +54,7 @@ public class CreateClient extends JFrame {
                 System.out.println("Nom: " + saisiNomJtf.getText() + "\nPrénom: " + saisiPrenomJtf.getText() + "\nFidèle: " + fideleCbx.isSelected());
                 Videotheque.getInstance().ajoutClient(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            }
-            else
+            } else
                 jop3.showMessageDialog(null, "Veuillez rentrer un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
 
             /*for(Client client : app.getClient()){
@@ -63,13 +66,13 @@ public class CreateClient extends JFrame {
         titleLbl.setForeground(Color.white);
         titlePnl.add(titleLbl);
         titlePnl.setBackground(Color.darkGray);
-        titlePnl.setPreferredSize(new Dimension(280,30));
+        titlePnl.setPreferredSize(new Dimension(280, 30));
 
         // workPlace panel----------------------------------------------------------------------------
         saisiPrenomJtf.setPreferredSize(new Dimension(150, 30));
         saisiNomJtf.setPreferredSize(new Dimension(150, 30));
 
-        workPlacePnl.setLayout(new GridLayout(8,1,0,5));
+        workPlacePnl.setLayout(new GridLayout(8, 1, 0, 5));
         workPlacePnl.add(nomLbl);
         workPlacePnl.add(saisiNomJtf);
         workPlacePnl.add(prenomLbl);

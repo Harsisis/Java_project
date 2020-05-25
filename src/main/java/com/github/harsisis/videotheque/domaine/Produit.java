@@ -1,6 +1,5 @@
 package com.github.harsisis.videotheque.domaine;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,14 +28,14 @@ public abstract class Produit {
         return tarifJournalier;
     }
 
-    public String getProduitNom(Map<Produit, Integer> listStockProduit){
+    public String getProduitNom(Produit produit) {
         String result = "";
-        for (Produit produit : listStockProduit.keySet()) {
-            if (produit.getClassName().equals("Livre")) {
-                result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre() + " | " + produit.getTitre();
-            }
-            else result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + produit.getTitre();
+        if (produit instanceof Livre) {
+            result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre() + " | " + produit.getTitre();
+        } else {
+            result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + produit.getTitre();
         }
+
         return result;
     }
 
@@ -61,5 +60,17 @@ public abstract class Produit {
     @Override
     public int hashCode() {
         return Objects.hash(produitId);
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        if (this instanceof Livre) {
+            result = this.getCategorieProduit().getLibelle() + " | " + this.getClassName() + " | " + Livre.getCategorieLivre() + " | " + this.getTitre();
+        } else {
+            result = this.getCategorieProduit().getLibelle() + " | " + this.getClassName() + " | " + this.getTitre();
+        }
+
+        return result;
     }
 }

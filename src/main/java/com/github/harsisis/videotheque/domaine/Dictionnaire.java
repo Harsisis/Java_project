@@ -1,6 +1,6 @@
 package com.github.harsisis.videotheque.domaine;
 
-public class Dictionnaire extends Produit{
+public class Dictionnaire extends Produit {
 
     private String langue;
 
