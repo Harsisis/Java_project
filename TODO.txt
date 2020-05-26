@@ -1,21 +1,19 @@
 Fonctions à implémenter :
-- ajouter un client
+x- ajouter un client
 - ajouter une commande
 - ajouter un emprunt/produit à la commande
 - modifier une commande en ajoutant un emprunt/produit
 - modifier une commande en supprimant un emprunt/produit
 - calculer le montant total d'une commande d'un client avec réduction ou sans
-- ajouter un produit au stock
+x- ajouter un produit au stock
 
 A fixer :
-- separer les classes dans des packages distinct pour organiser le code, par exemple : DONE
-       x- regrouper les composants graphiques tels que Fenetre.java dans un package dedié
-       x- creer un autre package dedié pour tous les objets du domaine (Client, Videotheque, DVD, etc.)
-       x- ne devrait rester dans le package com.github.harsisis.videotheque que la classe Main.java
   
 - ui
-        - Créer la liste d'affichage produits avec la quantité en stock
+        - Modifier la liste d'affichage produits pour mettre la quantité en stock
         - Créer la liste d'affichage des commandes
         - Créer une commande
         - Ajouter et enlever un produit à une commande
         - Modifier une commande
+        - problème plusieurs selection possible pour la création d'un livre
+

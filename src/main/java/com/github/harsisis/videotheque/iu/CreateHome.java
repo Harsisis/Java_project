@@ -1,6 +1,7 @@
 package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.Produit;
 import com.github.harsisis.videotheque.domaine.Commande;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
@@ -63,31 +64,40 @@ public class CreateHome extends JFrame{
             listPnl.removeAll();
             listPnl.add(listLbl);
             listLbl.setText("");
-            StringBuilder sb = new StringBuilder();
-            sb.append("<html>");
+            StringBuilder liCustomer = new StringBuilder();
+            liCustomer.append("<html>");
             for (Client client : Videotheque.getInstance().getListClient()) {
-                sb.append(listLbl.getText()).append("<br>").append(client.toString());
+                liCustomer.append(listLbl.getText()).append("<br>").append(client.toString());
             }
-            sb.append("</html>");
-            listLbl.setText(sb.toString());
+            liCustomer.append("</html>");
+            listLbl.setText(liCustomer.toString());
         });
-        listCommand.addActionListener(e -> {
+        listCommand.addActionListener(e -> {// a faire
             listPnl.removeAll();
             listPnl.add(listLbl);
             listLbl.setText("");
-            StringBuilder sb = new StringBuilder();
-            sb.append("<html>");
+            StringBuilder liOrder = new StringBuilder();
+            liOrder.append("<html>");
             for (Commande commande : Videotheque.getInstance().getListCommande()) {
-                sb.append(listLbl.getText()).append("<br>").append(commande.toString());
+                liOrder.append(listLbl.getText()).append("<br>").append(commande.toString());
             }
-            sb.append("</html>");
-            listLbl.setText(sb.toString());
+            liOrder.append("</html>");
+            listLbl.setText(liOrder.toString());
             revalidate();
             listPnl.repaint();
         });
         listProduct.addActionListener(e -> {
             listPnl.removeAll();
+            listPnl.add(listLbl);
             listLbl.setText("");
+            StringBuilder liProduct = new StringBuilder();
+            liProduct.append("<html>");
+            for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {// display quantity stock
+                liProduct.append(listLbl.getText()).append("<br>").append(produit);
+            }
+
+            liProduct.append("</html>");
+            listLbl.setText(liProduct.toString());
             revalidate();
             listPnl.repaint();
         });

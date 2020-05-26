@@ -34,6 +34,7 @@ public class CreateProduct extends JFrame {
     private static final JTextField saisiPriceJtf = new JTextField();
     private static final JTextField saisiYearJtf = new JTextField();
     private static final JTextField saisiAutorJtf = new JTextField();
+
     private final JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private final JPanel titlePnl = new JPanel();// panel with title label
     private final JPanel workPlacePnl = new JPanel(); // panel with blank to enter customer's data
@@ -43,6 +44,7 @@ public class CreateProduct extends JFrame {
     private final JPanel placeHolderPnl = new JPanel();
     private final JPanel buttonGrpLivrePnl = new JPanel();
     private final JPanel auteurLivrePnl = new JPanel();
+
     private final JLabel titleLbl = new JLabel("Créer un nouveau produit : ");
     private final JLabel titleProductLbl = new JLabel("Titre : ");
     private final JLabel priceProductLbl = new JLabel("Tarif Journalier : ");
@@ -50,13 +52,17 @@ public class CreateProduct extends JFrame {
     private final JLabel realisatorNameLbl = new JLabel("Nom du réalisateur : ");
     private final JLabel yearReleaseLbl = new JLabel("Année de sortie : ");
     private final JLabel languageLbl = new JLabel("Langue : ");
+
     private final JButton cancelProductBtn = new JButton("Annuler");
     private final JButton confirmProductBtn = new JButton("Valider");
     private final ButtonGroup bookTypeBg = new ButtonGroup();
+
     private final JRadioButton romanBtn = new JRadioButton("Roman");
     private final JRadioButton bdBtn = new JRadioButton("BD");
     private final JRadioButton manuel_scolaireBtn = new JRadioButton("Manuel scolaire");
+
     private final JOptionPane jop3 = new JOptionPane();
+
     String[] nameCat = new String[]{"CD", "DVD", "Dictionnaire", "Livre"};
     private final JComboBox<String> selectCatJcbx = new JComboBox<>(nameCat);
     String[] nameLang = new String[]{"Français", "Anglais", "Espagnol", "Italien", "Allemand"};
@@ -212,7 +218,7 @@ public class CreateProduct extends JFrame {
     }
 
     private Produit buildCD() throws ValidationException {
-        if (!saisiYearJtf.getText().equals("") && saisiYearJtf.getText().length() == 4) {
+        if (!saisiYearJtf.getText().equals("") && saisiYearJtf.getText().length() == 4 && ValidatorUtil.isValidInteger(saisiYearJtf.getText())) {
             return new CD(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), Integer.parseInt(saisiYearJtf.getText()));
         } else {
             throw new ValidationException("Veuillez saisir une année correcte (quatre entiers)", "Attention");

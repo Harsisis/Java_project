@@ -1,7 +1,7 @@
 package com.github.harsisis.videotheque.domaine;
 
 public enum CategorieLivre {
-    BD("Bande déssinée"),
+    BD("Bande dessinée"),
     MANUEL("Manuel"),
     ROMAN("Roman");
 
