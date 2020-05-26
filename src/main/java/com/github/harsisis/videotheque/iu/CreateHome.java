@@ -61,36 +61,21 @@ public class CreateHome extends JFrame{
         li.add(listProduct);
         li.add(listEmpty);
 
-        //don't delete, it should be define when we are able to display list from videotheque
         listUser.addActionListener(e -> {
             listPnl.removeAll();
-            listPnl.add(listLbl);
-            listLbl.setText("");
             List<Client> clientList = new ArrayList<Client>(Videotheque.getInstance().getListClient());
             System.out.println(clientList);
             JList list = new JList(new Vector<Client>(clientList));
             listPnl.add(list);
             revalidate();
             listPnl.repaint();
-//            StringBuilder liCustomer = new StringBuilder();
-//            liCustomer.append("<html>");
-//            for (Client client : Videotheque.getInstance().getListClient()) {
-//                liCustomer.append(listLbl.getText()).append("<br>").append(client.toString());
-//            }
-//            liCustomer.append("</html>");
-//            listLbl.setText(liCustomer.toString());
         });
-        listCommand.addActionListener(e -> {// a faire
+        listCommand.addActionListener(e -> {
             listPnl.removeAll();
-            listPnl.add(listLbl);
-            listLbl.setText("");
-            StringBuilder liOrder = new StringBuilder();
-            liOrder.append("<html>");
-            for (Commande commande : Videotheque.getInstance().getListCommande()) {
-                liOrder.append(listLbl.getText()).append("<br>").append(commande.toString());
-            }
-            liOrder.append("</html>");
-            listLbl.setText(liOrder.toString());
+            List<Commande> commandeList = new ArrayList<Commande>(Videotheque.getInstance().getListCommande());
+            System.out.println(commandeList);
+            JList list = new JList(new Vector<Commande>(commandeList));
+            listPnl.add(list);
             revalidate();
             listPnl.repaint();
         });
