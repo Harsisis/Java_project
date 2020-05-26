@@ -59,7 +59,7 @@ public class CreateProduct extends JFrame {
 
     private final JRadioButton romanBtn = new JRadioButton("Roman");
     private final JRadioButton bdBtn = new JRadioButton("BD");
-    private final JRadioButton manuel_scolaireBtn = new JRadioButton("Manuel scolaire");
+    private final JRadioButton manuelScolaireBtn = new JRadioButton("Manuel scolaire");
 
     private final JOptionPane jop3 = new JOptionPane();
 
@@ -90,6 +90,9 @@ public class CreateProduct extends JFrame {
 
         construitPanel(selectCatJcbx);
 
+        bookTypeBg.add(romanBtn);
+        bookTypeBg.add(bdBtn);
+        bookTypeBg.add(manuelScolaireBtn);
     }
 
     private void construitPanel(JComboBox<String> selectCatJcbx) {
@@ -190,7 +193,7 @@ public class CreateProduct extends JFrame {
                 typeLivre = CategorieLivre.ROMAN;
             } else if (bdBtn.isSelected()) {
                 typeLivre = CategorieLivre.BD;
-            } else if (manuel_scolaireBtn.isSelected()) {
+            } else if (manuelScolaireBtn.isSelected()) {
                 typeLivre = CategorieLivre.MANUEL;
             } else {
                 throw new ValidationException("Veuillez selectionner une catégorie valide", "Attention");
@@ -263,7 +266,7 @@ public class CreateProduct extends JFrame {
 
             buttonGrpLivrePnl.add(romanBtn);
             buttonGrpLivrePnl.add(bdBtn);
-            buttonGrpLivrePnl.add(manuel_scolaireBtn);
+            buttonGrpLivrePnl.add(manuelScolaireBtn);
 
             auteurLivrePnl.add(autorNameLbl, BorderLayout.WEST);
             auteurLivrePnl.add(saisiAutorJtf, BorderLayout.EAST);
