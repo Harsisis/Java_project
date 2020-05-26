@@ -1,19 +1,27 @@
 Fonctions à implémenter :
-x- ajouter un client
-- ajouter une commande
-- ajouter un emprunt/produit à la commande
-- modifier une commande en ajoutant un emprunt/produit
-- modifier une commande en supprimant un emprunt/produit
-- calculer le montant total d'une commande d'un client avec réduction ou sans
-x- ajouter un produit au stock
+- [x] ajouter un client
+- [ ] ajouter une commande
+- [ ] ajouter un emprunt/produit à la commande
+- [ ] modifier une commande en ajoutant un emprunt/produit
+- [ ] modifier une commande en supprimant un emprunt/produit
+- [x] calculer le montant total d'une commande d'un client avec réduction ou sans
+- [x] ajouter un produit au stock
 
 A fixer :
+- [ ] Faire jolie lest listes (basculer une page)
+- [ ] Faire en sorte où on voit qu’on on a réussi à créer le produit j option pane avec "le produit "+inserez produit+" a bien été crée"
+- [ ] vérification des saisies = empecher de mettre des lettres dans tarif
+- [ ] Écrire les Junits test
+- [ ] Gestion des commandes et des emprunts
+- [ ] Gestion des dates
+- [x] Trouver une alternative à l’html (format text field)
+- [x] Pas stocker les produits et plutôt des uuid
   
-- ui
-        - Modifier la liste d'affichage produits pour mettre la quantité en stock
-        - Créer la liste d'affichage des commandes
-        - Créer une commande
-        - Ajouter et enlever un produit à une commande
-        - Modifier une commande
-        - problème plusieurs selection possible pour la création d'un livre
+ui :
+- [ ] Modifier la liste d'affichage produits pour mettre la quantité en stock
+- [ ] Créer la liste d'affichage des commandes
+- [ ] Créer une commande
+- [ ] Ajouter et enlever un produit à une commande
+- [ ] Modifier une commande
+- [ ] problème plusieurs selection possible pour la création d'un livre
 

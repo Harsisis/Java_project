@@ -25,10 +25,10 @@ public class CreateHome extends JFrame{
 
     private JMenuBar menuBar = new JMenuBar();
     private JMenu li = new JMenu("Liste");
-    private JMenuItem listUser = new JMenuItem("liste des clients");
-    private JMenuItem listCommand = new JMenuItem("liste des commandes");
-    private JMenuItem listProduct = new JMenuItem("liste des produits");
-    private JMenuItem listEmpty = new JMenuItem("vider le panneau");
+    private JMenuItem listUser = new JMenuItem("Liste des clients");
+    private JMenuItem listCommand = new JMenuItem("Liste des commandes");
+    private JMenuItem listProduct = new JMenuItem("Liste des produits");
+    private JMenuItem listEmpty = new JMenuItem("Vider le panneau");
     private JMenuItem quit = new JMenuItem("Quitter");
     private JMenu help = new JMenu("Aide");
 
