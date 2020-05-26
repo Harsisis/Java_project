@@ -10,7 +10,7 @@ public class Videotheque {
 
     public static final double REDUC_FIDELE = 0.1;
     private static final Videotheque INSTANCE = new Videotheque();
-    private Map<Produit, Integer> listStockProduit = new HashMap<>();
+    private Map<String, Integer> listStockProduit = new HashMap<>();
     private HashSet<Client> listClient = new HashSet<>();
     private HashSet<Commande> listCommande = new HashSet<>();
     // this should stay private because only one instance can exist
@@ -30,13 +30,13 @@ public class Videotheque {
         return listCommande;
     }
 
-    public Map<Produit, Integer> getListStockProduit() {
+    public Map<String, Integer> getListStockProduit() {
         return listStockProduit;
     }
 
-    public List<Produit> listProduitDispo() {
-        List<Produit> resultat = new ArrayList<>();
-        for (Map.Entry<Produit, Integer> entry : listStockProduit.entrySet()) {
+    public List<String> listProduitDispo() {
+        List<String> resultat = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listStockProduit.entrySet()) {
             if (entry.getValue() > 0) {
                 resultat.add(entry.getKey());
             }
@@ -54,13 +54,13 @@ public class Videotheque {
         return listCommande.add(commande);
     }
 
-    public void ajoutStockProduit(Produit produit, int quantity) {
-        if (listStockProduit.containsKey(produit)) {
-            listStockProduit.put(produit, listStockProduit.get(produit) + quantity);
-        } else listStockProduit.put(produit, quantity);
+    public void ajoutStockProduit(String produitId, int quantity) {
+        if (listStockProduit.containsKey(produitId)) {
+            listStockProduit.put(produitId, listStockProduit.get(produitId) + quantity);
+        } else listStockProduit.put(produitId, quantity);
     }
 
-    public void retirerStockProduit(Produit produit, int quantity) {
-        listStockProduit.put(produit, listStockProduit.get(produit) - quantity);
+    public void retirerStockProduit(String produitId, int quantity) {
+        listStockProduit.put(produitId, listStockProduit.get(produitId) - quantity);
     }
 }

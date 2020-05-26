@@ -146,7 +146,7 @@ public class CreateProduct extends JFrame {
     void processInput() {
         try {
             Produit nouveauProduit = buildProduit();
-            Videotheque.getInstance().ajoutStockProduit(nouveauProduit, 0);
+            Videotheque.getInstance().ajoutStockProduit(nouveauProduit.getProduitNom(nouveauProduit), 0);
             System.out.println("Titre : " + saisiTitleJtf.getText() + "\nPrix : " + saisiPriceJtf.getText());
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         } catch (ValidationException ve) {

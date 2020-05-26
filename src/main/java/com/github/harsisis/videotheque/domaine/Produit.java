@@ -16,8 +16,8 @@ public abstract class Produit {
         this.categorieProduit = categorieProduit;
     }
 
-    public UUID getProduitId() {
-        return this.produitId;
+    public String getProduitId() {
+        return this.produitId.toString();
     }
 
     public String getTitre() {
@@ -31,11 +31,10 @@ public abstract class Produit {
     public String getProduitNom(Produit produit) {
         String result = "";
         if (produit instanceof Livre) {
-            result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre() + " | " + produit.getTitre();
+            result = produit.getCategorieProduit().getLibelle() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre().getLibelle() + " | " + produit.getTitre();
         } else {
-            result = produit.getCategorieProduit() + " | " + produit.getClassName() + " | " + produit.getTitre();
+            result = produit.getCategorieProduit().getLibelle() + " | " + produit.getClassName() + " | " + produit.getTitre();
         }
-
         return result;
     }
 

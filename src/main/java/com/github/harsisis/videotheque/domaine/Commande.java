@@ -31,9 +31,9 @@ public class Commande {
         return client;
     }
 
-    public boolean ajoutEmprunt(Produit produit, int dureeLocation, int quantity) {
-        Emprunt emprunt = new Emprunt(produit, dureeLocation);
-        Videotheque.getInstance().retirerStockProduit(produit, quantity);
+    public boolean ajoutEmprunt(String produitId, int dureeLocation, int quantity) {
+        Emprunt emprunt = new Emprunt(produitId, dureeLocation);
+        Videotheque.getInstance().retirerStockProduit(produitId, quantity);
         return listEmprunt.add(emprunt);
     }
 

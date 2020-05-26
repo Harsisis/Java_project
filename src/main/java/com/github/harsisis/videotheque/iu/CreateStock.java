@@ -36,11 +36,11 @@ public class CreateStock extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-        JComboBox<Produit> cBox = new JComboBox<>();
+        JComboBox<String> cBox = new JComboBox<>();
         cBox.setPreferredSize(new Dimension(400, 15));
 
 
-        for (Produit produit : Videotheque.getInstance().getListStockProduit().keySet()) {
+        for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
             cBox.addItem(produit);
         }
 
@@ -84,9 +84,9 @@ public class CreateStock extends JFrame {
         setVisible(true);
     }
 
-    private void processInput(JComboBox<Produit> cBox) {
+    private void processInput(JComboBox<String> cBox) {
         if (ValidatorUtil.isValidInteger(saisiQuantityJtf.getText())) {
-            Videotheque.getInstance().ajoutStockProduit((Produit) cBox.getSelectedItem(), Integer.parseInt(saisiQuantityJtf.getText()));
+            Videotheque.getInstance().ajoutStockProduit((String) cBox.getSelectedItem(), Integer.parseInt(saisiQuantityJtf.getText()));
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         } else {
             JOptionPane.showMessageDialog(this, "Quantité invalide, veuillez saisir un entier", "Erreur", JOptionPane.ERROR_MESSAGE);

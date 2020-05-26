@@ -9,7 +9,7 @@ public class Emprunt {
     private Produit produit;
     private int dureeLocation;
 
-    public Emprunt(Produit produit, int dureeLocation) {
+    public Emprunt(String produitId, int dureeLocation) {
         this.empruntId = UUID.randomUUID();
         this.produit = produit;
     }

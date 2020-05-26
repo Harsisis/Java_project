@@ -35,7 +35,7 @@ public class VideothequeTest {
         Videotheque videotheque = Videotheque.getInstance();
 
         //WHEN
-        videotheque.ajoutStockProduit(p1, quantity);
+        videotheque.ajoutStockProduit(p1.getProduitId(), quantity);
 
         //THEN
         assertFalse(videotheque.getListStockProduit().isEmpty());
