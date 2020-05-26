@@ -1,13 +1,15 @@
 package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
-import com.github.harsisis.videotheque.domaine.Produit;
 import com.github.harsisis.videotheque.domaine.Commande;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class CreateHome extends JFrame{
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
@@ -64,13 +66,19 @@ public class CreateHome extends JFrame{
             listPnl.removeAll();
             listPnl.add(listLbl);
             listLbl.setText("");
-            StringBuilder liCustomer = new StringBuilder();
-            liCustomer.append("<html>");
-            for (Client client : Videotheque.getInstance().getListClient()) {
-                liCustomer.append(listLbl.getText()).append("<br>").append(client.toString());
-            }
-            liCustomer.append("</html>");
-            listLbl.setText(liCustomer.toString());
+            List<Client> clientList = new ArrayList<Client>(Videotheque.getInstance().getListClient());
+            System.out.println(clientList);
+            JList list = new JList(new Vector<Client>(clientList));
+            listPnl.add(list);
+            revalidate();
+            listPnl.repaint();
+//            StringBuilder liCustomer = new StringBuilder();
+//            liCustomer.append("<html>");
+//            for (Client client : Videotheque.getInstance().getListClient()) {
+//                liCustomer.append(listLbl.getText()).append("<br>").append(client.toString());
+//            }
+//            liCustomer.append("</html>");
+//            listLbl.setText(liCustomer.toString());
         });
         listCommand.addActionListener(e -> {// a faire
             listPnl.removeAll();

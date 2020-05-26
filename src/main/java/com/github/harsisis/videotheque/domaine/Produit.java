@@ -61,15 +61,4 @@ public abstract class Produit {
         return Objects.hash(produitId);
     }
 
-    @Override
-    public String toString() {
-        String result = "";
-        if (this instanceof Livre) {
-            result = this.getCategorieProduit().getLibelle() + " | " + this.getClassName() + " | " + Livre.getCategorieLivre().getLibelle() + " | " + this.getTitre();
-        } else {
-            result = this.getCategorieProduit().getLibelle() + " | " + this.getClassName() + " | " + this.getTitre();
-        }
-
-        return result;
-    }
 }

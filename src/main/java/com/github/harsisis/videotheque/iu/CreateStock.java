@@ -39,7 +39,6 @@ public class CreateStock extends JFrame {
         JComboBox<String> cBox = new JComboBox<>();
         cBox.setPreferredSize(new Dimension(400, 15));
 
-
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
             cBox.addItem(produit);
         }
