@@ -2,6 +2,7 @@ package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Commande;
+import com.github.harsisis.videotheque.domaine.Produit;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class CreateHome extends JFrame{
@@ -81,16 +83,22 @@ public class CreateHome extends JFrame{
         });
         listProduct.addActionListener(e -> {
             listPnl.removeAll();
-            listPnl.add(listLbl);
-            listLbl.setText("");
-            StringBuilder liProduct = new StringBuilder();
-            liProduct.append("<html>");
-            for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {// display quantity stock
-                liProduct.append(listLbl.getText()).append("<br>").append(produit);
+            Vector<String> items = new Vector<>();
+            for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
+                items.add((entry.getKey() + " | Quantité : " + entry.getValue()));
             }
-
-            liProduct.append("</html>");
-            listLbl.setText(liProduct.toString());
+            JList list = new JList(items);
+            listPnl.add(list);
+//            listPnl.add(listLbl);
+//            listLbl.setText("");
+//            StringBuilder liProduct = new StringBuilder();
+//            liProduct.append("<html>");
+//            for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {// display quantity stock
+//                liProduct.append(listLbl.getText()).append("<br>").append(produit);
+//            }
+//
+//            liProduct.append("</html>");
+//            listLbl.setText(liProduct.toString());
             revalidate();
             listPnl.repaint();
         });
