@@ -2,7 +2,6 @@ package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Commande;
-import com.github.harsisis.videotheque.domaine.Emprunt;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 
@@ -54,14 +53,14 @@ public class CreateOrder extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        managePnl.setPreferredSize(new Dimension(300,600));
+        managePnl.setPreferredSize(new Dimension(300, 600));
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
-        JComboBox<Client> liClientJcbx = new JComboBox<>();
+        JComboBox<String> liClientJcbx = new JComboBox<>();
 
         for (Client client : Videotheque.getInstance().getListClient())
-            liClientJcbx.addItem(client);
+            liClientJcbx.addItem("Nom : " + client.getNom() + " Prénom : " + client.getPrenom());
 
         JComboBox<String> liProductJcbx = new JComboBox<>();
 
@@ -96,8 +95,7 @@ public class CreateOrder extends JFrame {
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
                 Commande.ajoutEmprunt(Videotheque.getInstance().getListStockProduit().keySet().toString(), Integer.parseInt(durationJtf.getText()));
-            }
-            else {
+            } else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             mainPage(liClientJcbx);
@@ -121,7 +119,7 @@ public class CreateOrder extends JFrame {
         setVisible(true);
     }
 
-    public void mainPage(JComboBox liClientJcbx){
+    public void mainPage(JComboBox liClientJcbx) {
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
         managePnl.add(titlePnl);
@@ -174,11 +172,11 @@ public class CreateOrder extends JFrame {
         //totalPnl.add();
     }
 
-    public void addParameter(JComboBox liProductJcbx){
+    public void addParameter(JComboBox liProductJcbx) {
 
 
         //select product panel----------------------------------------------------------------------
-        selectProductPnl.setLayout(new GridLayout(2,1));
+        selectProductPnl.setLayout(new GridLayout(2, 1));
         selectProductPnl.setBackground(Color.white);
         selectProductPnl.setBorder(BorderFactory.createLineBorder(Color.black));
         selectProductPnl.add(choicePrdLbl);
@@ -186,7 +184,7 @@ public class CreateOrder extends JFrame {
         liProductJcbx.setBackground(Color.white);
 
         //select time panel----------------------------------------------------------------------
-        selectTimePnl.setLayout(new GridLayout(2,1));
+        selectTimePnl.setLayout(new GridLayout(2, 1));
         selectTimePnl.setBackground(Color.white);
         selectTimePnl.setBorder(BorderFactory.createLineBorder(Color.black));
         selectTimePnl.add(durationLbl);
@@ -212,7 +210,7 @@ public class CreateOrder extends JFrame {
         managePnl.repaint();
     }
 
-    public void removeParameter(){
+    public void removeParameter() {
         managePnl.removeAll();
 
         managePnl.add(titlePnl);
