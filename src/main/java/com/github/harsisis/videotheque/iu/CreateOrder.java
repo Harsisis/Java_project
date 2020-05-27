@@ -63,12 +63,17 @@ public class CreateOrder extends JFrame {
         for (Client client : Videotheque.getInstance().getListClient())
             liClientJcbx.addItem(client);
 
-        JComboBox<String> cBox = new JComboBox<>();
-        cBox.setPreferredSize(new Dimension(400, 15));
+        JComboBox<String> liProductJcbx = new JComboBox<>();
 
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
-            cBox.addItem(produit);
+            liProductJcbx.addItem(produit);
         }
+
+        JComboBox<String> liLoaningJcbx = new JComboBox<>();
+
+        //for (){ remplissage avec la liste des emprunts
+
+        //}
 
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
@@ -84,7 +89,7 @@ public class CreateOrder extends JFrame {
         });
 
         //buttons on the adding loaning page
-        plusProductBtn.addActionListener(e -> addParameter(cBox));
+        plusProductBtn.addActionListener(e -> addParameter(liProductJcbx));
 
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx));
 
@@ -169,7 +174,7 @@ public class CreateOrder extends JFrame {
         //totalPnl.add();
     }
 
-    public void addParameter(JComboBox cBox){
+    public void addParameter(JComboBox liProductJcbx){
 
 
         //select product panel----------------------------------------------------------------------
@@ -177,8 +182,8 @@ public class CreateOrder extends JFrame {
         selectProductPnl.setBackground(Color.white);
         selectProductPnl.setBorder(BorderFactory.createLineBorder(Color.black));
         selectProductPnl.add(choicePrdLbl);
-        selectProductPnl.add(cBox);
-        cBox.setBackground(Color.white);
+        selectProductPnl.add(liProductJcbx);
+        liProductJcbx.setBackground(Color.white);
 
         //select time panel----------------------------------------------------------------------
         selectTimePnl.setLayout(new GridLayout(2,1));
