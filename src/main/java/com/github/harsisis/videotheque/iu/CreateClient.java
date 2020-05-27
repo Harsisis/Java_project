@@ -55,7 +55,7 @@ public class CreateClient extends JFrame {
                 Videotheque.getInstance().ajoutClient(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             } else
-                jop3.showMessageDialog(null, "Veuillez rentrer un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+                jop3.showMessageDialog(null, "Veuillez saisir un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
 
         });
 

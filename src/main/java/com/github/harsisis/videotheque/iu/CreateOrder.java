@@ -1,7 +1,9 @@
 package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.Commande;
 import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,22 +17,28 @@ public class CreateOrder extends JFrame {
     private JPanel titlePnl = new JPanel();//panel to display the title
     private JPanel selectPnl = new JPanel();//panel with list to select a customer
     private JPanel selectProductPnl = new JPanel();//panel with a combo box of all the products
-    private JPanel selectQuantityPnl = new JPanel();//panel to select the quantity of a product
     private JPanel selectTimePnl = new JPanel();//panel to select the rental period
     private JPanel addDelPnl = new JPanel();// panel with add and delete button for product
     private JPanel confirmPnl = new JPanel();// panel with button to cancel or confirm
+    private JPanel confirmPlusPnl = new JPanel();// panel with button to cancel or confirm add product
     private JPanel listProdPnl = new JPanel();//list with all the product includes in the order
     private JPanel totalPnl = new JPanel();// display total price
 
     private JLabel titleLbl = new JLabel("Enregistrer une nouvelle commande :");
     private JLabel productAddLbl = new JLabel("Ajouter ou Supprimer un produit :");
+    private JLabel choicePrdLbl = new JLabel("Choisir un produit :");
     private JLabel choiceClLbl = new JLabel("Choisir un client :");
+    private JLabel durationLbl = new JLabel("Choisir une durée :");
     private JLabel amountLbl = new JLabel("Total :");
 
     private JButton plusProductBtn = new JButton("+");
     private JButton minusProductBtn = new JButton("-");
     private JButton confirmOrderBtn = new JButton("Valider");
     private JButton cancelOrderBtn = new JButton("Annuler");
+    private JButton confirmProductBtn = new JButton("Ajouter");
+    private JButton cancelProductBtn = new JButton("Annuler");
+
+    private JTextField durationJtf = new JTextField();
 
     private JOptionPane jop3 = new JOptionPane();
 
@@ -54,23 +62,6 @@ public class CreateOrder extends JFrame {
             cBox.addItem(produit);
         }
 
-        //manage panel left side of the model-------------------------------------------------------
-        managePnl.setBackground(Color.darkGray);
-        managePnl.setLayout(new GridLayout(7, 1, 10, 10));
-        managePnl.add(titlePnl);
-        managePnl.add(selectPnl);
-        managePnl.add(addDelPnl);
-        managePnl.add(selectProductPnl);
-        managePnl.add(selectQuantityPnl);
-        managePnl.add(selectTimePnl);
-        managePnl.add(confirmPnl);
-
-        //title panel-------------------------------------------------------------------------------
-        titlePnl.add(titleLbl);
-        titlePnl.setBackground(Color.darkGray);
-        titleLbl.setForeground(Color.white);
-
-
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmOrderBtn.addActionListener(e -> {
@@ -83,6 +74,48 @@ public class CreateOrder extends JFrame {
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
+        plusProductBtn.addActionListener(e -> addParameter(cBox));
+
+        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx));
+
+        confirmProductBtn.addActionListener(e -> {
+            if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
+                //Commande.ajoutEmprunt(Videotheque.getInstance().getListStockProduit().keySet().toString(), Integer.parseInt(durationJtf.getText()));
+            }
+            else {
+                jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+            mainPage(liClientJcbx);
+        });
+
+        //display panel-----------------------------------------------------------------------------
+        mainPage(liClientJcbx);
+        displayPnl.setBackground(Color.white);
+        displayPnl.setOpaque(true);
+        displayPnl.setLayout(new BorderLayout());
+        displayPnl.add(managePnl, BorderLayout.WEST);
+        displayPnl.add(workplacePnl, BorderLayout.EAST);
+
+        // set visible------------------------------------------------------------------------------
+        setContentPane(displayPnl);
+        setVisible(true);
+    }
+
+    public void mainPage(JComboBox liClientJcbx){
+        //manage panel left side of the model-------------------------------------------------------
+        managePnl.removeAll();
+        managePnl.setPreferredSize(new Dimension(300,600));
+        managePnl.setBackground(Color.darkGray);
+        managePnl.setLayout(new GridLayout(7, 1, 10, 10));
+        managePnl.add(titlePnl);
+        managePnl.add(selectPnl);
+        managePnl.add(addDelPnl);
+        managePnl.add(confirmPnl);
+
+        //title panel-------------------------------------------------------------------------------
+        titlePnl.add(titleLbl);
+        titlePnl.setBackground(Color.darkGray);
+        titleLbl.setForeground(Color.white);
 
         //select panel------------------------------------------------------------------------------
         selectPnl.setLayout(new GridLayout(2, 1));
@@ -122,16 +155,43 @@ public class CreateOrder extends JFrame {
         totalPnl.setLayout(new GridLayout(1, 4));
         totalPnl.add(amountLbl);
         //totalPnl.add();
+    }
 
-        //display panel-----------------------------------------------------------------------------
-        displayPnl.setBackground(Color.white);
-        displayPnl.setOpaque(true);
-        displayPnl.setLayout(new BorderLayout());
-        displayPnl.add(managePnl, BorderLayout.WEST);
-        displayPnl.add(workplacePnl, BorderLayout.EAST);
+    public void addParameter(JComboBox cBox){
 
-        // set visible------------------------------------------------------------------------------
-        setContentPane(displayPnl);
-        setVisible(true);
+
+        //select product panel----------------------------------------------------------------------
+        selectProductPnl.setLayout(new GridLayout(2,1));
+        selectProductPnl.setBackground(Color.white);
+        selectProductPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        selectProductPnl.add(choicePrdLbl);
+        selectProductPnl.add(cBox);
+        cBox.setBackground(Color.white);
+
+        //select time panel----------------------------------------------------------------------
+        selectTimePnl.setLayout(new GridLayout(2,1));
+        selectTimePnl.setBackground(Color.white);
+        selectTimePnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        selectTimePnl.add(durationLbl);
+        selectTimePnl.add(durationJtf);
+        durationJtf.setBackground(Color.white);
+
+        //confirm add product panel----------------------------------------------------------------
+        confirmPlusPnl.setBackground(Color.white);
+        confirmPlusPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        confirmPlusPnl.add(confirmProductBtn);
+        confirmPlusPnl.add(cancelProductBtn);
+        confirmProductBtn.setBackground(Color.white);
+        cancelProductBtn.setBackground(Color.white);
+
+        //manage panel ----------------------------------------------------------------------------
+        managePnl.removeAll();
+        managePnl.add(titlePnl);
+        managePnl.add(selectProductPnl);
+        managePnl.add(selectTimePnl);
+        managePnl.add(confirmPlusPnl);
+
+        revalidate();
+        managePnl.repaint();
     }
 }
