@@ -9,6 +9,9 @@ import com.github.harsisis.videotheque.util.ValidatorUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class CreateOrder extends JFrame {
 
@@ -31,7 +34,7 @@ public class CreateOrder extends JFrame {
     private JLabel productAddLbl = new JLabel("Ajouter ou Supprimer un produit :");
     private JLabel choicePrdLbl = new JLabel("Choisir un produit :");
     private JLabel choiceClLbl = new JLabel("Choisir un client :");
-    private JLabel durationLbl = new JLabel("Choisir une durée :");
+    private JLabel durationLbl = new JLabel("Saisir une durée (en jour) :");
     private JLabel amountLbl = new JLabel("Total :");
 
     private JButton plusProductBtn = new JButton("+");
@@ -54,7 +57,7 @@ public class CreateOrder extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        managePnl.setPreferredSize(new Dimension(300,600));
+        managePnl.setPreferredSize(new Dimension(400,600));
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
@@ -71,16 +74,16 @@ public class CreateOrder extends JFrame {
 
         JComboBox<String> liLoaningJcbx = new JComboBox<>();
 
-        //for (){ remplissage avec la liste des emprunts
-
-        //}
+        for (int i = 0; i < Commande.getListEmprunt().size(); i++){
+            liLoaningJcbx.addItem((String) Commande.getListEmprunt().get(i));
+        }
 
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmOrderBtn.addActionListener(e -> {
             if (true) {
-                //Videotheque.getInstance().ajoutCommande(liClientJcbx.getSelectedObjects(),);
+                //Videotheque.getInstance().ajoutCommande(liClientJcbx.getSelectedObjects(), Commande.getListEmprunt());
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             } else
                 jop3.showMessageDialog(null, "Veuillez rentrer un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -96,6 +99,10 @@ public class CreateOrder extends JFrame {
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
                 Commande.ajoutEmprunt(Videotheque.getInstance().getListStockProduit().keySet().toString(), Integer.parseInt(durationJtf.getText()));
+                System.out.println(Commande.getListEmprunt());
+                JList listEmprunt = new JList(new Vector<Emprunt>(Commande.getListEmprunt()));
+                //liste produit panel-----------------------------------------------------------------------
+                listProdPnl.add(listEmprunt);
             }
             else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -166,11 +173,15 @@ public class CreateOrder extends JFrame {
         minusProductBtn.setBackground(Color.white);
 
         //liste produit panel-----------------------------------------------------------------------
+        listProdPnl.setPreferredSize(new Dimension(800,550));
+        listProdPnl.setBackground(Color.white);
 
         //total panel-------------------------------------------------------------------------------
+        totalPnl.setPreferredSize(new Dimension(800,50));
         totalPnl.setBackground(Color.darkGray);
         totalPnl.setLayout(new GridLayout(1, 4));
         totalPnl.add(amountLbl);
+        amountLbl.setForeground(Color.white);
         //totalPnl.add();
     }
 
@@ -223,6 +234,7 @@ public class CreateOrder extends JFrame {
 
         selectLoaningPnl.setBackground(Color.white);
         selectLoaningPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        //selectLoaningPnl.add(liLoaningJcbx);
 
         //confirm minus panel------------------------------------------------------------------------
 

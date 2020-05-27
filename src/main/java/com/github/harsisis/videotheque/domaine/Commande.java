@@ -31,6 +31,10 @@ public class Commande {
         return client;
     }
 
+    public static ArrayList getListEmprunt(){
+        return listEmprunt;
+    }
+
     public static boolean ajoutEmprunt(String produitId, int dureeLocation) {
         Emprunt emprunt = new Emprunt(produitId, dureeLocation);
         Videotheque.getInstance().retirerStockProduit(produitId, 1);

@@ -108,7 +108,7 @@ public class CreateHome extends JFrame{
 
         //panel list ------------------------------------------------------------------------------
         listPnl.setBackground(Color.white);
-        listPnl.setPreferredSize(new Dimension(760,600));
+        listPnl.setPreferredSize(new Dimension(700,600));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
@@ -126,7 +126,7 @@ public class CreateHome extends JFrame{
         addQtyProductBtn.setPreferredSize(new Dimension(140, 20));
         //panel
         workPlacePnl.setBackground(Color.darkGray);
-        workPlacePnl.setPreferredSize(new Dimension(180, 600));
+        workPlacePnl.setPreferredSize(new Dimension(200, 600));
         //workPlacePnl.setLayout(new BoxLayout(workPlacePnl, BoxLayout.PAGE_AXIS));
         workPlacePnl.setLayout(new GridLayout(8,1,0,5));
         workPlacePnl.add(addClientBtn);
