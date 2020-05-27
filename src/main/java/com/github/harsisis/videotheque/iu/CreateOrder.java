@@ -2,6 +2,7 @@ package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Commande;
+import com.github.harsisis.videotheque.domaine.Emprunt;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 
@@ -89,7 +90,7 @@ public class CreateOrder extends JFrame {
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
-                //Commande.ajoutEmprunt(Videotheque.getInstance().getListStockProduit().keySet().toString(), Integer.parseInt(durationJtf.getText()));
+                Commande.ajoutEmprunt(Videotheque.getInstance().getListStockProduit().keySet().toString(), Integer.parseInt(durationJtf.getText()));
             }
             else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
