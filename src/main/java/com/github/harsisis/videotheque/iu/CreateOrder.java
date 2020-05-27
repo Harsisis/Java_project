@@ -19,6 +19,8 @@ public class CreateOrder extends JFrame {
     private JPanel selectProductPnl = new JPanel();//panel with a combo box of all the products
     private JPanel selectTimePnl = new JPanel();//panel to select the rental period
     private JPanel addDelPnl = new JPanel();// panel with add and delete button for product
+    private JPanel selectLoaningPnl = new JPanel();// panel with add and delete button for product
+    private JPanel confirmMinusPnl = new JPanel();// panel with add and delete button for product
     private JPanel confirmPnl = new JPanel();// panel with button to cancel or confirm
     private JPanel confirmPlusPnl = new JPanel();// panel with button to cancel or confirm add product
     private JPanel listProdPnl = new JPanel();//list with all the product includes in the order
@@ -37,6 +39,8 @@ public class CreateOrder extends JFrame {
     private JButton cancelOrderBtn = new JButton("Annuler");
     private JButton confirmProductBtn = new JButton("Ajouter");
     private JButton cancelProductBtn = new JButton("Annuler");
+    private JButton confirmDelBtn = new JButton("Supprimer");
+    private JButton cancelDelBtn = new JButton("Annuler");
 
     private JTextField durationJtf = new JTextField();
 
@@ -49,6 +53,9 @@ public class CreateOrder extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        managePnl.setPreferredSize(new Dimension(300,600));
+        managePnl.setBackground(Color.darkGray);
+        managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
         JComboBox<Client> liClientJcbx = new JComboBox<>();
 
@@ -62,6 +69,7 @@ public class CreateOrder extends JFrame {
             cBox.addItem(produit);
         }
 
+        //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmOrderBtn.addActionListener(e -> {
@@ -74,6 +82,7 @@ public class CreateOrder extends JFrame {
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
+        //buttons on the adding loaning page
         plusProductBtn.addActionListener(e -> addParameter(cBox));
 
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx));
@@ -87,6 +96,11 @@ public class CreateOrder extends JFrame {
             }
             mainPage(liClientJcbx);
         });
+
+        //buttons on the delete loaning page
+        minusProductBtn.addActionListener(e -> removeParameter());
+
+        cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx));
 
         //display panel-----------------------------------------------------------------------------
         mainPage(liClientJcbx);
@@ -104,9 +118,6 @@ public class CreateOrder extends JFrame {
     public void mainPage(JComboBox liClientJcbx){
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
-        managePnl.setPreferredSize(new Dimension(300,600));
-        managePnl.setBackground(Color.darkGray);
-        managePnl.setLayout(new GridLayout(7, 1, 10, 10));
         managePnl.add(titlePnl);
         managePnl.add(selectPnl);
         managePnl.add(addDelPnl);
@@ -190,6 +201,31 @@ public class CreateOrder extends JFrame {
         managePnl.add(selectProductPnl);
         managePnl.add(selectTimePnl);
         managePnl.add(confirmPlusPnl);
+
+        revalidate();
+        managePnl.repaint();
+    }
+
+    public void removeParameter(){
+        managePnl.removeAll();
+
+        managePnl.add(titlePnl);
+        managePnl.add(selectLoaningPnl);
+        managePnl.add(confirmMinusPnl);
+
+        //select loaning panel-----------------------------------------------------------------------
+
+        selectLoaningPnl.setBackground(Color.white);
+        selectLoaningPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        //confirm minus panel------------------------------------------------------------------------
+
+        confirmMinusPnl.setBackground(Color.white);
+        confirmMinusPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        confirmMinusPnl.add(confirmDelBtn);
+        confirmMinusPnl.add(cancelDelBtn);
+        confirmDelBtn.setBackground(Color.white);
+        cancelDelBtn.setBackground(Color.white);
 
         revalidate();
         managePnl.repaint();
