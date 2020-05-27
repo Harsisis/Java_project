@@ -74,11 +74,9 @@ public class CreateOrder extends JFrame {
 
         JComboBox<String> liLoaningJcbx = new JComboBox<>();
 
-        for (int i = 0; i < Commande.getListEmprunt().size(); i++){
-            liLoaningJcbx.addItem((String) Commande.getListEmprunt().get(i));
-        }
-
-        JList listEmprunt = new JList(new Vector<Emprunt>(Commande.getListEmprunt()));
+//        for (int i = 0; i < Commande.getListEmprunt().size(); i++){
+//            liLoaningJcbx.addItem((String) Commande.getListEmprunt().get(i));
+//        }
 
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
@@ -96,15 +94,16 @@ public class CreateOrder extends JFrame {
         //buttons on the adding loaning page
         plusProductBtn.addActionListener(e -> addParameter(liProductJcbx));
 
-        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
+        //cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
-                Commande.ajoutEmprunt(Videotheque.getInstance().getListStockProduit().keySet().toString(), Integer.parseInt(durationJtf.getText()));
-                System.out.println(Commande.getListEmprunt());
+                //Commande commande = new Commande();
+                //Commande.ajoutEmprunt(listEmprunt, Integer.parseInt(durationJtf.getText()));
+
                 //liste produit panel-----------------------------------------------------------------------
                 durationJtf.setText("");
-                mainPage(liClientJcbx, listEmprunt);
+                //mainPage(liClientJcbx, listEmprunt);
             }
             else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -114,10 +113,10 @@ public class CreateOrder extends JFrame {
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> removeParameter());
 
-        cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
+        //cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
 
         //display panel-----------------------------------------------------------------------------
-        mainPage(liClientJcbx, listEmprunt);
+        //mainPage(liClientJcbx, listEmprunt);
         displayPnl.setBackground(Color.white);
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());

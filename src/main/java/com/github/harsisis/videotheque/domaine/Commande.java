@@ -11,7 +11,7 @@ public class Commande {
     private LocalDate debutDate;
     private Client client;
 
-    private static ArrayList<Emprunt> listEmprunt = new ArrayList<>();
+    private ArrayList<Emprunt> listEmprunt = new ArrayList<>();
 
     public Commande(Client client, ArrayList<Emprunt> empruntList) {
         this.commandeId = UUID.randomUUID();
@@ -31,11 +31,11 @@ public class Commande {
         return client;
     }
 
-    public static ArrayList getListEmprunt(){
+    public ArrayList getListEmprunt(){
         return listEmprunt;
     }
 
-    public static boolean ajoutEmprunt(String produitId, int dureeLocation) {
+    public boolean ajoutEmprunt(String produitId, int dureeLocation) {
         Emprunt emprunt = new Emprunt(produitId, dureeLocation);
         Videotheque.getInstance().retirerStockProduit(produitId, 1);
         return listEmprunt.add(emprunt);

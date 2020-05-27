@@ -2,18 +2,15 @@ package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Commande;
-import com.github.harsisis.videotheque.domaine.Produit;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
-public class CreateHome extends JFrame{
+public class CreateHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
@@ -33,7 +30,6 @@ public class CreateHome extends JFrame{
     private JMenuItem listEmpty = new JMenuItem("Vider le panneau");
     private JMenuItem quit = new JMenuItem("Quitter");
     private JMenu help = new JMenu("Aide");
-
 
 
     public CreateHome() {
@@ -65,29 +61,29 @@ public class CreateHome extends JFrame{
 
         listUser.addActionListener(e -> {
             listPnl.removeAll();
-            List<Client> clientList = new ArrayList<Client>(Videotheque.getInstance().getListClient());
+            ArrayList<Client> clientList = new ArrayList<>(Videotheque.getInstance().getListClient());
             System.out.println(clientList);
-            JList list = new JList(new Vector<Client>(clientList));
+            JList list = new JList(clientList.toArray());
             listPnl.add(list);
             revalidate();
             listPnl.repaint();
         });
         listCommand.addActionListener(e -> {
             listPnl.removeAll();
-            List<Commande> commandeList = new ArrayList<Commande>(Videotheque.getInstance().getListCommande());
+            ArrayList<Commande> commandeList = new ArrayList<>(Videotheque.getInstance().getListCommande());
             System.out.println(commandeList);
-            JList list = new JList(new Vector<Commande>(commandeList));
+            JList list = new JList(commandeList.toArray());
             listPnl.add(list);
             revalidate();
             listPnl.repaint();
         });
         listProduct.addActionListener(e -> {
             listPnl.removeAll();
-            Vector<String> items = new Vector<>();
+            ArrayList<String> produit = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
-                items.add((entry.getKey() + " | Quantité : " + entry.getValue()));
+                produit.add((entry.getKey() + " | Quantité : " + entry.getValue()));
             }
-            JList list = new JList(items);
+            JList list = new JList(produit.toArray());
             listPnl.add(list);
 //            listPnl.add(listLbl);
 //            listLbl.setText("");
@@ -96,7 +92,6 @@ public class CreateHome extends JFrame{
 //            for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {// display quantity stock
 //                liProduct.append(listLbl.getText()).append("<br>").append(produit);
 //            }
-//
 //            liProduct.append("</html>");
 //            listLbl.setText(liProduct.toString());
             revalidate();
@@ -116,7 +111,7 @@ public class CreateHome extends JFrame{
 
         //panel list ------------------------------------------------------------------------------
         listPnl.setBackground(Color.white);
-        listPnl.setPreferredSize(new Dimension(700,600));
+        listPnl.setPreferredSize(new Dimension(700, 600));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
@@ -136,7 +131,7 @@ public class CreateHome extends JFrame{
         workPlacePnl.setBackground(Color.darkGray);
         workPlacePnl.setPreferredSize(new Dimension(200, 600));
         //workPlacePnl.setLayout(new BoxLayout(workPlacePnl, BoxLayout.PAGE_AXIS));
-        workPlacePnl.setLayout(new GridLayout(8,1,0,5));
+        workPlacePnl.setLayout(new GridLayout(8, 1, 0, 5));
         workPlacePnl.add(addClientBtn);
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
