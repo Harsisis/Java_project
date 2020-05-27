@@ -52,7 +52,7 @@ public class CreateClient extends JFrame {
         confirmClientBtn.addActionListener(e -> {
             if (!saisiNomJtf.getText().equals("") && !saisiPrenomJtf.getText().equals("")) {
                 System.out.println("Nom: " + saisiNomJtf.getText() + "\nPrénom: " + saisiPrenomJtf.getText() + "\nFidèle: " + fideleCbx.isSelected());
-                Videotheque.getInstance().ajoutClient(saisiNomJtf.getText(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
+                Videotheque.getInstance().ajoutClient(saisiNomJtf.getText().toUpperCase(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             } else
                 jop3.showMessageDialog(null, "Veuillez saisir un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);

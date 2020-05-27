@@ -61,10 +61,10 @@ public class CreateOrder extends JFrame {
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
-        JComboBox<Client> liClientJcbx = new JComboBox<>();
+        JComboBox<String> liClientJcbx = new JComboBox<>();
 
         for (Client client : Videotheque.getInstance().getListClient())
-            liClientJcbx.addItem(client);
+            liClientJcbx.addItem(client.getNom() + " " + client.getPrenom() + " | " + client.getClientId());
 
         JComboBox<String> liProductJcbx = new JComboBox<>();
 
@@ -77,6 +77,8 @@ public class CreateOrder extends JFrame {
         for (int i = 0; i < Commande.getListEmprunt().size(); i++){
             liLoaningJcbx.addItem((String) Commande.getListEmprunt().get(i));
         }
+
+        JList listEmprunt = new JList(new Vector<Emprunt>(Commande.getListEmprunt()));
 
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
@@ -94,29 +96,28 @@ public class CreateOrder extends JFrame {
         //buttons on the adding loaning page
         plusProductBtn.addActionListener(e -> addParameter(liProductJcbx));
 
-        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx));
+        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
                 Commande.ajoutEmprunt(Videotheque.getInstance().getListStockProduit().keySet().toString(), Integer.parseInt(durationJtf.getText()));
                 System.out.println(Commande.getListEmprunt());
-                JList listEmprunt = new JList(new Vector<Emprunt>(Commande.getListEmprunt()));
                 //liste produit panel-----------------------------------------------------------------------
-                listProdPnl.add(listEmprunt);
+                durationJtf.setText("");
+                mainPage(liClientJcbx, listEmprunt);
             }
             else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-            mainPage(liClientJcbx);
         });
 
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> removeParameter());
 
-        cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx));
+        cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
 
         //display panel-----------------------------------------------------------------------------
-        mainPage(liClientJcbx);
+        mainPage(liClientJcbx, listEmprunt);
         displayPnl.setBackground(Color.white);
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());
@@ -128,7 +129,7 @@ public class CreateOrder extends JFrame {
         setVisible(true);
     }
 
-    public void mainPage(JComboBox liClientJcbx){
+    public void mainPage(JComboBox liClientJcbx, JList listEmprunt){
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
         managePnl.add(titlePnl);
@@ -173,11 +174,12 @@ public class CreateOrder extends JFrame {
         minusProductBtn.setBackground(Color.white);
 
         //liste produit panel-----------------------------------------------------------------------
-        listProdPnl.setPreferredSize(new Dimension(800,550));
+        listProdPnl.setPreferredSize(new Dimension(800,500));
         listProdPnl.setBackground(Color.white);
+        listProdPnl.add(listEmprunt);
 
         //total panel-------------------------------------------------------------------------------
-        totalPnl.setPreferredSize(new Dimension(800,50));
+        totalPnl.setPreferredSize(new Dimension(750,100));
         totalPnl.setBackground(Color.darkGray);
         totalPnl.setLayout(new GridLayout(1, 4));
         totalPnl.add(amountLbl);
