@@ -2,6 +2,7 @@ package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.*;
 import com.github.harsisis.videotheque.iu.exception.ValidationException;
+import com.github.harsisis.videotheque.util.CapitalizeUtil;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -142,6 +143,9 @@ public class CreateProduct extends JFrame {
             Produit nouveauProduit = buildProduit();
             Videotheque.getInstance().ajoutStockProduit(nouveauProduit.getProduitNom(nouveauProduit), 0);
             System.out.println("Titre : " + saisiTitleJtf.getText() + "\nPrix : " + saisiPriceJtf.getText());
+            JOptionPane.showMessageDialog(this, "Le produit " +
+                    CapitalizeUtil.getCapitalize(saisiTitleJtf.getText()) +
+                    " a bien été crée.", "Succès", JOptionPane.INFORMATION_MESSAGE);
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         } catch (ValidationException ve) {
             JOptionPane.showMessageDialog(this, ve.getMessage(), ve.getTitle(), JOptionPane.WARNING_MESSAGE);

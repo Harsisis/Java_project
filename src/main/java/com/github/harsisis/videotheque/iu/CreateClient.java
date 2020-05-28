@@ -1,6 +1,7 @@
 package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.util.CapitalizeUtil;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -52,7 +53,12 @@ public class CreateClient extends JFrame {
         confirmClientBtn.addActionListener(e -> {
             if (!saisiNomJtf.getText().equals("") && !saisiPrenomJtf.getText().equals("")) {
                 System.out.println("Nom: " + saisiNomJtf.getText() + "\nPrénom: " + saisiPrenomJtf.getText() + "\nFidèle: " + fideleCbx.isSelected());
-                Videotheque.getInstance().ajoutClient(saisiNomJtf.getText().toUpperCase(), saisiPrenomJtf.getText(), fideleCbx.isSelected());
+                Videotheque.getInstance().ajoutClient(saisiNomJtf.getText().toUpperCase(), CapitalizeUtil.getCapitalize(saisiPrenomJtf.getText()), fideleCbx.isSelected());
+                JOptionPane.showMessageDialog(this, "Le client " +
+                        saisiNomJtf.getText().toUpperCase() +
+                        " " +
+                        CapitalizeUtil.getCapitalize(saisiPrenomJtf.getText()) +
+                        " a bien été créé.", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             } else
                 jop3.showMessageDialog(null, "Veuillez saisir un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);

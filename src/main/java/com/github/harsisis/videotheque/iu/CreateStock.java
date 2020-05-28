@@ -62,6 +62,8 @@ public class CreateStock extends JFrame {
         workPlacePnl.setLayout(new GridLayout(4, 1, 0, 5));
         workPlacePnl.add(ProductLbl);
         workPlacePnl.add(cBox);
+
+        cBox.setBackground(Color.white);
         workPlacePnl.add(QuantityLbl);
         workPlacePnl.add(saisiQuantityJtf);
 

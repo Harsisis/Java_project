@@ -12,10 +12,12 @@ import java.util.Map;
 
 public class CreateHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
-    private JPanel workPlacePnl = new JPanel();// panel with a list of all customers registered
+    private JPanel workPlacePnl = new JPanel();// panel with a list of all customers, orders and products registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
+    private JPanel dataPnl = new JPanel();//panel at the right with listPnl and indicationPnl
+    private JPanel indicationPnl = new JPanel();//panel with a label which change when you are clicking on the "afficher la liste des ..." from menu
 
-    private JLabel listLbl = new JLabel(); // Label where i write all
+    private JLabel indicationLbl = new JLabel(); // Label where i write all
 
     private JButton addClientBtn = new JButton("Ajouter un client");
     private JButton addOrderBtn = new JButton("Ajouter une commande");
@@ -65,53 +67,68 @@ public class CreateHome extends JFrame {
             System.out.println(clientList);
             JList list = new JList(clientList.toArray());
             listPnl.add(list);
+            indicationLbl.setText("Liste des Clients :");
             revalidate();
             listPnl.repaint();
+            indicationPnl.repaint();
         });
         listCommand.addActionListener(e -> {
             listPnl.removeAll();
-            ArrayList<Commande> commandeList = new ArrayList<>(Videotheque.getInstance().getListCommande());
-            System.out.println(commandeList);
-            JList list = new JList(commandeList.toArray());
+            ArrayList<String> liCommande = new ArrayList<>();
+            for(Commande commande : Videotheque.getInstance().getListCommande()){
+                liCommande.add(commande.getCommandeId() +
+                        " | " +
+                        commande.getClient().getNom() +
+                        " " +
+                        commande.getClient().getPrenom());
+            }
+            JList list = new JList(liCommande.toArray());
             listPnl.add(list);
+            indicationLbl.setText("Liste des Commandes :");
             revalidate();
             listPnl.repaint();
+            indicationPnl.repaint();
         });
         listProduct.addActionListener(e -> {
             listPnl.removeAll();
             ArrayList<String> produit = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
-                produit.add((entry.getKey() + " | Quantité : " + entry.getValue()));
+                produit.add((entry.getKey() + " | " + entry.getValue()));
             }
             JList list = new JList(produit.toArray());
             listPnl.add(list);
-//            listPnl.add(listLbl);
-//            listLbl.setText("");
-//            StringBuilder liProduct = new StringBuilder();
-//            liProduct.append("<html>");
-//            for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {// display quantity stock
-//                liProduct.append(listLbl.getText()).append("<br>").append(produit);
-//            }
-//            liProduct.append("</html>");
-//            listLbl.setText(liProduct.toString());
+            indicationLbl.setText("Liste des Produits :");
             revalidate();
             listPnl.repaint();
+            indicationPnl.repaint();
         });
 
         listEmpty.addActionListener(e -> {
             listPnl.removeAll();
+            indicationLbl.setText("");
             revalidate();
             listPnl.repaint();
+            indicationPnl.repaint();
         });
 
         quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         setJMenuBar(menuBar);
 
+        //data panel -----------------------------------------------------------------------------
+        dataPnl.add(listPnl, BorderLayout.SOUTH);
+        dataPnl.add(indicationLbl, BorderLayout.NORTH);
+
+        //indication panel ------------------------------------------------------------------------
+        indicationPnl.add(indicationLbl);
+        indicationLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        indicationLbl.setAlignmentY(Component.CENTER_ALIGNMENT);
+        indicationPnl.setPreferredSize(new Dimension(700,100));
+        indicationPnl.setBorder(BorderFactory.createLineBorder(Color.black));
 
         //panel list ------------------------------------------------------------------------------
         listPnl.setBackground(Color.white);
-        listPnl.setPreferredSize(new Dimension(700, 600));
+        listPnl.setPreferredSize(new Dimension(700, 500));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
@@ -142,7 +159,7 @@ public class CreateHome extends JFrame {
         displayPnl.setBackground(Color.WHITE);
         displayPnl.setLayout(new BorderLayout());
         displayPnl.add(workPlacePnl, BorderLayout.WEST);
-        displayPnl.add(listPnl, BorderLayout.EAST);
+        displayPnl.add(dataPnl, BorderLayout.EAST);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);

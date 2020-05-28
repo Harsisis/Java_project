@@ -71,11 +71,16 @@ public class CreateOrder extends JFrame {
             liProductJcbx.addItem(produit);
         }
 
-        JComboBox<String> liLoaningJcbx = new JComboBox<>();
+        ArrayList<String> liCommande = new ArrayList<>();
+        for(Commande commande : Videotheque.getInstance().getListCommande()){
+            liCommande.add(commande.getCommandeId() +
+                    " | " +
+                    commande.getClient().getNom() +
+                    " " +
+                    commande.getClient().getPrenom());
+        }
+        JList listCommand = new JList(liCommande.toArray());
 
-//        for (int i = 0; i < Commande.getListEmprunt().size(); i++){
-//            liLoaningJcbx.addItem((String) Commande.getListEmprunt().get(i));
-//        }
 
         Commande commande = new Commande();
 
@@ -95,7 +100,7 @@ public class CreateOrder extends JFrame {
         //buttons on the adding loaning page
         plusProductBtn.addActionListener(e -> addParameter(liProductJcbx));
 
-        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx));
+        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, listCommand));
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
@@ -103,7 +108,7 @@ public class CreateOrder extends JFrame {
 
                 //liste produit panel-----------------------------------------------------------------------
                 durationJtf.setText("");
-                mainPage(liClientJcbx);
+                mainPage(liClientJcbx, listCommand);
             }
             else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -113,10 +118,10 @@ public class CreateOrder extends JFrame {
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> removeParameter());
 
-        cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx));
+        cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx, listCommand));
 
         //display panel-----------------------------------------------------------------------------
-        mainPage(liClientJcbx);
+        mainPage(liClientJcbx, listCommand);
         displayPnl.setBackground(Color.white);
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());
@@ -128,7 +133,7 @@ public class CreateOrder extends JFrame {
         setVisible(true);
     }
 
-    public void mainPage(JComboBox liClientJcbx){
+    public void mainPage(JComboBox liClientJcbx, JList listCommande){
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
         managePnl.add(titlePnl);
@@ -175,6 +180,7 @@ public class CreateOrder extends JFrame {
         //liste produit panel-----------------------------------------------------------------------
         listProdPnl.setPreferredSize(new Dimension(800,500));
         listProdPnl.setBackground(Color.white);
+        listProdPnl.add(listCommande);
 
         //total panel-------------------------------------------------------------------------------
         totalPnl.setPreferredSize(new Dimension(750,100));
