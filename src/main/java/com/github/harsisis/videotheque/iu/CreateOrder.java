@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 public class CreateOrder extends JFrame {
 
@@ -61,10 +59,11 @@ public class CreateOrder extends JFrame {
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
-        JComboBox<String> liClientJcbx = new JComboBox<>();
+        JComboBox<Client> liClientJcbx = new JComboBox<>();
 
-        for (Client client : Videotheque.getInstance().getListClient())
-            liClientJcbx.addItem(client.getNom() + " " + client.getPrenom() + " | " + client.getClientId());
+        for (Client client : Videotheque.getInstance().getListClient()) {
+            liClientJcbx.addItem(client);
+        }
 
         JComboBox<String> liProductJcbx = new JComboBox<>();
 
@@ -78,12 +77,14 @@ public class CreateOrder extends JFrame {
 //            liLoaningJcbx.addItem((String) Commande.getListEmprunt().get(i));
 //        }
 
+        Commande commande = new Commande();
+
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmOrderBtn.addActionListener(e -> {
             if (true) {
-                //Videotheque.getInstance().ajoutCommande(liClientJcbx.getSelectedObjects(), Commande.getListEmprunt());
+                Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), commande.getListEmprunt());
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             } else
                 jop3.showMessageDialog(null, "Veuillez rentrer un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -94,16 +95,15 @@ public class CreateOrder extends JFrame {
         //buttons on the adding loaning page
         plusProductBtn.addActionListener(e -> addParameter(liProductJcbx));
 
-        //cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
+        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx));
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
-                //Commande commande = new Commande();
-                //Commande.ajoutEmprunt(listEmprunt, Integer.parseInt(durationJtf.getText()));
+               commande.ajoutEmprunt(liProductJcbx.getSelectedItem().toString(), Integer.parseInt(durationJtf.getText()));
 
                 //liste produit panel-----------------------------------------------------------------------
                 durationJtf.setText("");
-                //mainPage(liClientJcbx, listEmprunt);
+                mainPage(liClientJcbx);
             }
             else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -113,10 +113,10 @@ public class CreateOrder extends JFrame {
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> removeParameter());
 
-        //cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx, listEmprunt));
+        cancelDelBtn.addActionListener(e -> mainPage(liClientJcbx));
 
         //display panel-----------------------------------------------------------------------------
-        //mainPage(liClientJcbx, listEmprunt);
+        mainPage(liClientJcbx);
         displayPnl.setBackground(Color.white);
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());
@@ -128,7 +128,7 @@ public class CreateOrder extends JFrame {
         setVisible(true);
     }
 
-    public void mainPage(JComboBox liClientJcbx, JList listEmprunt){
+    public void mainPage(JComboBox liClientJcbx){
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
         managePnl.add(titlePnl);
@@ -175,7 +175,6 @@ public class CreateOrder extends JFrame {
         //liste produit panel-----------------------------------------------------------------------
         listProdPnl.setPreferredSize(new Dimension(800,500));
         listProdPnl.setBackground(Color.white);
-        listProdPnl.add(listEmprunt);
 
         //total panel-------------------------------------------------------------------------------
         totalPnl.setPreferredSize(new Dimension(750,100));

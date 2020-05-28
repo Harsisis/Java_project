@@ -1,32 +1,16 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.CD;
-import com.github.harsisis.videotheque.domaine.CategorieLivre;
-import com.github.harsisis.videotheque.domaine.DVD;
-import com.github.harsisis.videotheque.domaine.Dictionnaire;
-import com.github.harsisis.videotheque.domaine.Livre;
-import com.github.harsisis.videotheque.domaine.Produit;
-import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.domaine.*;
 import com.github.harsisis.videotheque.iu.exception.ValidationException;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.WindowEvent;
+import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+import java.awt.*;
+import java.awt.event.*;
 
 public class CreateProduct extends JFrame {
 
@@ -69,6 +53,7 @@ public class CreateProduct extends JFrame {
     private final JComboBox<String> selectLangJcbx = new JComboBox<>(nameLang);
 
     public CreateProduct() {
+        saisiYearJtf.setDocument(new JTextFieldLimit(4));
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un produit");
         setSize(600, 400);
@@ -274,5 +259,23 @@ public class CreateProduct extends JFrame {
         }
         revalidate();
         placeHolderPnl.repaint();
+    }
+    class JTextFieldLimit extends PlainDocument {
+        private int limit;
+        JTextFieldLimit(int limit) {
+            super();
+            this.limit = limit;
+        }
+        JTextFieldLimit(int limit, boolean upper) {
+            super();
+            this.limit = limit;
+        }
+        public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+            if (str == null)
+                return;
+            if ((getLength() + str.length()) <= limit) {
+                super.insertString(offset, str, attr);
+            }
+        }
     }
 }

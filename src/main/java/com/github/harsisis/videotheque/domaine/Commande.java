@@ -19,6 +19,9 @@ public class Commande {
         this.debutDate = LocalDate.now();
     }
 
+    public Commande() {
+    }
+
     public String getCommandeId() {
         return commandeId.toString();
     }
