@@ -17,7 +17,7 @@ public class CreateHome extends JFrame {
     private JPanel dataPnl = new JPanel();//panel at the right with listPnl and indicationPnl
     private JPanel indicationPnl = new JPanel();//panel with a label which change when you are clicking on the "afficher la liste des ..." from menu
 
-    private JLabel indicationLbl = new JLabel(); // Label where i write all
+    private JLabel indicationLbl = new JLabel("Liste"); // Label where i write all
 
     private JButton addClientBtn = new JButton("Ajouter un client");
     private JButton addOrderBtn = new JButton("Ajouter une commande");
@@ -105,7 +105,7 @@ public class CreateHome extends JFrame {
 
         listEmpty.addActionListener(e -> {
             listPnl.removeAll();
-            indicationLbl.setText("");
+            indicationLbl.setText("Liste");
             revalidate();
             listPnl.repaint();
             indicationPnl.repaint();
@@ -116,13 +116,14 @@ public class CreateHome extends JFrame {
         setJMenuBar(menuBar);
 
         //data panel -----------------------------------------------------------------------------
-        dataPnl.add(listPnl, BorderLayout.SOUTH);
-        dataPnl.add(indicationLbl, BorderLayout.NORTH);
+        dataPnl.add(listPnl);
 
         //indication panel ------------------------------------------------------------------------
         indicationPnl.add(indicationLbl);
+        indicationLbl.setForeground(Color.white);
         indicationLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
         indicationLbl.setAlignmentY(Component.CENTER_ALIGNMENT);
+        indicationPnl.setBackground(Color.blue);
         indicationPnl.setPreferredSize(new Dimension(700,100));
         indicationPnl.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -147,12 +148,12 @@ public class CreateHome extends JFrame {
         //panel
         workPlacePnl.setBackground(Color.darkGray);
         workPlacePnl.setPreferredSize(new Dimension(200, 600));
-        //workPlacePnl.setLayout(new BoxLayout(workPlacePnl, BoxLayout.PAGE_AXIS));
         workPlacePnl.setLayout(new GridLayout(8, 1, 0, 5));
         workPlacePnl.add(addClientBtn);
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
         workPlacePnl.add(addQtyProductBtn);
+        workPlacePnl.add(indicationLbl);
 
         //panel display----------------------------------------------------------------------------
         // I can display only one panel then all the other panels are stocked in displayPnl
