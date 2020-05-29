@@ -2,6 +2,7 @@ package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Commande;
+import com.github.harsisis.videotheque.domaine.Produit;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
@@ -40,7 +41,7 @@ public class WindowHome extends JFrame {
 
         // set window settings --------------------------------------------------------------------
         setTitle("Application");
-        setSize(900, 600);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,25 +66,30 @@ public class WindowHome extends JFrame {
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
 
+        DefaultTableModel modelProduit = new DefaultTableModel();
+        JTable tableProduit = new JTable(modelProduit);
+
         defineClientTable(modelClient, tableClient);
 
         defineCommandeTable(modelCommande, tableCommande);
+
+        defineProduitTable(modelProduit, tableProduit);
 
         listUser.addActionListener(e -> createClientTable(modelClient, tableClient));
 
         listCommand.addActionListener(e -> createCommandeTable(modelCommande, tableCommande));
 
-        listProduct.addActionListener(e -> {
-            listPnl.removeAll();
-            ArrayList<String> produit = new ArrayList<>();
-            for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
-                produit.add((entry.getKey() + " | " + entry.getValue()));
-            }
-            JList list = new JList(produit.toArray());
-            listPnl.add(list);
-            indicationLbl.setText("Liste des Produits :");
-            revalidate();
-            listPnl.repaint();
+        listProduct.addActionListener(e -> { createProduitTable(modelProduit, tableProduit);
+            //listPnl.removeAll();
+            //ArrayList<String> produit = new ArrayList<>();
+            //for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
+            //    produit.add((entry.getKey() + " | " + entry.getValue()));
+            //}
+            //JList list = new JList(produit.toArray());
+            //listPnl.add(list);
+            //indicationLbl.setText("Liste des Produits :");
+            //revalidate();
+            //listPnl.repaint();
         });
 
         listEmpty.addActionListener(e -> {
@@ -99,7 +105,7 @@ public class WindowHome extends JFrame {
 
         //panel list ------------------------------------------------------------------------------
         listPnl.setBackground(Color.white);
-        listPnl.setPreferredSize(new Dimension(700, 600));
+        listPnl.setPreferredSize(new Dimension(750, 600));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
@@ -140,7 +146,7 @@ public class WindowHome extends JFrame {
     }
 
     private void defineClientTable(DefaultTableModel modelClient, JTable tableClient) {
-        modelClient.addColumn("ID utilisateur");
+        modelClient.addColumn("ID client");
         modelClient.addColumn("Nom");
         modelClient.addColumn("Prénom");
         modelClient.addColumn("Fidèle");
@@ -155,7 +161,7 @@ public class WindowHome extends JFrame {
                 column.setPreferredWidth(100);//column fidele
             }
             else {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(150);//columns nom and prenom
             }
         }
     }
@@ -165,6 +171,7 @@ public class WindowHome extends JFrame {
             modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
         }
         scrollPane = new JScrollPane(tableClient);
+        scrollPane.setPreferredSize(new Dimension(720,500));
         tableClient.setFillsViewportHeight(true);
         listPnl.add(scrollPane);
         indicationLbl.setText("Liste des Clients :");
@@ -180,13 +187,13 @@ public class WindowHome extends JFrame {
         for(int i = 0; i<=2; i++){
             column = tableCommande.getColumnModel().getColumn(i);
             if (i == 0){
-                column.setPreferredWidth(800);//column ID
+                column.setPreferredWidth(300);//column ID
             }
             else if(i == 1){
-                column.setPreferredWidth(800);//column fidele
+                column.setPreferredWidth(500);//column Client
             }
             else {
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(100);
             }
         }
     }
@@ -196,9 +203,31 @@ public class WindowHome extends JFrame {
             modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
+        scrollPane.setPreferredSize(new Dimension(720,500));
         tableCommande.setFillsViewportHeight(true);
         listPnl.add(scrollPane);
         indicationLbl.setText("Liste des Commandes :");
+        revalidate();
+        listPnl.repaint();
+    }
+
+        private void defineProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
+            modelProduit.addColumn("Produit");
+            modelProduit.addColumn("Quantité");
+
+            tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);
+            tableProduit.getColumnModel().getColumn(1).setPreferredWidth(150);
+    }
+    private void createProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
+        listPnl.removeAll();
+        for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
+                //modelProduit.addRow(entry.getKey(), entry.getValue().toString());
+            }
+        scrollPane = new JScrollPane(tableProduit);
+        scrollPane.setPreferredSize(new Dimension(720,500));
+        tableProduit.setFillsViewportHeight(true);
+        listPnl.add(scrollPane);
+        indicationLbl.setText("Liste des Produits :");
         revalidate();
         listPnl.repaint();
     }

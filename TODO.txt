@@ -8,7 +8,7 @@ Fonctions à implémenter :
 - [x] ajouter un produit au stock
 
 A fixer :
-- [ ] Faire jolie lest listes (basculer une page)
+- [x] Faire jolie les listes (basculer une page)
 - [x] Faire en sorte où on voit qu’on on a réussi à créer le produit j option pane avec "le produit "+inserez produit+" a bien été crée"
 - [ ] vérification des saisies = empecher de mettre des lettres dans tarif
 - [ ] Écrire les Junits test
@@ -16,11 +16,13 @@ A fixer :
 - [ ] Gestion des dates
 - [x] Trouver une alternative à l’html (format text field)
 - [x] Pas stocker les produits et plutôt des uuid
+- [ ] Empecher la creation d'une commande si client vide
   
 ui :
 - [x] Modifier la liste d'affichage produits pour mettre la quantité en stock
-- [ ] Créer la liste d'affichage des commandes
-- [ ] Ajouter et enlever un produit à une commande
+- [x] Créer la liste d'affichage des commandes
+- [x] Ajouter un produit à une commande
+- [ ] Enlever un produit à une commande
 - [ ] Modifier une commande
-- [ ] problème plusieurs selection possible pour la création d'un livre
+- [x] problème plusieurs selection possible pour la création d'un livre
 

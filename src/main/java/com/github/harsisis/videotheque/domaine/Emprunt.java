@@ -14,6 +14,10 @@ public class Emprunt {
         this.produit = produit;
     }
 
+    public String getEmpruntId() {
+        return empruntId.toString();
+    }
+
     public Produit getProduit() {
         return produit;
     }

@@ -31,7 +31,7 @@ public class WindowStock extends JFrame {
 
     public WindowStock() {    // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Stock");
-        setSize(500, 400);
+        setSize(500, 300);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

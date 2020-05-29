@@ -49,9 +49,10 @@ public class Videotheque {
         return listClient.add(client);
     }
 
-    public boolean ajoutCommande(Client client, ArrayList<Emprunt> empruntList) {
+    public Commande ajoutCommande(Client client, ArrayList<Emprunt> empruntList) {
         Commande commande = new Commande(client, empruntList);
-        return listCommande.add(commande);
+        listCommande.add(commande);
+        return commande;
     }
 
     public void ajoutStockProduit(String produitId, int quantity) {
