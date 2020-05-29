@@ -17,7 +17,6 @@ public class Main {
     public static void main(String[] args) {
         //create window
         CreateHome video = new CreateHome();
-        System.out.println("za marche");
 
     }
 }
