@@ -82,8 +82,6 @@ public class WindowOrder extends JFrame {
 
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
-        defineCommandeTable(modelCommande, tableCommande);
-        createCommandeTable(modelCommande, tableCommande);
 
         ArrayList<Emprunt> emprunts = new ArrayList<>();
 
@@ -103,7 +101,7 @@ public class WindowOrder extends JFrame {
         //buttons on the adding loaning page
         plusProductBtn.addActionListener(e -> addParameter(liProductJcbx));
 
-        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx));
+        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
@@ -128,17 +126,21 @@ public class WindowOrder extends JFrame {
         minusProductBtn.addActionListener(e -> removeParameter());
 
         cancelDelBtn.addActionListener(e -> {
-            mainPage(liClientJcbx);
+            mainPage(liClientJcbx, modelCommande, tableCommande);
             createCommandeTable(modelCommande, tableCommande);
         });
 
         //display panel-----------------------------------------------------------------------------
-        mainPage(liClientJcbx);
+        mainPage(liClientJcbx, modelCommande, tableCommande);
         displayPnl.setBackground(Color.white);
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());
         displayPnl.add(managePnl, BorderLayout.WEST);
         displayPnl.add(workplacePnl, BorderLayout.EAST);
+
+        amountLbl.setBorder(new EmptyBorder(0,10,0,20));
+        listProdPnl.setPreferredSize(new Dimension(800,500));
+        totalPnl.setPreferredSize(new Dimension(800,100));
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
@@ -151,7 +153,10 @@ public class WindowOrder extends JFrame {
         modelEmprunt.addColumn("Durée");
     }
 
-    public void mainPage(JComboBox liClientJcbx){
+    public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande){
+
+        defineCommandeTable(modelCommande, tableCommande);
+        createCommandeTable(modelCommande, tableCommande);
 
         //title panel-------------------------------------------------------------------------------
         titlePnl.add(titleLbl);
@@ -190,18 +195,13 @@ public class WindowOrder extends JFrame {
         minusProductBtn.setBackground(Color.white);
 
         //liste produit panel-----------------------------------------------------------------------
-        listProdPnl.setPreferredSize(new Dimension(800,500));
         listProdPnl.setBackground(Color.white);
 
         //total panel-------------------------------------------------------------------------------
-        totalPnl.setPreferredSize(new Dimension(800,100));
         totalPnl.setLayout(new BorderLayout());
         totalPnl.setBackground(Color.DARK_GRAY);
         totalPnl.add(amountLbl, BorderLayout.EAST);
         amountLbl.setForeground(Color.white);
-        amountLbl.setBackground(Color.red);
-        amountLbl.setBorder(new EmptyBorder(0,10,0,20));
-        //totalPnl.add();
 
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
@@ -212,10 +212,12 @@ public class WindowOrder extends JFrame {
 
         revalidate();
         managePnl.repaint();
+        listProdPnl.repaint();
     }
 
     public void addParameter(JComboBox liProductJcbx){
 
+        listProdPnl.removeAll();
 
         //select product panel----------------------------------------------------------------------
         selectProductPnl.setLayout(new GridLayout(2,1));
@@ -251,10 +253,12 @@ public class WindowOrder extends JFrame {
 
         revalidate();
         managePnl.repaint();
+        listProdPnl.repaint();
     }
 
     public void removeParameter(){
         managePnl.removeAll();
+        listProdPnl.removeAll();
 
         managePnl.add(titlePnl);
         managePnl.add(selectLoaningPnl);
@@ -277,6 +281,7 @@ public class WindowOrder extends JFrame {
 
         revalidate();
         managePnl.repaint();
+        listProdPnl.repaint();
     }
 
     private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {

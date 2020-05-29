@@ -24,5 +24,13 @@ ui :
 - [x] Ajouter un produit à une commande
 - [ ] Enlever un produit à une commande
 - [ ] Modifier une commande
-- [x] problème plusieurs selection possible pour la création d'un livre
+- [x] Problème plusieurs selection possible pour la création d'un livre
+- [x] Affichage commande plus et moi dans commande
+
+
+
+A faire :
+- [ ] Afficher liste emprunt
+- [ ] Afficher liste produit sur l'accueil
+- [ ] Afficher les emprunts dans une comboBox
 
