@@ -74,26 +74,18 @@ public class WindowOrder extends JFrame {
         ArrayList<String> liCommande = new ArrayList<>();
         for(Commande commande : Videotheque.getInstance().getListCommande()){
             liCommande.add(commande.getCommandeId() +
-                    " | " +
-                    commande.getClient().getNom() +
-                    " " +
-                    commande.getClient().getPrenom());
+                    " | " + commande.getClient().getNom() +
+                    " " + commande.getClient().getPrenom());
         }
         JList listCommand = new JList(liCommande.toArray());
 
-
-        Commande commande = new Commande();
+        ArrayList<Emprunt> emprunts = new ArrayList<>();
 
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmOrderBtn.addActionListener(e -> {
-            if (true) {
-                Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), commande.getListEmprunt());
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            } else
-                jop3.showMessageDialog(null, "Veuillez rentrer un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
-
+            Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
@@ -104,8 +96,7 @@ public class WindowOrder extends JFrame {
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {
-               commande.ajoutEmprunt(liProductJcbx.getSelectedItem().toString(), Integer.parseInt(durationJtf.getText()));
-
+               emprunts.add(new Emprunt(liProductJcbx.getSelectedItem().toString(), Integer.parseInt(durationJtf.getText())));
                 //liste produit panel-----------------------------------------------------------------------
                 durationJtf.setText("");
                 mainPage(liClientJcbx, listCommand);

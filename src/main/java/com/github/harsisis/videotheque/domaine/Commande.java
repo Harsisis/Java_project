@@ -34,14 +34,8 @@ public class Commande {
         return client;
     }
 
-    public ArrayList getListEmprunt(){
+    public ArrayList getListEmprunt() {
         return listEmprunt;
-    }
-
-    public boolean ajoutEmprunt(String produitId, int dureeLocation) {
-        Emprunt emprunt = new Emprunt(produitId, dureeLocation);
-        Videotheque.getInstance().retirerStockProduit(produitId, 1);
-        return listEmprunt.add(emprunt);
     }
 
     public void supEmprunt(Produit numeroEmprunt) {
