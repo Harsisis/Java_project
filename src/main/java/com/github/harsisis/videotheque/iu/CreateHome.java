@@ -5,6 +5,8 @@ import com.github.harsisis.videotheque.domaine.Commande;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -14,8 +16,6 @@ public class CreateHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers, orders and products registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
-    private JPanel dataPnl = new JPanel();//panel at the right with listPnl and indicationPnl
-    private JPanel indicationPnl = new JPanel();//panel with a label which change when you are clicking on the "afficher la liste des ..." from menu
 
     private JLabel indicationLbl = new JLabel("Liste"); // Label where i write all
 
@@ -32,6 +32,8 @@ public class CreateHome extends JFrame {
     private JMenuItem listEmpty = new JMenuItem("Vider le panneau");
     private JMenuItem quit = new JMenuItem("Quitter");
     private JMenu help = new JMenu("Aide");
+
+    private JScrollPane scrollPane;
 
 
     public CreateHome() {
@@ -61,16 +63,44 @@ public class CreateHome extends JFrame {
         li.add(listProduct);
         li.add(listEmpty);
 
+        //Table definition ---------------------------------------------------------------------------
+        DefaultTableModel modelUser = new DefaultTableModel();
+        JTable tableUser = new JTable(modelUser);
+
+        modelUser.addColumn("ID utilisateur");
+        modelUser.addColumn("Nom");
+        modelUser.addColumn("Prénom");
+        modelUser.addColumn("Fidèle");
+
+        TableColumn column = null;
+        for(int i = 0; i<=3; i++){
+            column = tableUser.getColumnModel().getColumn(i);
+            if (i == 0){
+                column.setPreferredWidth(300);//column ID
+            }
+            else if(i == 3){
+                column.setPreferredWidth(100);//column fidele
+            }
+            else {
+                column.setPreferredWidth(150);
+            }
+        }
+
         listUser.addActionListener(e -> {
             listPnl.removeAll();
-            ArrayList<Client> clientList = new ArrayList<>(Videotheque.getInstance().getListClient());
-            System.out.println(clientList);
-            JList list = new JList(clientList.toArray());
-            listPnl.add(list);
+            //ArrayList<Client> clientList = new ArrayList<>(Videotheque.getInstance().getListClient());
+            //System.out.println(clientList);
+
+            for (Client client : Videotheque.getInstance().getListClient()) {
+                modelUser.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
+            }
+            scrollPane = new JScrollPane(tableUser);
+            tableUser.setFillsViewportHeight(true);
+            listPnl.add(scrollPane);
+
             indicationLbl.setText("Liste des Clients :");
             revalidate();
             listPnl.repaint();
-            indicationPnl.repaint();
         });
         listCommand.addActionListener(e -> {
             listPnl.removeAll();
@@ -87,7 +117,6 @@ public class CreateHome extends JFrame {
             indicationLbl.setText("Liste des Commandes :");
             revalidate();
             listPnl.repaint();
-            indicationPnl.repaint();
         });
         listProduct.addActionListener(e -> {
             listPnl.removeAll();
@@ -100,7 +129,6 @@ public class CreateHome extends JFrame {
             indicationLbl.setText("Liste des Produits :");
             revalidate();
             listPnl.repaint();
-            indicationPnl.repaint();
         });
 
         listEmpty.addActionListener(e -> {
@@ -108,28 +136,15 @@ public class CreateHome extends JFrame {
             indicationLbl.setText("Liste");
             revalidate();
             listPnl.repaint();
-            indicationPnl.repaint();
         });
 
         quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         setJMenuBar(menuBar);
 
-        //data panel -----------------------------------------------------------------------------
-        dataPnl.add(listPnl);
-
-        //indication panel ------------------------------------------------------------------------
-        indicationPnl.add(indicationLbl);
-        indicationLbl.setForeground(Color.white);
-        indicationLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
-        indicationLbl.setAlignmentY(Component.CENTER_ALIGNMENT);
-        indicationPnl.setBackground(Color.blue);
-        indicationPnl.setPreferredSize(new Dimension(700,100));
-        indicationPnl.setBorder(BorderFactory.createLineBorder(Color.black));
-
         //panel list ------------------------------------------------------------------------------
         listPnl.setBackground(Color.white);
-        listPnl.setPreferredSize(new Dimension(700, 500));
+        listPnl.setPreferredSize(new Dimension(700, 600));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
@@ -145,22 +160,24 @@ public class CreateHome extends JFrame {
         addQtyProductBtn.setBackground(Color.white);
         addQtyProductBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         addQtyProductBtn.setPreferredSize(new Dimension(140, 20));
+
+        indicationLbl.setForeground(Color.white);
         //panel
         workPlacePnl.setBackground(Color.darkGray);
         workPlacePnl.setPreferredSize(new Dimension(200, 600));
         workPlacePnl.setLayout(new GridLayout(8, 1, 0, 5));
+        workPlacePnl.add(indicationLbl);
         workPlacePnl.add(addClientBtn);
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
         workPlacePnl.add(addQtyProductBtn);
-        workPlacePnl.add(indicationLbl);
 
         //panel display----------------------------------------------------------------------------
         // I can display only one panel then all the other panels are stocked in displayPnl
         displayPnl.setBackground(Color.WHITE);
         displayPnl.setLayout(new BorderLayout());
         displayPnl.add(workPlacePnl, BorderLayout.WEST);
-        displayPnl.add(dataPnl, BorderLayout.EAST);
+        displayPnl.add(listPnl, BorderLayout.EAST);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
