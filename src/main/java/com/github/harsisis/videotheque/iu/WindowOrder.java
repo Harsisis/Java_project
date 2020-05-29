@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-public class CreateOrder extends JFrame {
+public class WindowOrder extends JFrame {
 
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel managePnl = new JPanel();// panel with client list, add button, confirm button and cancel button
@@ -48,7 +48,7 @@ public class CreateOrder extends JFrame {
 
     private JOptionPane jop3 = new JOptionPane();
 
-    public CreateOrder() {
+    public WindowOrder() {
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'une Commande");
         setSize(1200, 600);

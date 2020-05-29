@@ -13,7 +13,7 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.*;
 
-public class CreateProduct extends JFrame {
+public class WindowProduct extends JFrame {
 
     private static final JTextField saisiTitleJtf = new JTextField();
     private static final JTextField saisiPriceJtf = new JTextField();
@@ -53,7 +53,7 @@ public class CreateProduct extends JFrame {
     String[] nameLang = new String[]{"Français", "Anglais", "Espagnol", "Italien", "Allemand"};
     private final JComboBox<String> selectLangJcbx = new JComboBox<>(nameLang);
 
-    public CreateProduct() {
+    public WindowProduct() {
         saisiYearJtf.setDocument(new JTextFieldLimit(4));
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un produit");

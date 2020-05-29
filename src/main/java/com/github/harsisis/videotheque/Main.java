@@ -1,6 +1,6 @@
 package com.github.harsisis.videotheque;
 
-import com.github.harsisis.videotheque.iu.CreateHome;
+import com.github.harsisis.videotheque.iu.WindowHome;
 
 //Convention nommage
 //  CSTE : ABC_DEF
@@ -16,7 +16,7 @@ import com.github.harsisis.videotheque.iu.CreateHome;
 public class Main {
     public static void main(String[] args) {
         //create window
-        CreateHome video = new CreateHome();
+        WindowHome video = new WindowHome();
 
     }
 }

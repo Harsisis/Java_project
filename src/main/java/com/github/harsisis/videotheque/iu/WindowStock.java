@@ -17,7 +17,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
 
-public class CreateStock extends JFrame {
+public class WindowStock extends JFrame {
     private static JTextField saisiQuantityJtf = new JTextField();
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel titlePnl = new JPanel();// panel with title label
@@ -29,7 +29,7 @@ public class CreateStock extends JFrame {
     private JButton cancelStockBtn = new JButton("Annuler");
     private JButton confirmStockBtn = new JButton("Valider");
 
-    public CreateStock() {    // set window settings --------------------------------------------------------------------
+    public WindowStock() {    // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Stock");
         setSize(500, 400);
         setLocationRelativeTo(null);

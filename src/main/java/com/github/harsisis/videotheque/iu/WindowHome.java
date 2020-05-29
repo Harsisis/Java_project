@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class CreateHome extends JFrame {
+public class WindowHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers, orders and products registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
@@ -25,16 +25,18 @@ public class CreateHome extends JFrame {
     private JButton addQtyProductBtn = new JButton("Ajouter du stock");
 
     private JMenuBar menuBar = new JMenuBar();
+    private JMenu li = new JMenu("Liste");
     private JMenuItem listUser = new JMenuItem("Liste des clients");
     private JMenuItem listCommand = new JMenuItem("Liste des commandes");
     private JMenuItem listProduct = new JMenuItem("Liste des produits");
     private JMenuItem listEmpty = new JMenuItem("Vider le panneau");
     private JMenuItem quit = new JMenuItem("Quitter");
+    private JMenu help = new JMenu("Aide");
 
     private JScrollPane scrollPane;
 
 
-    public CreateHome() {
+    public WindowHome() {
 
         // set window settings --------------------------------------------------------------------
         setTitle("Application");
@@ -43,76 +45,34 @@ public class CreateHome extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        addClientBtn.addActionListener(e -> new CreateClient());//add procedure to addClientBtn
-        addOrderBtn.addActionListener(e -> new CreateOrder());
-        addProductBtn.addActionListener(e -> new CreateProduct());
-        addQtyProductBtn.addActionListener(e -> new CreateStock());
+        addClientBtn.addActionListener(e -> new WindowClient());//add procedure to addClientBtn
+        addOrderBtn.addActionListener(e -> new WindowOrder());
+        addProductBtn.addActionListener(e -> new WindowProduct());
+        addQtyProductBtn.addActionListener(e -> new WindowStock());
 
         //items menu ------------------------------------------------------------------------------
-        //create a menu with 2 items, Liste to pull down a menu with three buttons that display list of customers, order and product
-        // and the second one Aide to pull down another menu with the exit button
+        //create a menu with tables
         menuBar.add(listUser);
         menuBar.add(listCommand);
         menuBar.add(listProduct);
         menuBar.add(listEmpty);
         menuBar.add(quit);
 
-
         //Table definition ---------------------------------------------------------------------------
-        DefaultTableModel modelUser = new DefaultTableModel();
-        JTable tableUser = new JTable(modelUser);
+        DefaultTableModel modelClient = new DefaultTableModel();
+        JTable tableClient = new JTable(modelClient);
 
-        modelUser.addColumn("ID utilisateur");
-        modelUser.addColumn("Nom");
-        modelUser.addColumn("Prénom");
-        modelUser.addColumn("Fidèle");
+        DefaultTableModel modelCommande = new DefaultTableModel();
+        JTable tableCommande = new JTable(modelCommande);
 
-        TableColumn column = null;
-        for(int i = 0; i<=3; i++){
-            column = tableUser.getColumnModel().getColumn(i);
-            if (i == 0){
-                column.setPreferredWidth(400);//column ID
-            }
-            else if(i == 3){
-                column.setPreferredWidth(100);//column fidele
-            }
-            else {
-                column.setPreferredWidth(150);
-            }
-        }
+        defineClientTable(modelClient, tableClient);
 
-        listUser.addActionListener(e -> {
-            listPnl.removeAll();
-            //ArrayList<Client> clientList = new ArrayList<>(Videotheque.getInstance().getListClient());
-            //System.out.println(clientList);
+        defineCommandeTable(modelCommande, tableCommande);
 
-            for (Client client : Videotheque.getInstance().getListClient()) {
-                modelUser.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
-            }
-            scrollPane = new JScrollPane(tableUser);
-            tableUser.setFillsViewportHeight(true);
+        listUser.addActionListener(e -> createClientTable(modelClient, tableClient));
 
-            listPnl.add(scrollPane);
-            indicationLbl.setText("Liste des Clients :");
-            revalidate();
-            listPnl.repaint();
-        });
-        listCommand.addActionListener(e -> {
-            listPnl.removeAll();
-            ArrayList<String> liCommande = new ArrayList<>();
-            for(Commande commande : Videotheque.getInstance().getListCommande()){
-                liCommande.add(commande.getCommandeId() +
-                        " | " +
-                        commande.getClient().getNom() +
-                        " " +
-                        commande.getClient().getPrenom());
-            }
-            JList list = new JList(liCommande.toArray());
-            listPnl.add(list);
-            indicationLbl.setText("Liste des Commandes :");
-            revalidate();
-            listPnl.repaint();
-        });
+        listCommand.addActionListener(e -> createCommandeTable(modelCommande, tableCommande));
+
         listProduct.addActionListener(e -> {
             listPnl.removeAll();
             ArrayList<String> produit = new ArrayList<>();
@@ -137,9 +97,9 @@ public class CreateHome extends JFrame {
 
         setJMenuBar(menuBar);
 
-        //panel list or scroll pane ----------------------------------------------------------------
+        //panel list ------------------------------------------------------------------------------
         listPnl.setBackground(Color.white);
-        listPnl.setPreferredSize(new Dimension(600, 600));
+        listPnl.setPreferredSize(new Dimension(700, 600));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
@@ -177,5 +137,69 @@ public class CreateHome extends JFrame {
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
         setVisible(true);
+    }
+
+    private void defineClientTable(DefaultTableModel modelClient, JTable tableClient) {
+        modelClient.addColumn("ID utilisateur");
+        modelClient.addColumn("Nom");
+        modelClient.addColumn("Prénom");
+        modelClient.addColumn("Fidèle");
+
+        TableColumn column = null;
+        for(int i = 0; i<=3; i++){
+            column = tableClient.getColumnModel().getColumn(i);
+            if (i == 0){
+                column.setPreferredWidth(400);//column ID
+            }
+            else if(i == 3){
+                column.setPreferredWidth(100);//column fidele
+            }
+            else {
+                column.setPreferredWidth(150);
+            }
+        }
+    }
+    private void createClientTable(DefaultTableModel modelClient, JTable tableClient) {
+        listPnl.removeAll();
+        for (Client client : Videotheque.getInstance().getListClient()) {
+            modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
+        }
+        scrollPane = new JScrollPane(tableClient);
+        tableClient.setFillsViewportHeight(true);
+        listPnl.add(scrollPane);
+        indicationLbl.setText("Liste des Clients :");
+        revalidate();
+        listPnl.repaint();
+    }
+    private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
+        modelCommande.addColumn("ID commande");
+        modelCommande.addColumn("Client");
+        modelCommande.addColumn("Date de début de la commande");
+
+        TableColumn column = null;
+        for(int i = 0; i<=2; i++){
+            column = tableCommande.getColumnModel().getColumn(i);
+            if (i == 0){
+                column.setPreferredWidth(800);//column ID
+            }
+            else if(i == 1){
+                column.setPreferredWidth(800);//column fidele
+            }
+            else {
+                column.setPreferredWidth(150);
+            }
+        }
+    }
+    private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
+        listPnl.removeAll();
+        for (Commande commande : Videotheque.getInstance().getListCommande()) {
+            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
+        }
+        scrollPane = new JScrollPane(tableCommande);
+        tableCommande.setFillsViewportHeight(true);
+        listPnl.add(scrollPane);
+        indicationLbl.setText("Liste des Commandes :");
+        revalidate();
+        listPnl.repaint();
     }
 }

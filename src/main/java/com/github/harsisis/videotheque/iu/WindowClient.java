@@ -16,7 +16,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
 
-public class CreateClient extends JFrame {
+public class WindowClient extends JFrame {
     private static JTextField saisiNomJtf = new JTextField();
     private static JTextField saisiPrenomJtf = new JTextField();
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
@@ -36,7 +36,7 @@ public class CreateClient extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
 
-    public CreateClient() {
+    public WindowClient() {
         // set window settings --------------------------------------------------------------------
         setTitle("Ajout d'un Client");
         setSize(280, 400);
@@ -51,18 +51,7 @@ public class CreateClient extends JFrame {
         saisiPrenomJtf.setText("");
         cancelClientBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
         confirmClientBtn.addActionListener(e -> {
-            if (!saisiNomJtf.getText().equals("") && !saisiPrenomJtf.getText().equals("")) {
-                System.out.println("Nom: " + saisiNomJtf.getText() + "\nPrénom: " + saisiPrenomJtf.getText() + "\nFidèle: " + fideleCbx.isSelected());
-                Videotheque.getInstance().ajoutClient(saisiNomJtf.getText().toUpperCase(), CapitalizeUtil.getCapitalize(saisiPrenomJtf.getText()), fideleCbx.isSelected());
-                JOptionPane.showMessageDialog(this, "Le client " +
-                        saisiNomJtf.getText().toUpperCase() +
-                        " " +
-                        CapitalizeUtil.getCapitalize(saisiPrenomJtf.getText()) +
-                        " a bien été créé.", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            } else
-                jop3.showMessageDialog(null, "Veuillez saisir un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
-
+            createClient();
         });
 
         // title panel--------------------------------------------------------------------------------
@@ -97,5 +86,19 @@ public class CreateClient extends JFrame {
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
         setVisible(true);
+    }
+
+    private void createClient() {
+        if (!saisiNomJtf.getText().equals("") && !saisiPrenomJtf.getText().equals("")) {
+            System.out.println("Nom: " + saisiNomJtf.getText() + "\nPrénom: " + saisiPrenomJtf.getText() + "\nFidèle: " + fideleCbx.isSelected());
+            Videotheque.getInstance().ajoutClient(saisiNomJtf.getText().toUpperCase(), CapitalizeUtil.getCapitalize(saisiPrenomJtf.getText()), fideleCbx.isSelected());
+            JOptionPane.showMessageDialog(this, "Le client " +
+                    saisiNomJtf.getText().toUpperCase() +
+                    " " +
+                    CapitalizeUtil.getCapitalize(saisiPrenomJtf.getText()) +
+                    " a bien été créé.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        } else
+            jop3.showMessageDialog(null, "Veuillez saisir un Nom et Prénom valide", "Erreur", JOptionPane.ERROR_MESSAGE);
     }
 }
