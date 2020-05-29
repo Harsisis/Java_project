@@ -36,6 +36,8 @@ public class WindowHome extends JFrame {
 
     private JScrollPane scrollPane;
 
+    private JOptionPane jop3 = new JOptionPane();
+
 
     public WindowHome() {
 
@@ -99,7 +101,13 @@ public class WindowHome extends JFrame {
             listPnl.repaint();
         });
 
-        quit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+        quit.addActionListener(e -> {
+
+            int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            }
+        });
 
         setJMenuBar(menuBar);
 
