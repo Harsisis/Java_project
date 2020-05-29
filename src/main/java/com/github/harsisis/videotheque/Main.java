@@ -15,8 +15,9 @@ import com.github.harsisis.videotheque.iu.CreateHome;
 
 public class Main {
     public static void main(String[] args) {
-        //created window
+        //create window
         CreateHome video = new CreateHome();
+        System.out.println("za marche");
 
     }
 }

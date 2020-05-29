@@ -17,7 +17,7 @@ public class CreateHome extends JFrame {
     private JPanel workPlacePnl = new JPanel();// panel with a list of all customers, orders and products registered
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
 
-    private JLabel indicationLbl = new JLabel("Liste"); // Label where i write all
+    private JLabel indicationLbl = new JLabel(""); // Label where i write all
 
     private JButton addClientBtn = new JButton("Ajouter un client");
     private JButton addOrderBtn = new JButton("Ajouter une commande");
@@ -25,13 +25,11 @@ public class CreateHome extends JFrame {
     private JButton addQtyProductBtn = new JButton("Ajouter du stock");
 
     private JMenuBar menuBar = new JMenuBar();
-    private JMenu li = new JMenu("Liste");
     private JMenuItem listUser = new JMenuItem("Liste des clients");
     private JMenuItem listCommand = new JMenuItem("Liste des commandes");
     private JMenuItem listProduct = new JMenuItem("Liste des produits");
     private JMenuItem listEmpty = new JMenuItem("Vider le panneau");
     private JMenuItem quit = new JMenuItem("Quitter");
-    private JMenu help = new JMenu("Aide");
 
     private JScrollPane scrollPane;
 
@@ -53,15 +51,12 @@ public class CreateHome extends JFrame {
         //items menu ------------------------------------------------------------------------------
         //create a menu with 2 items, Liste to pull down a menu with three buttons that display list of customers, order and product
         // and the second one Aide to pull down another menu with the exit button
-        menuBar.add(li);//add Li item to menu
-        menuBar.add(help);
+        menuBar.add(listUser);
+        menuBar.add(listCommand);
+        menuBar.add(listProduct);
+        menuBar.add(listEmpty);
+        menuBar.add(quit);
 
-        help.add(quit);
-
-        li.add(listUser);
-        li.add(listCommand);
-        li.add(listProduct);
-        li.add(listEmpty);
 
         //Table definition ---------------------------------------------------------------------------
         DefaultTableModel modelUser = new DefaultTableModel();
@@ -76,7 +71,7 @@ public class CreateHome extends JFrame {
         for(int i = 0; i<=3; i++){
             column = tableUser.getColumnModel().getColumn(i);
             if (i == 0){
-                column.setPreferredWidth(300);//column ID
+                column.setPreferredWidth(400);//column ID
             }
             else if(i == 3){
                 column.setPreferredWidth(100);//column fidele
@@ -96,8 +91,8 @@ public class CreateHome extends JFrame {
             }
             scrollPane = new JScrollPane(tableUser);
             tableUser.setFillsViewportHeight(true);
-            listPnl.add(scrollPane);
 
+            listPnl.add(scrollPane);
             indicationLbl.setText("Liste des Clients :");
             revalidate();
             listPnl.repaint();
@@ -133,7 +128,7 @@ public class CreateHome extends JFrame {
 
         listEmpty.addActionListener(e -> {
             listPnl.removeAll();
-            indicationLbl.setText("Liste");
+            indicationLbl.setText("");
             revalidate();
             listPnl.repaint();
         });
@@ -142,9 +137,9 @@ public class CreateHome extends JFrame {
 
         setJMenuBar(menuBar);
 
-        //panel list ------------------------------------------------------------------------------
+        //panel list or scroll pane ----------------------------------------------------------------
         listPnl.setBackground(Color.white);
-        listPnl.setPreferredSize(new Dimension(700, 600));
+        listPnl.setPreferredSize(new Dimension(600, 600));
 
         //panel buttons (workplace)----------------------------------------------------------------
         //buttons to create customers, orders and products, they are stocked in a gridLayout
