@@ -143,6 +143,8 @@ public class WindowOrder extends JFrame {
 
             }
             System.out.println(total);
+            amountLbl.setText("Total : " + total);
+            amountLbl.setVisible(true);
         });
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
@@ -173,9 +175,11 @@ public class WindowOrder extends JFrame {
         displayPnl.add(managePnl, BorderLayout.WEST);
         displayPnl.add(workplacePnl, BorderLayout.EAST);
 
-        amountLbl.setBorder(new EmptyBorder(0,10,0,20));
         listProdPnl.setPreferredSize(new Dimension(800,500));
         totalPnl.setPreferredSize(new Dimension(800,100));
+        totalPnl.add(amountLbl, BorderLayout.EAST);
+        amountLbl.setPreferredSize(new Dimension(800,0));
+        amountLbl.setVisible(false);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
