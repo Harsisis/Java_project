@@ -4,7 +4,6 @@ import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.Commande;
 import com.github.harsisis.videotheque.domaine.Emprunt;
 import com.github.harsisis.videotheque.domaine.Videotheque;
-import com.github.harsisis.videotheque.util.CapitalizeUtil;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.*;
@@ -13,10 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-import java.time.LocalDate;
 import java.util.ArrayList;
-
-import static java.time.LocalDate.*;
 
 public class WindowOrder extends JFrame {
 
@@ -111,7 +107,7 @@ public class WindowOrder extends JFrame {
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
-               emprunts.add(new Emprunt(liProductJcbx.getSelectedItem().toString(), Integer.parseInt(durationJtf.getText())));
+                    emprunts.add(new Emprunt(liProductJcbx.getSelectedItem().toString(), Integer.parseInt(durationJtf.getText())));
                //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
                 //liste produit panel-----------------------------------------------------------------------
@@ -131,8 +127,16 @@ public class WindowOrder extends JFrame {
 
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
+            for (Emprunt emp : emprunts) {
+                    liEmpruntJcbx.addItem(emp);
+            }
+
             //for (Emprunt emp : emprunts) {
-            //    liEmpruntJcbx.addItem(emp);
+            //    liEmpruntJcbx.addItem(emp.getEmpruntStr());       ne pas oublier de mettre le type de la comboBox en String
+            //                                                      "AWT-EventQueue-0" java.lang.NullPointerException
+            //	                                                    at com.github.harsisis.videotheque.domaine.Emprunt.getEmpruntStr(Emprunt.java:26)
+            //	                                                    at com.github.harsisis.videotheque.iu.WindowOrder.removeParameter(WindowOrder.java:286)
+            //	                                                    at com.github.harsisis.videotheque.iu.WindowOrder.lambda$new$5(WindowOrder.java:130)
             //}
             removeParameter(liEmpruntJcbx);
         });
