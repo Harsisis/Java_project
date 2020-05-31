@@ -38,6 +38,7 @@ public class WindowOrder extends JFrame {
     private JLabel titleLbl = new JLabel("Enregistrer une nouvelle commande :");
     private JLabel productAddLbl = new JLabel("Ajouter ou Supprimer un produit :");
     private JLabel choicePrdLbl = new JLabel("Choisir un produit :");
+    private JLabel choiceEmpLbl = new JLabel("Choisir un emprunt :");
     private JLabel choiceClLbl = new JLabel("Choisir un client :");
     private JLabel durationLbl = new JLabel("Saisir une durée (en jour) :");
     private JLabel amountLbl = new JLabel("Total :");
@@ -83,12 +84,14 @@ public class WindowOrder extends JFrame {
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
 
+        JComboBox<Emprunt> liEmpruntJcbx = new JComboBox<>();
         ArrayList<Emprunt> emprunts = new ArrayList<>();
 
         DefaultTableModel modelEmprunt = new DefaultTableModel();
         JTable tableEmprunt = new JTable(modelEmprunt);
 
         defineEmpruntTable(modelEmprunt);
+        defineCommandeTable(modelCommande, tableCommande);
 
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
@@ -99,13 +102,17 @@ public class WindowOrder extends JFrame {
         });
 
         //buttons on the adding loaning page
-        plusProductBtn.addActionListener(e -> addParameter(liProductJcbx));
+        plusProductBtn.addActionListener(e -> {
+            addParameter(liProductJcbx);
+            //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+        });
 
-        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
+        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande, modelEmprunt));
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
                emprunts.add(new Emprunt(liProductJcbx.getSelectedItem().toString(), Integer.parseInt(durationJtf.getText())));
+               //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
@@ -123,15 +130,20 @@ public class WindowOrder extends JFrame {
         });
 
         //buttons on the delete loaning page
-        minusProductBtn.addActionListener(e -> removeParameter());
+        minusProductBtn.addActionListener(e -> {
+            //for (Emprunt emp : emprunts) {
+            //    liEmpruntJcbx.addItem(emp);
+            //}
+            removeParameter(liEmpruntJcbx);
+        });
 
         cancelDelBtn.addActionListener(e -> {
-            mainPage(liClientJcbx, modelCommande, tableCommande);
+            mainPage(liClientJcbx, modelCommande, tableCommande, modelEmprunt);
             createCommandeTable(modelCommande, tableCommande);
         });
 
         //display panel-----------------------------------------------------------------------------
-        mainPage(liClientJcbx, modelCommande, tableCommande);
+        mainPage(liClientJcbx, modelCommande, tableCommande, modelEmprunt);
         displayPnl.setBackground(Color.white);
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());
@@ -153,10 +165,23 @@ public class WindowOrder extends JFrame {
         modelEmprunt.addColumn("Durée");
     }
 
-    public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande){
+    private void createEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt, ArrayList<Emprunt> emprunts) {
+        listProdPnl.removeAll();
+        for (Emprunt emp : emprunts) {
+            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduit().toString(), emp.getDureeLocation()});
+        }
+        scrollPane = new JScrollPane(tableEmprunt);
+        scrollPane.setPreferredSize(new Dimension(750,450));
+        tableEmprunt.setFillsViewportHeight(true);
+        listProdPnl.add(scrollPane);
+        revalidate();
+        listProdPnl.repaint();
+    }
 
-        defineCommandeTable(modelCommande, tableCommande);
+    public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande, DefaultTableModel modelEmprunt){
+
         createCommandeTable(modelCommande, tableCommande);
+        //defineEmpruntTable(modelEmprunt);
 
         //title panel-------------------------------------------------------------------------------
         titlePnl.add(titleLbl);
@@ -256,7 +281,7 @@ public class WindowOrder extends JFrame {
         listProdPnl.repaint();
     }
 
-    public void removeParameter(){
+    public void removeParameter(JComboBox liEmpruntJcbx){
         managePnl.removeAll();
         listProdPnl.removeAll();
 
@@ -267,8 +292,11 @@ public class WindowOrder extends JFrame {
         //select loaning panel-----------------------------------------------------------------------
 
         selectLoaningPnl.setBackground(Color.white);
+        selectLoaningPnl.setLayout(new GridLayout(2,1, 5,0));
         selectLoaningPnl.setBorder(BorderFactory.createLineBorder(Color.black));
-        //selectLoaningPnl.add(liLoaningJcbx);
+        selectLoaningPnl.add(choiceEmpLbl);
+        selectLoaningPnl.add(liEmpruntJcbx);
+        liEmpruntJcbx.setBackground(Color.white);
 
         //confirm minus panel------------------------------------------------------------------------
 

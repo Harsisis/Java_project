@@ -228,9 +228,14 @@ public class WindowHome extends JFrame {
     }
     private void createProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
         listPnl.removeAll();
-        for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
+        //for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
                 //modelProduit.addRow(entry.getKey(), entry.getValue().toString());
-            }
+            //}
+
+        for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
+            modelProduit.addRow(new Object[]{produit, });
+        }
+
         scrollPane = new JScrollPane(tableProduit);
         scrollPane.setPreferredSize(new Dimension(720,500));
         tableProduit.setFillsViewportHeight(true);
