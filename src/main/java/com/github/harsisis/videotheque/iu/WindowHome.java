@@ -233,7 +233,7 @@ public class WindowHome extends JFrame {
             //}
 
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
-            modelProduit.addRow(new Object[]{produit, });
+            modelProduit.addRow(new Object[]{produit, Videotheque.getInstance().getListStockProduit().get(produit)});
         }
 
         scrollPane = new JScrollPane(tableProduit);
