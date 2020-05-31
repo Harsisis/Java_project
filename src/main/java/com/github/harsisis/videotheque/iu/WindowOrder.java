@@ -1,13 +1,12 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.Client;
-import com.github.harsisis.videotheque.domaine.Commande;
-import com.github.harsisis.videotheque.domaine.Emprunt;
-import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.domaine.*;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
@@ -66,34 +65,47 @@ public class WindowOrder extends JFrame {
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
         JComboBox<Client> liClientJcbx = new JComboBox<>();
-
         for (Client client : Videotheque.getInstance().getListClient()) {
             liClientJcbx.addItem(client);
         }
-
         JComboBox<String> liProductJcbx = new JComboBox<>();
-
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
             liProductJcbx.addItem(produit);
         }
-
         DefaultTableModel modelCommande = new DefaultTableModel();
+
         JTable tableCommande = new JTable(modelCommande);
 
-        JComboBox<Emprunt> liEmpruntJcbx = new JComboBox<>();
         ArrayList<Emprunt> emprunts = new ArrayList<>();
 
+        JComboBox<String> liEmpruntJcbx = new JComboBox<>();
+
         DefaultTableModel modelEmprunt = new DefaultTableModel();
+
         JTable tableEmprunt = new JTable(modelEmprunt);
 
         defineEmpruntTable(modelEmprunt);
         defineCommandeTable(modelCommande, tableCommande);
 
+        tableCommande.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
+                double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
+                double total = 0;
+                for (Emprunt emprunt : emprunts) {
+                    total += trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
+                }
+                System.out.println(total);
+                amountLbl.setText("Total : " + total);
+            }
+        });
+
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         confirmOrderBtn.addActionListener(e -> {
-            Commande commande = Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
+            Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
@@ -107,7 +119,7 @@ public class WindowOrder extends JFrame {
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
-                    emprunts.add(new Emprunt(liProductJcbx.getSelectedItem().toString(), Integer.parseInt(durationJtf.getText())));
+                    emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
                //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
                 //liste produit panel-----------------------------------------------------------------------
@@ -128,9 +140,9 @@ public class WindowOrder extends JFrame {
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
             for (Emprunt emp : emprunts) {
-                    liEmpruntJcbx.addItem(emp);
+                    liEmpruntJcbx.addItem(emp.getProduitId());
             }
-
+            emprunts.remove(liEmpruntJcbx.getSelectedObjects());
             //for (Emprunt emp : emprunts) {
             //    liEmpruntJcbx.addItem(emp.getEmpruntStr());       ne pas oublier de mettre le type de la comboBox en String
             //                                                      "AWT-EventQueue-0" java.lang.NullPointerException
@@ -163,6 +175,13 @@ public class WindowOrder extends JFrame {
         setVisible(true);
     }
 
+    public static Produit trouverProdId(String id, Iterable<Produit> liste) {
+        for(Produit prod : liste)
+            if (prod.getProduitId().equals(id))
+                return prod;
+        return null;
+    }
+
     private void defineEmpruntTable(DefaultTableModel modelEmprunt) {
         modelEmprunt.addColumn("ID emprunt");
         modelEmprunt.addColumn("Produit");
@@ -172,7 +191,7 @@ public class WindowOrder extends JFrame {
     private void createEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt, ArrayList<Emprunt> emprunts) {
         listProdPnl.removeAll();
         for (Emprunt emp : emprunts) {
-            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduit().toString(), emp.getDureeLocation()});
+            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId().toString(), emp.getDureeLocation()});
         }
         scrollPane = new JScrollPane(tableEmprunt);
         scrollPane.setPreferredSize(new Dimension(750,450));

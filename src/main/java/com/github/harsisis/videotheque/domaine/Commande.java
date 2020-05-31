@@ -38,30 +38,7 @@ public class Commande {
         return listEmprunt;
     }
 
-    public void supEmprunt(Produit numeroEmprunt) {
-        listEmprunt.remove(numeroEmprunt);
-    }
-
     // peut etre autre methode plus simple a comprendre
-    public double calculPrix() {
-
-        //expression ternaire
-        double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
-
-        // solution plus basique
-        double total = 0;
-        for (Emprunt emprunt : listEmprunt) {
-            total += emprunt.getProduit().getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
-        }
-        return total;
-
-        // solution plus moderne
-        /*
-        return listEmprunt.stream()
-                .map(emprunt -> emprunt.getProduit().getTarifJournalier() * emprunt.getDureeLocation() * coefPrix)
-                .reduce(0.0D, (a,b) -> a+b);
-        */
-    }
 
     @Override
     public boolean equals(Object o) {
