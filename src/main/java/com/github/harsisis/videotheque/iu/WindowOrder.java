@@ -94,7 +94,7 @@ public class WindowOrder extends JFrame {
                 double total = 0;
                 boolean isAdjusting = e.getValueIsAdjusting();
 
-                //on est trop con, la liste emprunts est vide est on la rempli pas, forcément que ca n'affiche rien
+                //on est trop con, la liste emprunts est vide et on ne la rempli pas, forcément que ca n'affiche rien
 
                 if(!isAdjusting){
                     Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
