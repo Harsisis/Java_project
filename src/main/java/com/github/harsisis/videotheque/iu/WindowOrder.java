@@ -106,11 +106,11 @@ public class WindowOrder extends JFrame {
                         System.out.println("tota1l"+trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier());
                         System.out.println("total2"+emprunt.getDureeLocation());
                         System.out.println("total3"+coefPrix);
-
                         total += trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
                     }
                     System.out.println("total"+total);
                     amountLbl.setText("Total : " + total);
+                    amountLbl.setVisible(true);
                 }
             }
         });
@@ -180,9 +180,11 @@ public class WindowOrder extends JFrame {
         displayPnl.add(managePnl, BorderLayout.WEST);
         displayPnl.add(workplacePnl, BorderLayout.EAST);
 
-        amountLbl.setBorder(new EmptyBorder(0,10,0,20));
         listProdPnl.setPreferredSize(new Dimension(800,500));
         totalPnl.setPreferredSize(new Dimension(800,100));
+        totalPnl.add(amountLbl, BorderLayout.EAST);
+        amountLbl.setPreferredSize(new Dimension(800,0));
+        amountLbl.setVisible(false);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
@@ -262,7 +264,6 @@ public class WindowOrder extends JFrame {
         //total panel-------------------------------------------------------------------------------
         totalPnl.setLayout(new BorderLayout());
         totalPnl.setBackground(Color.DARK_GRAY);
-        totalPnl.add(amountLbl, BorderLayout.EAST);
         amountLbl.setForeground(Color.white);
 
         //manage panel left side of the model-------------------------------------------------------
@@ -314,8 +315,9 @@ public class WindowOrder extends JFrame {
         managePnl.add(confirmPlusPnl);
 
         revalidate();
-        managePnl.repaint();
         listProdPnl.repaint();
+        managePnl.repaint();
+
     }
 
     public void removeParameter(JComboBox liEmpruntJcbx){
@@ -345,8 +347,9 @@ public class WindowOrder extends JFrame {
         cancelDelBtn.setBackground(Color.white);
 
         revalidate();
-        managePnl.repaint();
         listProdPnl.repaint();
+        managePnl.repaint();
+
     }
 
     private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
