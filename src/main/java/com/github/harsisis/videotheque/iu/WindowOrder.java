@@ -82,38 +82,17 @@ public class WindowOrder extends JFrame {
 
         DefaultTableModel modelEmprunt = new DefaultTableModel();
 
+        ListSelectionModel cellSelectionModel;
+
         JTable tableEmprunt = new JTable(modelEmprunt);
 
         defineEmpruntTable(modelEmprunt);
+
         defineCommandeTable(modelCommande, tableCommande);
 
-        tableCommande.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int lsm = ListSelectionModel.SINGLE_SELECTION;
-                double total = 0;
-                boolean isAdjusting = e.getValueIsAdjusting();
-
-                //on est trop con, la liste emprunts est vide est on la rempli pas, forcément que ca n'affiche rien
-
-                if(!isAdjusting){
-
-                    Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
-                    double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
-
-
-                    for (Emprunt emprunt : emprunts) {
-                        System.out.println("tota1l"+trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier());
-                        System.out.println("total2"+emprunt.getDureeLocation());
-                        System.out.println("total3"+coefPrix);
-                        total += trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
-                    }
-                    System.out.println("total"+total);
-                    amountLbl.setText("Total : " + total);
-                    amountLbl.setVisible(true);
-                }
-            }
-        });
+        tableCommande.setCellSelectionEnabled(true);
+        cellSelectionModel = tableCommande.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
@@ -151,6 +130,20 @@ public class WindowOrder extends JFrame {
             }
         });
 
+        cellSelectionModel.addListSelectionListener(listSelectionEvent -> {
+            Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
+            String commandeId = (String) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(),0);
+            Commande commande = trouverCommande(commandeId);
+            double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
+            double total = 0;
+            for (Emprunt emprunt : commande.getListEmprunt()) {
+                double tarif = trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier();
+                int dureeLocation = emprunt.getDureeLocation();
+                total += tarif * dureeLocation * coefPrix;
+
+            }
+            System.out.println(total);
+        });
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
             for (Emprunt emp : emprunts) {
@@ -180,11 +173,9 @@ public class WindowOrder extends JFrame {
         displayPnl.add(managePnl, BorderLayout.WEST);
         displayPnl.add(workplacePnl, BorderLayout.EAST);
 
+        amountLbl.setBorder(new EmptyBorder(0,10,0,20));
         listProdPnl.setPreferredSize(new Dimension(800,500));
         totalPnl.setPreferredSize(new Dimension(800,100));
-        totalPnl.add(amountLbl, BorderLayout.EAST);
-        amountLbl.setPreferredSize(new Dimension(800,0));
-        amountLbl.setVisible(false);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
@@ -198,6 +189,13 @@ public class WindowOrder extends JFrame {
         return null;
     }
 
+    public Commande trouverCommande(String id) {
+        for(Commande commande : Videotheque.getInstance().getListCommande()) {
+            if (commande.getCommandeId().equals(id))
+                return commande;
+        }
+        return null;
+    }
     private void defineEmpruntTable(DefaultTableModel modelEmprunt) {
         modelEmprunt.addColumn("ID emprunt");
         modelEmprunt.addColumn("Produit");
@@ -264,6 +262,7 @@ public class WindowOrder extends JFrame {
         //total panel-------------------------------------------------------------------------------
         totalPnl.setLayout(new BorderLayout());
         totalPnl.setBackground(Color.DARK_GRAY);
+        totalPnl.add(amountLbl, BorderLayout.EAST);
         amountLbl.setForeground(Color.white);
 
         //manage panel left side of the model-------------------------------------------------------
@@ -315,9 +314,8 @@ public class WindowOrder extends JFrame {
         managePnl.add(confirmPlusPnl);
 
         revalidate();
-        listProdPnl.repaint();
         managePnl.repaint();
-
+        listProdPnl.repaint();
     }
 
     public void removeParameter(JComboBox liEmpruntJcbx){
@@ -347,9 +345,8 @@ public class WindowOrder extends JFrame {
         cancelDelBtn.setBackground(Color.white);
 
         revalidate();
-        listProdPnl.repaint();
         managePnl.repaint();
-
+        listProdPnl.repaint();
     }
 
     private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {

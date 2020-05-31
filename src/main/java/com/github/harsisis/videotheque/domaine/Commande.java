@@ -34,7 +34,7 @@ public class Commande {
         return client;
     }
 
-    public ArrayList getListEmprunt() {
+    public ArrayList<Emprunt> getListEmprunt() {
         return listEmprunt;
     }
 
