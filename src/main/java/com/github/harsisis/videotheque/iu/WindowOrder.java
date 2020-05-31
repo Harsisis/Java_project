@@ -94,15 +94,13 @@ public class WindowOrder extends JFrame {
                 double total = 0;
                 boolean isAdjusting = e.getValueIsAdjusting();
 
-                //on est trop con, la liste emprunts est vide et on ne la rempli pas, forcément que ca n'affiche rien
+                //on est trop con, la liste emprunts est vide est on la rempli pas, forcément que ca n'affiche rien
 
                 if(!isAdjusting){
+
                     Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
-                    Commande commande = (Commande) tableCommande.getValueAt(tableCommande.getSelectedRow(), 0);
                     double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
 
-                    // updtade liste emprunt
-                    emprunts= commande.getListEmprunt();
 
                     for (Emprunt emprunt : emprunts) {
                         System.out.println("tota1l"+trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier());
