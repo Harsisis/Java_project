@@ -32,6 +32,6 @@ ui :
 A faire :
 - [ ] Afficher liste emprunt
 - [x] Afficher liste produit sur l'accueil
-- [ ] Afficher la quantité d'un produit sur la liste d'accueil
+- [x] Afficher la quantité d'un produit sur la liste d'accueil
 - [ ] Afficher les emprunts dans une comboBox
 

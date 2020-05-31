@@ -2,6 +2,7 @@ package com.github.harsisis.videotheque.iu;
 
 import com.github.harsisis.videotheque.domaine.Produit;
 import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.util.CapitalizeUtil;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.JButton;
@@ -86,11 +87,19 @@ public class WindowStock extends JFrame {
     }
 
     private void processInput(JComboBox<String> cBox) {
-        if (ValidatorUtil.isValidInteger(saisiQuantityJtf.getText())) {
+        if (ValidatorUtil.isValidInteger(saisiQuantityJtf.getText()) && Integer.parseInt(saisiQuantityJtf.getText()) >= 0) {
             Videotheque.getInstance().ajoutStockProduit((String) cBox.getSelectedItem(), Integer.parseInt(saisiQuantityJtf.getText()));
+            if(Integer.parseInt(saisiQuantityJtf.getText()) == 1) {
+                JOptionPane.showMessageDialog(this, saisiQuantityJtf.getText() +
+                        " unité a bien été ajouté pour ce produit", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, saisiQuantityJtf.getText() +
+                        " unités ont bien été ajoutés pour ce produit", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            }
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         } else {
-            JOptionPane.showMessageDialog(this, "Quantité invalide, veuillez saisir un entier", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Quantité invalide, veuillez saisir un entier positif", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
     }

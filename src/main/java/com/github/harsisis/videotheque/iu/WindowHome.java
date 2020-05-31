@@ -81,18 +81,7 @@ public class WindowHome extends JFrame {
 
         listCommand.addActionListener(e -> createCommandeTable(modelCommande, tableCommande));
 
-        listProduct.addActionListener(e -> { createProduitTable(modelProduit, tableProduit);
-            //listPnl.removeAll();
-            //ArrayList<String> produit = new ArrayList<>();
-            //for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
-            //    produit.add((entry.getKey() + " | " + entry.getValue()));
-            //}
-            //JList list = new JList(produit.toArray());
-            //listPnl.add(list);
-            //indicationLbl.setText("Liste des Produits :");
-            //revalidate();
-            //listPnl.repaint();
-        });
+        listProduct.addActionListener(e -> createProduitTable(modelProduit, tableProduit));
 
         listEmpty.addActionListener(e -> {
             listPnl.removeAll();
@@ -175,6 +164,7 @@ public class WindowHome extends JFrame {
     }
     private void createClientTable(DefaultTableModel modelClient, JTable tableClient) {
         listPnl.removeAll();
+        modelClient.setRowCount(0);//clear the table
         for (Client client : Videotheque.getInstance().getListClient()) {
             modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
         }
@@ -207,6 +197,7 @@ public class WindowHome extends JFrame {
     }
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listPnl.removeAll();
+        modelCommande.setRowCount(0);
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
             modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
         }
@@ -228,10 +219,7 @@ public class WindowHome extends JFrame {
     }
     private void createProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
         listPnl.removeAll();
-        //for (Map.Entry<String, Integer> entry : Videotheque.getInstance().getListStockProduit().entrySet()) {
-                //modelProduit.addRow(entry.getKey(), entry.getValue().toString());
-            //}
-
+        modelProduit.setRowCount(0);
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
             modelProduit.addRow(new Object[]{produit, Videotheque.getInstance().getListStockProduit().get(produit)});
         }
