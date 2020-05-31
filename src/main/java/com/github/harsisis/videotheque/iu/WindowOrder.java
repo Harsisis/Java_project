@@ -89,15 +89,31 @@ public class WindowOrder extends JFrame {
 
         tableCommande.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
-                double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
+            public void valueChanged(ListSelectionEvent e) {
+                int lsm = ListSelectionModel.SINGLE_SELECTION;
                 double total = 0;
-                for (Emprunt emprunt : emprunts) {
-                    total += trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
+                boolean isAdjusting = e.getValueIsAdjusting();
+
+                //on est trop con, la liste emprunts est vide est on la rempli pas, forcément que ca n'affiche rien
+
+                if(!isAdjusting){
+                    Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
+                    Commande commande = (Commande) tableCommande.getValueAt(tableCommande.getSelectedRow(), 0);
+                    double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
+
+                    // updtade liste emprunt
+                    emprunts= commande.getListEmprunt();
+
+                    for (Emprunt emprunt : emprunts) {
+                        System.out.println("tota1l"+trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier());
+                        System.out.println("total2"+emprunt.getDureeLocation());
+                        System.out.println("total3"+coefPrix);
+
+                        total += trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier() * emprunt.getDureeLocation() * coefPrix;
+                    }
+                    System.out.println("total"+total);
+                    amountLbl.setText("Total : " + total);
                 }
-                System.out.println(total);
-                amountLbl.setText("Total : " + total);
             }
         });
 
@@ -356,6 +372,7 @@ public class WindowOrder extends JFrame {
     }
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listProdPnl.removeAll();
+        modelCommande.setRowCount(0);//clear the table
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
             modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
         }
@@ -366,4 +383,5 @@ public class WindowOrder extends JFrame {
         revalidate();
         listProdPnl.repaint();
     }
+
 }
