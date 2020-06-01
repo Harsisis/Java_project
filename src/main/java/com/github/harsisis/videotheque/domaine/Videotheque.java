@@ -11,6 +11,7 @@ public class Videotheque {
     public static final double REDUC_FIDELE = 0.1;
     private static final Videotheque INSTANCE = new Videotheque();
     private Map<String, Integer> listStockProduit = new HashMap<>();
+    private Map<String, Produit> listProduit = new HashMap<>();
     private HashSet<Client> listClient = new HashSet<>();
     private HashSet<Commande> listCommande = new HashSet<>();
     // this should stay private because only one instance can exist
@@ -32,6 +33,10 @@ public class Videotheque {
 
     public Map<String, Integer> getListStockProduit() {
         return listStockProduit;
+    }
+
+    public Map<String, Produit> getListProduit() {
+        return listProduit;
     }
 
     public List<String> listProduitDispo() {
@@ -59,6 +64,14 @@ public class Videotheque {
         if (listStockProduit.containsKey(produitId)) {
             listStockProduit.put(produitId, listStockProduit.get(produitId) + quantity);
         } else listStockProduit.put(produitId, quantity);
+    }
+
+    public void ajoutProduit(String produitId, Produit produit) {
+        listProduit.put(produitId, produit);
+    }
+
+    public Produit getProduit(String produitId) {
+            return listProduit.get(produitId);
     }
 
     public void retirerStockProduit(String produitId, int quantity) {

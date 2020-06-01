@@ -221,7 +221,8 @@ public class WindowHome extends JFrame {
         listPnl.removeAll();
         modelProduit.setRowCount(0);
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
-            modelProduit.addRow(new Object[]{produit, Videotheque.getInstance().getListStockProduit().get(produit)});
+            Produit prod = Videotheque.getInstance().getProduit(produit);
+            modelProduit.addRow(new Object[]{prod.getProduitNom(prod), Videotheque.getInstance().getListStockProduit().get(produit)});
         }
 
         scrollPane = new JScrollPane(tableProduit);

@@ -13,10 +13,11 @@ public class Commande {
 
     private ArrayList<Emprunt> listEmprunt = new ArrayList<>();
 
-    public Commande(Client client, ArrayList<Emprunt> empruntList) {
+    public Commande(Client client, ArrayList<Emprunt> listEmprunt) {
         this.commandeId = UUID.randomUUID();
         this.client = client;
         this.debutDate = LocalDate.now();
+        this.listEmprunt = listEmprunt;
     }
 
     public Commande() {

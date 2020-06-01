@@ -12,6 +12,7 @@ public class Emprunt {
     public Emprunt(String produitId, int dureeLocation) {
         this.empruntId = UUID.randomUUID();
         this.produitId = produitId;
+        this.dureeLocation = dureeLocation;
     }
 
     public String getEmpruntId() {

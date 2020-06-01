@@ -12,6 +12,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class WindowOrder extends JFrame {
 
@@ -69,9 +70,10 @@ public class WindowOrder extends JFrame {
             liClientJcbx.addItem(client);
         }
         JComboBox<String> liProductJcbx = new JComboBox<>();
-        for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
+        for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
             liProductJcbx.addItem(produit);
         }
+        liProductJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
         DefaultTableModel modelCommande = new DefaultTableModel();
 
         JTable tableCommande = new JTable(modelCommande);
@@ -113,7 +115,7 @@ public class WindowOrder extends JFrame {
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
                     emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
-               //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+                    //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
@@ -137,12 +139,12 @@ public class WindowOrder extends JFrame {
             double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
             double total = 0;
             for (Emprunt emprunt : commande.getListEmprunt()) {
-                double tarif = trouverProdId(emprunt.getProduitId(), (Iterable<Produit>) Videotheque.getInstance().getListStockProduit().keySet().iterator()).getTarifJournalier();
+                double tarif = Videotheque.getInstance().getProduit(emprunt.getProduitId()).getTarifJournalier();
                 int dureeLocation = emprunt.getDureeLocation();
                 total += tarif * dureeLocation * coefPrix;
-
             }
             System.out.println(total);
+            amountLbl.setText("Total : " + total);
         });
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
@@ -182,15 +184,15 @@ public class WindowOrder extends JFrame {
         setVisible(true);
     }
 
-    public static Produit trouverProdId(String id, Iterable<Produit> liste) {
-        for(Produit prod : liste)
-            if (prod.getProduitId().equals(id))
-                return prod;
-        return null;
-    }
+//    public static Produit trouverProduit(String id) {
+//        for(String prod : Videotheque.getInstance().getListStockProduit().entrySet())
+//            if (prod.getProduitId().equals(id))
+//                return prod;
+//        return null;
+//    }
 
     public Commande trouverCommande(String id) {
-        for(Commande commande : Videotheque.getInstance().getListCommande()) {
+        for (Commande commande : Videotheque.getInstance().getListCommande()) {
             if (commande.getCommandeId().equals(id))
                 return commande;
         }

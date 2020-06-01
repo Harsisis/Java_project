@@ -141,7 +141,8 @@ public class WindowProduct extends JFrame {
     void processInput() {
         try {
             Produit nouveauProduit = buildProduit();
-            Videotheque.getInstance().ajoutStockProduit(nouveauProduit.getProduitNom(nouveauProduit), 0);
+            Videotheque.getInstance().ajoutStockProduit(nouveauProduit.getProduitId(), 0);
+            Videotheque.getInstance().ajoutProduit(nouveauProduit.getProduitId(), nouveauProduit);
             System.out.println("Titre : " + saisiTitleJtf.getText() + "\nPrix : " + saisiPriceJtf.getText());
             JOptionPane.showMessageDialog(this, "Le produit " +
                     CapitalizeUtil.getCapitalize(saisiTitleJtf.getText()) +
