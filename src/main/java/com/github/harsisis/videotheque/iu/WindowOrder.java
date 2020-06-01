@@ -5,14 +5,11 @@ import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class WindowOrder extends JFrame {
 
@@ -114,8 +111,8 @@ public class WindowOrder extends JFrame {
 
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
-                    emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
-                    //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+                emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
+                //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
@@ -145,11 +142,12 @@ public class WindowOrder extends JFrame {
             }
             System.out.println(total);
             amountLbl.setText("Total : " + total);
+            amountLbl.setVisible(true);
         });
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
             for (Emprunt emp : emprunts) {
-                    liEmpruntJcbx.addItem(emp.getProduitId());
+                liEmpruntJcbx.addItem(emp.getProduitId());
             }
             emprunts.remove(liEmpruntJcbx.getSelectedObjects());
             //for (Emprunt emp : emprunts) {
@@ -178,18 +176,14 @@ public class WindowOrder extends JFrame {
         amountLbl.setBorder(new EmptyBorder(0,10,0,20));
         listProdPnl.setPreferredSize(new Dimension(800,500));
         totalPnl.setPreferredSize(new Dimension(800,100));
+        totalPnl.add(amountLbl, BorderLayout.EAST);
+        amountLbl.setPreferredSize(new Dimension(800,0));
+        amountLbl.setVisible(false);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
         setVisible(true);
     }
-
-//    public static Produit trouverProduit(String id) {
-//        for(String prod : Videotheque.getInstance().getListStockProduit().entrySet())
-//            if (prod.getProduitId().equals(id))
-//                return prod;
-//        return null;
-//    }
 
     public Commande trouverCommande(String id) {
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
