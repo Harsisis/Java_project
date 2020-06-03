@@ -3,17 +3,8 @@ package com.github.harsisis.videotheque.iu;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 import com.github.harsisis.videotheque.util.CapitalizeUtil;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 
 public class WindowClient extends JFrame {

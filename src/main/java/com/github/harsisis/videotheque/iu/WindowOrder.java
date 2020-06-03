@@ -71,25 +71,13 @@ public class WindowOrder extends JFrame {
             liProductJcbx.addItem(produit);
         }
         liProductJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
-        DefaultTableModel modelCommande = new DefaultTableModel();
-
-        JTable tableCommande = new JTable(modelCommande);
-
-        ArrayList<Emprunt> emprunts = new ArrayList<>();
-
         JComboBox<String> liEmpruntJcbx = new JComboBox<>();
-
-        DefaultTableModel modelEmprunt = new DefaultTableModel();
-
+        liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
         ListSelectionModel cellSelectionModel;
-
-        JTable tableEmprunt = new JTable(modelEmprunt);
-
-        defineEmpruntTable(modelEmprunt);
-        createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
-
+        ArrayList<Emprunt> emprunts = new ArrayList<>();
+        DefaultTableModel modelCommande = new DefaultTableModel();
+        JTable tableCommande = new JTable(modelCommande);
         defineCommandeTable(modelCommande, tableCommande);
-
         tableCommande.setCellSelectionEnabled(true);
         cellSelectionModel = tableCommande.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -102,20 +90,20 @@ public class WindowOrder extends JFrame {
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
-        //buttons on the adding loaning page
+        //buttons on the add loan page
         plusProductBtn.addActionListener(e -> {
-
             addParameter(liProductJcbx);
-            tableEmprunt.repaint();
+            createEmpruntTable(emprunts);
         });
 
-        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande, modelEmprunt));
+        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
 
         confirmProductBtn.addActionListener(e -> {
-            if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
+            if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {//vérifier si il y a du stock
                 emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
                 listProdPnl.repaint();
-                tableEmprunt.repaint();
+                createEmpruntTable(emprunts);
+                //tableEmprunt.repaint();
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
@@ -124,21 +112,11 @@ public class WindowOrder extends JFrame {
                 durationJtf.setText("");
             }
             else {
-                jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+                jop3.showMessageDialog(null, "Valeur invalide / Produit non disponible", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
-
         cellSelectionModel.addListSelectionListener(listSelectionEvent -> {
-            Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
-            String commandeId = (String) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(),0);
-            Commande commande = trouverCommande(commandeId);
-            double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
-            double total = 0;
-            for (Emprunt emprunt : commande.getListEmprunt()) {
-                double tarif = Videotheque.getInstance().getProduit(emprunt.getProduitId()).getTarifJournalier();
-                int dureeLocation = emprunt.getDureeLocation();
-                total += tarif * dureeLocation * coefPrix;
-            }
+            double total = getTotal(tableCommande);
             System.out.println(total);
             amountLbl.setText("Total : " + total);
             amountLbl.setVisible(true);
@@ -150,17 +128,15 @@ public class WindowOrder extends JFrame {
             }
             emprunts.remove(liEmpruntJcbx.getSelectedObjects());
             removeParameter(liEmpruntJcbx);
+            createEmpruntTable(emprunts);
             listProdPnl.repaint();
-            tableEmprunt.repaint();
         });
-
         cancelDelBtn.addActionListener(e -> {
-            mainPage(liClientJcbx, modelCommande, tableCommande, modelEmprunt);
+            mainPage(liClientJcbx, modelCommande, tableCommande);
             createCommandeTable(modelCommande, tableCommande);
         });
-
         //display panel-----------------------------------------------------------------------------
-        mainPage(liClientJcbx, modelCommande, tableCommande, modelEmprunt);
+        mainPage(liClientJcbx, modelCommande, tableCommande);
         displayPnl.setBackground(Color.white);
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());
@@ -178,6 +154,22 @@ public class WindowOrder extends JFrame {
         setContentPane(displayPnl);
         setVisible(true);
     }
+    private boolean produitEnStock(String produitId) {
+        return Videotheque.getInstance().getListStockProduit().get(produitId) > 0;
+    }
+    private double getTotal(JTable tableCommande) {
+        Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
+        String commandeId = (String) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(),0);
+        Commande commande = trouverCommande(commandeId);
+        double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
+        double total = 0;
+        for (Emprunt emprunt : commande.getListEmprunt()) {
+            double tarif = Videotheque.getInstance().getProduit(emprunt.getProduitId()).getTarifJournalier();
+            int dureeLocation = emprunt.getDureeLocation();
+            total += tarif * dureeLocation * coefPrix;
+        }
+        return total;
+    }
 
     public Commande trouverCommande(String id) {
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
@@ -192,20 +184,24 @@ public class WindowOrder extends JFrame {
         modelEmprunt.addColumn("Durée");
     }
 
-    private void createEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt, ArrayList<Emprunt> emprunts) {
+    private void createEmpruntTable(ArrayList<Emprunt> emprunts) {
         listProdPnl.removeAll();
+        DefaultTableModel modelEmprunt = new DefaultTableModel();
+        JTable tableEmprunt = new JTable(modelEmprunt);
+        defineEmpruntTable(modelEmprunt);
         for (Emprunt emp : emprunts) {
-            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId().toString(), emp.getDureeLocation()});
+            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId(), emp.getDureeLocation()});
         }
         scrollPane = new JScrollPane(tableEmprunt);
         scrollPane.setPreferredSize(new Dimension(750,450));
         tableEmprunt.setFillsViewportHeight(true);
         listProdPnl.add(scrollPane);
+        listProdPnl.setVisible(true);
         revalidate();
         listProdPnl.repaint();
     }
 
-    public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande, DefaultTableModel modelEmprunt){
+    public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande){
 
         createCommandeTable(modelCommande, tableCommande);
 
@@ -362,7 +358,7 @@ public class WindowOrder extends JFrame {
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listProdPnl.removeAll();
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
-            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
+            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
         scrollPane.setPreferredSize(new Dimension(750,450));

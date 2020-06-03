@@ -77,11 +77,10 @@ public class WindowStock extends JFrame {
     private void processInput(JComboBox<String> cBox) {
         if (ValidatorUtil.isValidInteger(saisiQuantityJtf.getText()) && Integer.parseInt(saisiQuantityJtf.getText()) >= 0) {
             Videotheque.getInstance().ajoutStockProduit((String) cBox.getSelectedItem(), Integer.parseInt(saisiQuantityJtf.getText()));
-            if(Integer.parseInt(saisiQuantityJtf.getText()) == 1) {
+            if (Integer.parseInt(saisiQuantityJtf.getText()) == 1) {
                 JOptionPane.showMessageDialog(this, saisiQuantityJtf.getText() +
                         " unité a bien été ajouté pour ce produit", "Succès", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(this, saisiQuantityJtf.getText() +
                         " unités ont bien été ajoutés pour ce produit", "Succès", JOptionPane.INFORMATION_MESSAGE);
             }

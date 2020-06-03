@@ -1,10 +1,6 @@
 package com.github.harsisis.videotheque.domaine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Videotheque {
 
@@ -14,6 +10,7 @@ public class Videotheque {
     private Map<String, Produit> listProduit = new HashMap<>();
     private HashSet<Client> listClient = new HashSet<>();
     private HashSet<Commande> listCommande = new HashSet<>();
+
     // this should stay private because only one instance can exist
     // use Videotheque.getInstance()
     private Videotheque() {
@@ -71,7 +68,7 @@ public class Videotheque {
     }
 
     public Produit getProduit(String produitId) {
-            return listProduit.get(produitId);
+        return listProduit.get(produitId);
     }
 
     public void retirerStockProduit(String produitId, int quantity) {

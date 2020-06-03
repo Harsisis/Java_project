@@ -199,7 +199,7 @@ public class WindowHome extends JFrame {
         listPnl.removeAll();
         modelCommande.setRowCount(0);
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
-            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
+            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
         scrollPane.setPreferredSize(new Dimension(720,500));
