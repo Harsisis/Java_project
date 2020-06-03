@@ -269,6 +269,7 @@ public class WindowOrder extends JFrame {
     public void addParameter(JComboBox liProductJcbx){
 
         listProdPnl.removeAll();
+        amountLbl.setVisible(false);
 
         //select product panel----------------------------------------------------------------------
         selectProductPnl.setLayout(new GridLayout(2,1));
@@ -310,6 +311,7 @@ public class WindowOrder extends JFrame {
     public void removeParameter(JComboBox liEmpruntJcbx){
         managePnl.removeAll();
         listProdPnl.removeAll();
+        amountLbl.setVisible(false);
 
         managePnl.add(titlePnl);
         managePnl.add(selectLoaningPnl);
