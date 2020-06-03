@@ -64,11 +64,17 @@ public class WindowOrder extends JFrame {
         managePnl.setPreferredSize(new Dimension(400, 600));
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
+        confirmOrderBtn.setEnabled(false);
 
         JComboBox<Client> liClientJcbx = new JComboBox<>();
         for (Client client : Videotheque.getInstance().getListClient()) {
             liClientJcbx.addItem(client);
         }
+
+        if(!Videotheque.getInstance().getListClient().isEmpty()){
+            confirmOrderBtn.setEnabled(true);
+        }
+
         JComboBox<String> liProductJcbx = new JComboBox<>();
         for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
             liProductJcbx.addItem(produit);
