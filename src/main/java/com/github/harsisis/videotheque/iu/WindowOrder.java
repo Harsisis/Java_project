@@ -1,6 +1,9 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.*;
+import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.Commande;
+import com.github.harsisis.videotheque.domaine.Emprunt;
+import com.github.harsisis.videotheque.domaine.Videotheque;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.*;
@@ -58,7 +61,7 @@ public class WindowOrder extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        managePnl.setPreferredSize(new Dimension(400,600));
+        managePnl.setPreferredSize(new Dimension(400, 600));
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
@@ -110,8 +113,7 @@ public class WindowOrder extends JFrame {
                         liProductJcbx.getSelectedItem().toString() +
                         " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 durationJtf.setText("");
-            }
-            else {
+            } else {
                 jop3.showMessageDialog(null, "Valeur invalide / Produit non disponible", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -129,7 +131,6 @@ public class WindowOrder extends JFrame {
             emprunts.remove(liEmpruntJcbx.getSelectedObjects());
             removeParameter(liEmpruntJcbx);
             createEmpruntTable(emprunts);
-            listProdPnl.repaint();
         });
         cancelDelBtn.addActionListener(e -> {
             mainPage(liClientJcbx, modelCommande, tableCommande);
@@ -143,23 +144,25 @@ public class WindowOrder extends JFrame {
         displayPnl.add(managePnl, BorderLayout.WEST);
         displayPnl.add(workplacePnl, BorderLayout.EAST);
 
-        amountLbl.setBorder(new EmptyBorder(0,10,0,20));
-        listProdPnl.setPreferredSize(new Dimension(800,500));
-        totalPnl.setPreferredSize(new Dimension(800,100));
+        amountLbl.setBorder(new EmptyBorder(0, 10, 0, 20));
+        listProdPnl.setPreferredSize(new Dimension(800, 500));
+        totalPnl.setPreferredSize(new Dimension(800, 100));
         totalPnl.add(amountLbl, BorderLayout.EAST);
-        amountLbl.setPreferredSize(new Dimension(800,0));
+        amountLbl.setPreferredSize(new Dimension(800, 0));
         amountLbl.setVisible(false);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
         setVisible(true);
     }
+
     private boolean produitEnStock(String produitId) {
         return Videotheque.getInstance().getListStockProduit().get(produitId) > 0;
     }
+
     private double getTotal(JTable tableCommande) {
-        Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(),1);
-        String commandeId = (String) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(),0);
+        Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(), 1);
+        String commandeId = (String) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(), 0);
         Commande commande = trouverCommande(commandeId);
         double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
         double total = 0;
@@ -178,6 +181,7 @@ public class WindowOrder extends JFrame {
         }
         return null;
     }
+
     private void defineEmpruntTable(DefaultTableModel modelEmprunt) {
         modelEmprunt.addColumn("ID emprunt");
         modelEmprunt.addColumn("Produit");
@@ -193,7 +197,7 @@ public class WindowOrder extends JFrame {
             modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId(), emp.getDureeLocation()});
         }
         scrollPane = new JScrollPane(tableEmprunt);
-        scrollPane.setPreferredSize(new Dimension(750,450));
+        scrollPane.setPreferredSize(new Dimension(750, 450));
         tableEmprunt.setFillsViewportHeight(true);
         listProdPnl.add(scrollPane);
         listProdPnl.setVisible(true);
@@ -201,7 +205,7 @@ public class WindowOrder extends JFrame {
         listProdPnl.repaint();
     }
 
-    public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande){
+    public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande) {
 
         createCommandeTable(modelCommande, tableCommande);
 
@@ -262,13 +266,13 @@ public class WindowOrder extends JFrame {
         listProdPnl.repaint();
     }
 
-    public void addParameter(JComboBox liProductJcbx){
+    public void addParameter(JComboBox liProductJcbx) {
 
         listProdPnl.removeAll();
         amountLbl.setVisible(false);
 
         //select product panel----------------------------------------------------------------------
-        selectProductPnl.setLayout(new GridLayout(2,1));
+        selectProductPnl.setLayout(new GridLayout(2, 1));
         selectProductPnl.setBackground(Color.white);
         selectProductPnl.setBorder(BorderFactory.createLineBorder(Color.black));
         selectProductPnl.add(choicePrdLbl);
@@ -276,7 +280,7 @@ public class WindowOrder extends JFrame {
         liProductJcbx.setBackground(Color.white);
 
         //select time panel----------------------------------------------------------------------
-        selectTimePnl.setLayout(new GridLayout(2,1));
+        selectTimePnl.setLayout(new GridLayout(2, 1));
         selectTimePnl.setBackground(Color.white);
         selectTimePnl.setBorder(BorderFactory.createLineBorder(Color.black));
         selectTimePnl.add(durationLbl);
@@ -304,7 +308,7 @@ public class WindowOrder extends JFrame {
         listProdPnl.repaint();
     }
 
-    public void removeParameter(JComboBox liEmpruntJcbx){
+    public void removeParameter(JComboBox liEmpruntJcbx) {
         managePnl.removeAll();
         listProdPnl.removeAll();
         amountLbl.setVisible(false);
@@ -316,7 +320,7 @@ public class WindowOrder extends JFrame {
         //select loaning panel-----------------------------------------------------------------------
 
         selectLoaningPnl.setBackground(Color.white);
-        selectLoaningPnl.setLayout(new GridLayout(2,1, 5,0));
+        selectLoaningPnl.setLayout(new GridLayout(2, 1, 5, 0));
         selectLoaningPnl.setBorder(BorderFactory.createLineBorder(Color.black));
         selectLoaningPnl.add(choiceEmpLbl);
         selectLoaningPnl.add(liEmpruntJcbx);
@@ -342,26 +346,25 @@ public class WindowOrder extends JFrame {
         modelCommande.addColumn("Date de début de la commande");
 
         TableColumn column = null;
-        for(int i = 0; i<=2; i++){
+        for (int i = 0; i <= 2; i++) {
             column = tableCommande.getColumnModel().getColumn(i);
-            if (i == 0){
+            if (i == 0) {
                 column.setPreferredWidth(300);//column ID
-            }
-            else if(i == 1){
+            } else if (i == 1) {
                 column.setPreferredWidth(500);//column Client
-            }
-            else {
+            } else {
                 column.setPreferredWidth(100);
             }
         }
     }
+
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listProdPnl.removeAll();
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
             modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
-        scrollPane.setPreferredSize(new Dimension(750,450));
+        scrollPane.setPreferredSize(new Dimension(750, 450));
         tableCommande.setFillsViewportHeight(true);
         listProdPnl.add(scrollPane);
         revalidate();

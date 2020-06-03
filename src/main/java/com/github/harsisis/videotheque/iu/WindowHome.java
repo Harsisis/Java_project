@@ -10,8 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class WindowHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
@@ -149,19 +147,18 @@ public class WindowHome extends JFrame {
         modelClient.addColumn("Fidèle");
 
         TableColumn column = null;
-        for(int i = 0; i<=3; i++){
+        for (int i = 0; i <= 3; i++) {
             column = tableClient.getColumnModel().getColumn(i);
-            if (i == 0){
+            if (i == 0) {
                 column.setPreferredWidth(400);//column ID
-            }
-            else if(i == 3){
+            } else if (i == 3) {
                 column.setPreferredWidth(100);//column fidele
-            }
-            else {
+            } else {
                 column.setPreferredWidth(150);//columns nom and prenom
             }
         }
     }
+
     private void createClientTable(DefaultTableModel modelClient, JTable tableClient) {
         listPnl.removeAll();
         modelClient.setRowCount(0);//clear the table
@@ -169,32 +166,32 @@ public class WindowHome extends JFrame {
             modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
         }
         scrollPane = new JScrollPane(tableClient);
-        scrollPane.setPreferredSize(new Dimension(720,500));
+        scrollPane.setPreferredSize(new Dimension(720, 500));
         tableClient.setFillsViewportHeight(true);
         listPnl.add(scrollPane);
         indicationLbl.setText("Liste des Clients :");
         revalidate();
         listPnl.repaint();
     }
+
     private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         modelCommande.addColumn("ID commande");
         modelCommande.addColumn("Client");
         modelCommande.addColumn("Date de début de la commande");
 
         TableColumn column = null;
-        for(int i = 0; i<=2; i++){
+        for (int i = 0; i <= 2; i++) {
             column = tableCommande.getColumnModel().getColumn(i);
-            if (i == 0){
+            if (i == 0) {
                 column.setPreferredWidth(300);//column ID
-            }
-            else if(i == 1){
+            } else if (i == 1) {
                 column.setPreferredWidth(500);//column Client
-            }
-            else {
+            } else {
                 column.setPreferredWidth(100);
             }
         }
     }
+
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listPnl.removeAll();
         modelCommande.setRowCount(0);
@@ -202,7 +199,7 @@ public class WindowHome extends JFrame {
             modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
-        scrollPane.setPreferredSize(new Dimension(720,500));
+        scrollPane.setPreferredSize(new Dimension(720, 500));
         tableCommande.setFillsViewportHeight(true);
         listPnl.add(scrollPane);
         indicationLbl.setText("Liste des Commandes :");
@@ -210,13 +207,14 @@ public class WindowHome extends JFrame {
         listPnl.repaint();
     }
 
-        private void defineProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
-            modelProduit.addColumn("Produit");
-            modelProduit.addColumn("Quantité");
+    private void defineProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
+        modelProduit.addColumn("Produit");
+        modelProduit.addColumn("Quantité");
 
-            tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);
-            tableProduit.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);
+        tableProduit.getColumnModel().getColumn(1).setPreferredWidth(150);
     }
+
     private void createProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
         listPnl.removeAll();
         modelProduit.setRowCount(0);
@@ -226,7 +224,7 @@ public class WindowHome extends JFrame {
         }
 
         scrollPane = new JScrollPane(tableProduit);
-        scrollPane.setPreferredSize(new Dimension(720,500));
+        scrollPane.setPreferredSize(new Dimension(720, 500));
         tableProduit.setFillsViewportHeight(true);
         listPnl.add(scrollPane);
         indicationLbl.setText("Liste des Produits :");
