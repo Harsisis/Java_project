@@ -9,7 +9,7 @@ Fonctions à implémenter :
 
 A fixer :
 - [x] Faire jolie les listes (basculer une page)
-- [x] Faire en sorte où on voit qu’on on a réussi à créer le produit j option pane avec "le produit "+inserez produit+" a bien été crée"
+- [x] Faire en sorte où on voit qu’on on a réussi à créer le produit j option pane avec "le produit "+inserez produit+" a bien été créé"
 - [ ] vérification des saisies = empecher de mettre des lettres dans tarif
 - [ ] Écrire les Junits test
 - [ ] Gestion des commandes et des emprunts
@@ -22,7 +22,7 @@ ui :
 - [x] Modifier la liste d'affichage produits pour mettre la quantité en stock
 - [x] Créer la liste d'affichage des commandes
 - [x] Ajouter un produit à une commande
-- [ ] Enlever un produit à une commande
+- [x] Enlever un produit à une commande
 - [ ] Modifier une commande
 - [x] Problème plusieurs selection possible pour la création d'un livre
 - [x] Affichage commande plus et moi dans commande
@@ -33,5 +33,6 @@ A faire :
 - [ ] Afficher liste emprunt
 - [x] Afficher liste produit sur l'accueil
 - [x] Afficher la quantité d'un produit sur la liste d'accueil
-- [ ] Afficher les emprunts dans une comboBox
+- [x] Afficher les emprunts dans une comboBox
+- [ ] Afficher le produit concerné par l'emprunt dans la comboBox pour enlever l'emprunt
 

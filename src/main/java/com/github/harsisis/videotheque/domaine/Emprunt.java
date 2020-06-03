@@ -23,12 +23,6 @@ public class Emprunt {
         return produitId;
     }
 
-//    public String getEmpruntStr(){ //voir erreur dans windowOrder -> "AWT-EventQueue-0" java.lang.NullPointerException
-//        return produitId.getTitre() +
-//                " | " +
-//                String.valueOf(dureeLocation);
-//    }
-
     public int getDureeLocation() {
         return dureeLocation;
     }

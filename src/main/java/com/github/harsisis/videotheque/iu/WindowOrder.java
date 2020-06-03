@@ -150,13 +150,6 @@ public class WindowOrder extends JFrame {
                 liEmpruntJcbx.addItem(emp.getProduitId());
             }
             emprunts.remove(liEmpruntJcbx.getSelectedObjects());
-            //for (Emprunt emp : emprunts) {
-            //    liEmpruntJcbx.addItem(emp.getEmpruntStr());       ne pas oublier de mettre le type de la comboBox en String
-            //                                                      "AWT-EventQueue-0" java.lang.NullPointerException
-            //	                                                    at com.github.harsisis.videotheque.domaine.Emprunt.getEmpruntStr(Emprunt.java:26)
-            //	                                                    at com.github.harsisis.videotheque.iu.WindowOrder.removeParameter(WindowOrder.java:286)
-            //	                                                    at com.github.harsisis.videotheque.iu.WindowOrder.lambda$new$5(WindowOrder.java:130)
-            //}
             removeParameter(liEmpruntJcbx);
         });
 

@@ -244,6 +244,7 @@ public class WindowProduct extends JFrame {
             //insert combo box with language
             placeHolderPnl.add(languageLbl, BorderLayout.EAST);
             placeHolderPnl.add(selectLangJcbx, BorderLayout.WEST);
+            selectLangJcbx.setBackground(Color.white);
 
         } else {// livre
             placeHolderPnl.removeAll();
