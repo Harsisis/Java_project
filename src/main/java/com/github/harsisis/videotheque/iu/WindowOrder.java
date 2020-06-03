@@ -86,6 +86,7 @@ public class WindowOrder extends JFrame {
         JTable tableEmprunt = new JTable(modelEmprunt);
 
         defineEmpruntTable(modelEmprunt);
+        createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
         defineCommandeTable(modelCommande, tableCommande);
 
@@ -103,8 +104,9 @@ public class WindowOrder extends JFrame {
 
         //buttons on the adding loaning page
         plusProductBtn.addActionListener(e -> {
+
             addParameter(liProductJcbx);
-            //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+            tableEmprunt.repaint();
         });
 
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande, modelEmprunt));
@@ -112,17 +114,14 @@ public class WindowOrder extends JFrame {
         confirmProductBtn.addActionListener(e -> {
             if (ValidatorUtil.isValidInteger(durationJtf.getText())) {//vérifier si il y a du stock
                 emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
-                //createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+                listProdPnl.repaint();
+                tableEmprunt.repaint();
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
                         liProductJcbx.getSelectedItem().toString() +
                         " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 durationJtf.setText("");
-
-                for(Emprunt emp : emprunts) {
-                    //modelEmprunt.addRow(emp.getEmpruntId(), emp.getProduit(), emp.getFinLocation(now()));
-                }
             }
             else {
                 jop3.showMessageDialog(null, "Veuillez saisir une durée valide", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -151,6 +150,8 @@ public class WindowOrder extends JFrame {
             }
             emprunts.remove(liEmpruntJcbx.getSelectedObjects());
             removeParameter(liEmpruntJcbx);
+            listProdPnl.repaint();
+            tableEmprunt.repaint();
         });
 
         cancelDelBtn.addActionListener(e -> {
@@ -207,7 +208,6 @@ public class WindowOrder extends JFrame {
     public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande, DefaultTableModel modelEmprunt){
 
         createCommandeTable(modelCommande, tableCommande);
-        //defineEmpruntTable(modelEmprunt);
 
         //title panel-------------------------------------------------------------------------------
         titlePnl.add(titleLbl);
@@ -361,7 +361,6 @@ public class WindowOrder extends JFrame {
     }
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listProdPnl.removeAll();
-        modelCommande.setRowCount(0);//clear the table
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
             modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
         }
