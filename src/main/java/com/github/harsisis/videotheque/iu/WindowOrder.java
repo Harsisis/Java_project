@@ -108,11 +108,10 @@ public class WindowOrder extends JFrame {
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
 
         confirmProductBtn.addActionListener(e -> {
-            if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {//vérifier si il y a du stock
+            if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {
                 emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
                 listProdPnl.repaint();
                 createEmpruntTable(emprunts);
-                //tableEmprunt.repaint();
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
@@ -120,7 +119,7 @@ public class WindowOrder extends JFrame {
                         " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 durationJtf.setText("");
             } else {
-                jop3.showMessageDialog(null, "Valeur invalide / Produit non disponible", "Erreur", JOptionPane.ERROR_MESSAGE);
+                jop3.showMessageDialog(null, "Valeur invalide ou quantité insuffisante", "Attention", JOptionPane.WARNING_MESSAGE);
             }
         });
         cellSelectionModel.addListSelectionListener(listSelectionEvent -> {
@@ -140,7 +139,13 @@ public class WindowOrder extends JFrame {
         });
         cancelDelBtn.addActionListener(e -> {
             mainPage(liClientJcbx, modelCommande, tableCommande);
-            createCommandeTable(modelCommande, tableCommande);
+        });
+
+        confirmDelBtn.addActionListener(e -> {
+            emprunts.remove(liEmpruntJcbx.getSelectedObjects());
+            jop3.showMessageDialog(null, "Le produit à bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
+            listProdPnl.repaint();
+            createEmpruntTable(emprunts);
         });
         //display panel-----------------------------------------------------------------------------
         mainPage(liClientJcbx, modelCommande, tableCommande);
@@ -188,17 +193,21 @@ public class WindowOrder extends JFrame {
         return null;
     }
 
-    private void defineEmpruntTable(DefaultTableModel modelEmprunt) {
+    private void defineEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt) {
         modelEmprunt.addColumn("ID emprunt");
         modelEmprunt.addColumn("Produit");
         modelEmprunt.addColumn("Durée");
+
+        tableEmprunt.getColumnModel().getColumn(0).setPreferredWidth(295);
+        tableEmprunt.getColumnModel().getColumn(1).setPreferredWidth(400);
+        tableEmprunt.getColumnModel().getColumn(2).setPreferredWidth(50);
     }
 
     private void createEmpruntTable(ArrayList<Emprunt> emprunts) {
         listProdPnl.removeAll();
         DefaultTableModel modelEmprunt = new DefaultTableModel();
         JTable tableEmprunt = new JTable(modelEmprunt);
-        defineEmpruntTable(modelEmprunt);
+        defineEmpruntTable(modelEmprunt, tableEmprunt);
         for (Emprunt emp : emprunts) {
             modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId(), emp.getDureeLocation()});
         }
