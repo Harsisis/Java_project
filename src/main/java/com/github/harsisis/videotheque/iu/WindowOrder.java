@@ -27,6 +27,7 @@ public class WindowOrder extends JFrame {
     private JPanel confirmPlusPnl = new JPanel();// panel with button to cancel or confirm add product
     private JPanel listProdPnl = new JPanel();//list with all the product includes in the order
     private JPanel totalPnl = new JPanel();// display total price
+    private JPanel modifyPnl = new JPanel();// display button to modify an order
 
     private JLabel titleLbl = new JLabel("Enregistrer une nouvelle commande :");
     private JLabel productAddLbl = new JLabel("Ajouter ou Supprimer un produit :");
@@ -44,6 +45,7 @@ public class WindowOrder extends JFrame {
     private JButton cancelProductBtn = new JButton("Retour");
     private JButton confirmDelBtn = new JButton("Supprimer");
     private JButton cancelDelBtn = new JButton("Annuler");
+    private JButton modifyCommandeBtn = new JButton("Modifier la commande");
 
     private JTextField durationJtf = new JTextField();
 
@@ -62,6 +64,7 @@ public class WindowOrder extends JFrame {
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
         confirmOrderBtn.setEnabled(false);
+        modifyCommandeBtn.setEnabled(false);
 
         JComboBox<Client> liClientJcbx = new JComboBox<>();
         for (Client client : Videotheque.getInstance().getListClient()) {
@@ -101,6 +104,17 @@ public class WindowOrder extends JFrame {
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
+        cellSelectionModel.addListSelectionListener(e -> {
+            if(!e.getValueIsAdjusting()) {
+                modifyCommandeBtn.setEnabled(true);
+                double total = WindowOrder.getTotal(tableCommande);
+                amountLbl.setText("Total : " + total + " €");
+                amountLbl.setVisible(true);
+                Commande commande = WindowOrder.trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
+                modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
+            }
+        });
+
         //buttons on the add loan page
         plusProductBtn.addActionListener(e -> {
             addParameter(liProductJcbx);
@@ -127,7 +141,7 @@ public class WindowOrder extends JFrame {
         cellSelectionModel.addListSelectionListener(listSelectionEvent -> {
             double total = getTotal(tableCommande);
             System.out.println(total);
-            amountLbl.setText("Total : " + total);
+            amountLbl.setText("Total : " + total + " €");
             amountLbl.setVisible(true);
         });
         //buttons on the delete loaning page
@@ -163,6 +177,10 @@ public class WindowOrder extends JFrame {
         totalPnl.add(amountLbl, BorderLayout.EAST);
         amountLbl.setPreferredSize(new Dimension(800, 0));
         amountLbl.setVisible(false);
+        modifyCommandeBtn.setBackground(Color.white);
+        modifyCommandeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        modifyCommandeBtn.setPreferredSize(new Dimension(200, 20));
+        modifyPnl.add(modifyCommandeBtn);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
@@ -245,12 +263,17 @@ public class WindowOrder extends JFrame {
         totalPnl.add(amountLbl, BorderLayout.EAST);
         amountLbl.setForeground(Color.white);
 
+        //modify panel ----------------------------------------------------------------------------
+        modifyPnl.setBackground(Color.white);
+        modifyPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
         managePnl.add(titlePnl);
         managePnl.add(selectPnl);
         managePnl.add(addDelPnl);
         managePnl.add(confirmPnl);
+        managePnl.add(modifyPnl);
 
         revalidate();
         managePnl.repaint();

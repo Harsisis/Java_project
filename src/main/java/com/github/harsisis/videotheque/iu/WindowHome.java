@@ -22,7 +22,6 @@ public class WindowHome extends JFrame {
     private JButton addOrderBtn = new JButton("Ajouter une commande");
     private JButton addProductBtn = new JButton("Ajouter un produit");
     private JButton addQtyProductBtn = new JButton("Ajouter du stock");
-    private JButton modifyCommandeBtn = new JButton("Modifier la commande");
 
     private JMenuBar menuBar = new JMenuBar();
     private JMenuItem listUser = new JMenuItem("Liste des clients");
@@ -49,7 +48,7 @@ public class WindowHome extends JFrame {
         addProductBtn.addActionListener(e -> new WindowProduct());
         addQtyProductBtn.addActionListener(e -> new WindowStock());
         amountLbl.setVisible(false);
-        modifyCommandeBtn.setEnabled(false);
+
 
         //items menu ------------------------------------------------------------------------------
         //create a menu with tables
@@ -103,16 +102,15 @@ public class WindowHome extends JFrame {
             listPnl.repaint();
         });
 
-        cellSelectionModel.addListSelectionListener(e -> {
-            if(!e.getValueIsAdjusting()) {
-                modifyCommandeBtn.setEnabled(true);
-                double total = WindowOrder.getTotal(tableCommande);
-                amountLbl.setText("Total : " + total + " €");
-                amountLbl.setVisible(true);
-                Commande commande = WindowOrder.trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
-                modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
-            }
-        });
+       // cellSelectionModel.addListSelectionListener(e -> {
+            //if(!e.getValueIsAdjusting()) {
+                //double total = WindowOrder.getTotal(tableCommande);
+                //amountLbl.setText("Total : " + total + " €");
+               // amountLbl.setVisible(true);
+               // Commande commande = WindowOrder.trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
+           // }
+       // });
+
         quit.addActionListener(e -> {
 
             int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
@@ -141,9 +139,6 @@ public class WindowHome extends JFrame {
         addQtyProductBtn.setBackground(Color.white);
         addQtyProductBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         addQtyProductBtn.setPreferredSize(new Dimension(140, 20));
-        modifyCommandeBtn.setBackground(Color.white);
-        modifyCommandeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        modifyCommandeBtn.setPreferredSize(new Dimension(140, 20));
 
         amountLbl.setForeground(Color.white);
         indicationLbl.setForeground(Color.white);
@@ -157,7 +152,6 @@ public class WindowHome extends JFrame {
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
         workPlacePnl.add(addQtyProductBtn);
-        workPlacePnl.add(modifyCommandeBtn);
         workPlacePnl.add(amountLbl);
 
         //panel display----------------------------------------------------------------------------
