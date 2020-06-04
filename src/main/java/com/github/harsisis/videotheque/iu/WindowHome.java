@@ -1,15 +1,14 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.Client;
-import com.github.harsisis.videotheque.domaine.Commande;
-import com.github.harsisis.videotheque.domaine.Produit;
-import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.domaine.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class WindowHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
@@ -17,25 +16,24 @@ public class WindowHome extends JFrame {
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
 
     private JLabel indicationLbl = new JLabel(""); // Label where i write all
+    private JLabel amountLbl = new JLabel("");
 
     private JButton addClientBtn = new JButton("Ajouter un client");
     private JButton addOrderBtn = new JButton("Ajouter une commande");
     private JButton addProductBtn = new JButton("Ajouter un produit");
     private JButton addQtyProductBtn = new JButton("Ajouter du stock");
+    private JButton modifyCommandeBtn = new JButton("Modifier la commande");
 
     private JMenuBar menuBar = new JMenuBar();
-    private JMenu li = new JMenu("Liste");
     private JMenuItem listUser = new JMenuItem("Liste des clients");
     private JMenuItem listCommand = new JMenuItem("Liste des commandes");
     private JMenuItem listProduct = new JMenuItem("Liste des produits");
     private JMenuItem listEmpty = new JMenuItem("Vider le panneau");
     private JMenuItem quit = new JMenuItem("Quitter");
-    private JMenu help = new JMenu("Aide");
 
     private JScrollPane scrollPane;
 
     private JOptionPane jop3 = new JOptionPane();
-
 
     public WindowHome() {
 
@@ -50,6 +48,8 @@ public class WindowHome extends JFrame {
         addOrderBtn.addActionListener(e -> new WindowOrder());
         addProductBtn.addActionListener(e -> new WindowProduct());
         addQtyProductBtn.addActionListener(e -> new WindowStock());
+        amountLbl.setVisible(false);
+        modifyCommandeBtn.setEnabled(false);
 
         //items menu ------------------------------------------------------------------------------
         //create a menu with tables
@@ -68,6 +68,11 @@ public class WindowHome extends JFrame {
 
         DefaultTableModel modelProduit = new DefaultTableModel();
         JTable tableProduit = new JTable(modelProduit);
+
+        ListSelectionModel cellSelectionModel;
+        tableCommande.setCellSelectionEnabled(true);
+        cellSelectionModel = tableCommande.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         defineClientTable(modelClient, tableClient);
 
@@ -88,6 +93,16 @@ public class WindowHome extends JFrame {
             listPnl.repaint();
         });
 
+        cellSelectionModel.addListSelectionListener(e -> {
+            if(!e.getValueIsAdjusting()) {
+                modifyCommandeBtn.setEnabled(true);
+                double total = WindowOrder.getTotal(tableCommande);
+                amountLbl.setText("Total : " + total);
+                amountLbl.setVisible(true);
+                Commande commande = WindowOrder.trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
+                modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
+            }
+        });
         quit.addActionListener(e -> {
 
             int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
@@ -127,6 +142,8 @@ public class WindowHome extends JFrame {
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
         workPlacePnl.add(addQtyProductBtn);
+        workPlacePnl.add(modifyCommandeBtn);
+        workPlacePnl.add(amountLbl);
 
         //panel display----------------------------------------------------------------------------
         // I can display only one panel then all the other panels are stocked in displayPnl
@@ -196,7 +213,7 @@ public class WindowHome extends JFrame {
         listPnl.removeAll();
         modelCommande.setRowCount(0);
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
-            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
+            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
         scrollPane.setPreferredSize(new Dimension(720, 500));

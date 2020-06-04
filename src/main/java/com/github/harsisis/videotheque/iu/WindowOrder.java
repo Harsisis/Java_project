@@ -1,9 +1,6 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.Client;
-import com.github.harsisis.videotheque.domaine.Commande;
-import com.github.harsisis.videotheque.domaine.Emprunt;
-import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.domaine.*;
 import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.*;
@@ -42,7 +39,7 @@ public class WindowOrder extends JFrame {
     private JButton plusProductBtn = new JButton("+");
     private JButton minusProductBtn = new JButton("-");
     private JButton confirmOrderBtn = new JButton("Valider");
-    private JButton cancelOrderBtn = new JButton("Annuler");
+    private JButton cancelOrderBtn = new JButton("Retour");
     private JButton confirmProductBtn = new JButton("Ajouter");
     private JButton cancelProductBtn = new JButton("Retour");
     private JButton confirmDelBtn = new JButton("Supprimer");
@@ -100,6 +97,7 @@ public class WindowOrder extends JFrame {
 
         confirmOrderBtn.addActionListener(e -> {
             Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
+            JOptionPane.showMessageDialog(this, "La commande a bien été ajouté à la liste des commandes",  "Succès", JOptionPane.INFORMATION_MESSAGE);
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
@@ -119,7 +117,7 @@ public class WindowOrder extends JFrame {
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
-                        liProductJcbx.getSelectedItem().toString() +
+                        liProductJcbx.getSelectedItem() +
                         " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 durationJtf.setText("");
             } else {
@@ -147,7 +145,7 @@ public class WindowOrder extends JFrame {
 
         confirmDelBtn.addActionListener(e -> {
             emprunts.remove(liEmpruntJcbx.getSelectedIndex());
-            jop3.showMessageDialog(null, "Le produit à bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
+            jop3.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
             listProdPnl.repaint();
         });
@@ -171,12 +169,9 @@ public class WindowOrder extends JFrame {
         setVisible(true);
     }
 
-    private boolean produitEnStock(String produitId) {
-        return Videotheque.getInstance().getListStockProduit().get(produitId) > 0;
-    }
 
-    private double getTotal(JTable tableCommande) {
-        Client client = (Client) tableCommande.getValueAt(tableCommande.getSelectedRow(), 1);
+    static double getTotal(JTable tableCommande) {
+        Client client = (Client) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(), 1);
         String commandeId = (String) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(), 0);
         Commande commande = trouverCommande(commandeId);
         double coefPrix = client.isFidele() ? 1 - Videotheque.REDUC_FIDELE : 1;
@@ -189,7 +184,11 @@ public class WindowOrder extends JFrame {
         return total;
     }
 
-    public Commande trouverCommande(String id) {
+    private boolean produitEnStock(String produitId) {
+        return Videotheque.getInstance().getListStockProduit().get(produitId) > 0;
+    }
+
+    public static Commande trouverCommande(String id) {
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
             if (commande.getCommandeId().equals(id))
                 return commande;
@@ -354,7 +353,7 @@ public class WindowOrder extends JFrame {
         listProdPnl.removeAll();
         modelCommande.setRowCount(0);
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
-            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
+            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
         scrollPane.setPreferredSize(new Dimension(750, 450));
