@@ -28,6 +28,19 @@ public class VideothequeTest {
     }
 
     @Test
+    public void given_validInputParams_when_ajoutProduit_then_true() {
+        //GIVEN
+        Videotheque videotheque = Videotheque.getInstance();
+        DVD dvd = new DVD("Lion King", 5, "Jon Favreau");
+
+        //WHEN
+        videotheque.ajoutProduit(dvd.getProduitId(), dvd);
+
+        //THEN
+        assertTrue(!Videotheque.getInstance().getListProduit().isEmpty());
+    }
+
+    @Test
     public void given_produitAndQuantity_when_ajoutStockProduit_then_listStockProduitShouldNotBeEmpty() {
         // GIVEN
         Produit p1 = new CD("titre", 10D, 1983);
@@ -40,5 +53,6 @@ public class VideothequeTest {
         //THEN
         assertFalse(videotheque.getListStockProduit().isEmpty());
     }
+
 
 }

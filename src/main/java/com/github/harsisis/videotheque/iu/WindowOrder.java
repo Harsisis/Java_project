@@ -188,7 +188,7 @@ public class WindowOrder extends JFrame {
     }
 
 
-    static double getTotal(JTable tableCommande) {
+    double getTotal(JTable tableCommande) {
         Client client = (Client) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(), 1);
         String commandeId = (String) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(), 0);
         Commande commande = trouverCommande(commandeId);
@@ -206,7 +206,7 @@ public class WindowOrder extends JFrame {
         return Videotheque.getInstance().getListStockProduit().get(produitId) > 0;
     }
 
-    public static Commande trouverCommande(String id) {
+    public Commande trouverCommande(String id) {
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
             if (commande.getCommandeId().equals(id))
                 return commande;
