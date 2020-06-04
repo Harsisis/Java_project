@@ -80,15 +80,25 @@ public class WindowHome extends JFrame {
 
         defineProduitTable(modelProduit, tableProduit);
 
-        listUser.addActionListener(e -> createClientTable(modelClient, tableClient));
+        listUser.addActionListener(e -> {
+            createClientTable(modelClient, tableClient);
+            amountLbl.setVisible(false);
+        });
 
-        listCommand.addActionListener(e -> createCommandeTable(modelCommande, tableCommande));
+        listCommand.addActionListener(e -> {
+            createCommandeTable(modelCommande, tableCommande);
+            amountLbl.setVisible(false);
+        });
 
-        listProduct.addActionListener(e -> createProduitTable(modelProduit, tableProduit));
+        listProduct.addActionListener(e -> {
+            createProduitTable(modelProduit, tableProduit);
+            amountLbl.setVisible(false);
+        });
 
         listEmpty.addActionListener(e -> {
             listPnl.removeAll();
             indicationLbl.setText("");
+            amountLbl.setVisible(false);
             revalidate();
             listPnl.repaint();
         });
@@ -97,7 +107,7 @@ public class WindowHome extends JFrame {
             if(!e.getValueIsAdjusting()) {
                 modifyCommandeBtn.setEnabled(true);
                 double total = WindowOrder.getTotal(tableCommande);
-                amountLbl.setText("Total : " + total);
+                amountLbl.setText("Total : " + total + " €");
                 amountLbl.setVisible(true);
                 Commande commande = WindowOrder.trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
                 modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
@@ -131,8 +141,13 @@ public class WindowHome extends JFrame {
         addQtyProductBtn.setBackground(Color.white);
         addQtyProductBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         addQtyProductBtn.setPreferredSize(new Dimension(140, 20));
+        modifyCommandeBtn.setBackground(Color.white);
+        modifyCommandeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        modifyCommandeBtn.setPreferredSize(new Dimension(140, 20));
 
+        amountLbl.setForeground(Color.white);
         indicationLbl.setForeground(Color.white);
+
         //panel
         workPlacePnl.setBackground(Color.darkGray);
         workPlacePnl.setPreferredSize(new Dimension(200, 600));

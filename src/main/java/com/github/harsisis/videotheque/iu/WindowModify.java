@@ -11,23 +11,67 @@ import java.util.ArrayList;
 
 public class WindowModify extends JFrame {
 
+    private JPanel displayPnl = new JPanel();
     private JPanel managePnl = new JPanel();
     private JPanel listProdPnl = new JPanel();
+    private JPanel addDelPnl = new JPanel();
+    private JPanel backPnl = new JPanel();
+
+    private JButton plusProductBtn = new JButton("+");
+    private JButton minusProductBtn = new JButton("-");
+    private JButton backProductBtn = new JButton("Retour");
+
     private JScrollPane scrollPane;
+
     DefaultTableModel modelEmprunt = new DefaultTableModel();
     JTable tableEmprunt = new JTable(modelEmprunt);
 
     public WindowModify(Commande commande) {
-        setTitle("Ajout d'une Commande");
-        setSize(600, 400);
+        setTitle("Modification d'une Commande");
+        setSize(800, 500);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        managePnl.setPreferredSize(new Dimension(400, 600));
+
+        addDelPnl.add(plusProductBtn);
+        addDelPnl.add(minusProductBtn);
+        plusProductBtn.setBackground(Color.white);
+        minusProductBtn.setBackground(Color.white);
+
+        backPnl.add(backProductBtn);
+        backProductBtn.setBackground(Color.white);
+
+        mainPage(commande);
+        defineEmpruntTable(modelEmprunt, tableEmprunt);
+
+        displayPnl.add(managePnl, BorderLayout.WEST);
+        displayPnl.add(listProdPnl, BorderLayout.EAST);
+
+        setContentPane(displayPnl);
+        setVisible(true);
+    }
+
+    private void mainPage(Commande commande) {
+        listProdPnl.removeAll();
+        managePnl.removeAll();
+
+        listProdPnl.setPreferredSize(new Dimension(200, 500));
+        listProdPnl.setBackground(Color.white);
+
+        addDelPnl.setPreferredSize(new Dimension(200, 500));
+        addDelPnl.setBackground(Color.white);
+        addDelPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        backPnl.setPreferredSize(new Dimension(200, 500));
+        backPnl.setBackground(Color.white);
+        backPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        managePnl.setPreferredSize(new Dimension(600, 500));
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
-        defineEmpruntTable(modelEmprunt, tableEmprunt);
-        setVisible(true);
+        managePnl.add(addDelPnl);
+        managePnl.add(backPnl);
+
         createEmpruntTable(modelEmprunt, tableEmprunt, commande.getListEmprunt());
     }
 
