@@ -27,7 +27,7 @@ public class WindowOrder extends JFrame {
     private JPanel confirmPlusPnl = new JPanel();// panel with button to cancel or confirm add product
     private JPanel listProdPnl = new JPanel();//list with all the product includes in the order
     private JPanel totalPnl = new JPanel();// display total price
-    private JPanel modifyPnl = new JPanel();// display button to modify an order
+    private JPanel modifyPnl = new JPanel();
 
     private JLabel titleLbl = new JLabel("Enregistrer une nouvelle commande :");
     private JLabel productAddLbl = new JLabel("Ajouter ou Supprimer un produit :");
@@ -155,6 +155,9 @@ public class WindowOrder extends JFrame {
         });
         cancelDelBtn.addActionListener(e -> {
             mainPage(liClientJcbx, modelCommande, tableCommande);
+            revalidate();
+            managePnl.repaint();
+            listProdPnl.repaint();
         });
 
         confirmDelBtn.addActionListener(e -> {
@@ -163,6 +166,7 @@ public class WindowOrder extends JFrame {
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
             listProdPnl.repaint();
         });
+
         //display panel-----------------------------------------------------------------------------
         mainPage(liClientJcbx, modelCommande, tableCommande);
         displayPnl.setBackground(Color.white);
@@ -179,7 +183,7 @@ public class WindowOrder extends JFrame {
         amountLbl.setVisible(false);
         modifyCommandeBtn.setBackground(Color.white);
         modifyCommandeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        modifyCommandeBtn.setPreferredSize(new Dimension(200, 20));
+        modifyCommandeBtn.setPreferredSize(new Dimension(200, 30));
         modifyPnl.add(modifyCommandeBtn);
 
         // set visible------------------------------------------------------------------------------

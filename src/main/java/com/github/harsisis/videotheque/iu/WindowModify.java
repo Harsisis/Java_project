@@ -3,10 +3,12 @@ package com.github.harsisis.videotheque.iu;
 import com.github.harsisis.videotheque.domaine.Commande;
 import com.github.harsisis.videotheque.domaine.Emprunt;
 import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.util.ValidatorUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class WindowModify extends JFrame {
@@ -16,10 +18,27 @@ public class WindowModify extends JFrame {
     private JPanel listProdPnl = new JPanel();
     private JPanel addDelPnl = new JPanel();
     private JPanel backPnl = new JPanel();
+    private JPanel titlePnl = new JPanel();
+    private JPanel selectProductPnl = new JPanel();
+    private JPanel selectTimePnl = new JPanel();
+    private JPanel confirmPlusPnl = new JPanel();
+    private JPanel selectLoaningPnl = new JPanel();// panel with add and delete button for product
+    private JPanel confirmMinusPnl = new JPanel();
 
     private JButton plusProductBtn = new JButton("+");
     private JButton minusProductBtn = new JButton("-");
     private JButton backProductBtn = new JButton("Retour");
+    private JButton confirmProductBtn = new JButton("Valider");
+    private JButton cancelProductBtn = new JButton("Annuler");
+    private JButton confirmDelBtn = new JButton("Supprimer");
+    private JButton cancelDelBtn = new JButton("Annuler");
+
+    private JLabel titleLbl = new JLabel("Modification d'une commande");
+    private JLabel choicePrdLbl = new JLabel("Choisir un produit :");
+    private JLabel durationLbl = new JLabel("Saisir une durée (en jour) :");
+    private JLabel choiceEmpLbl = new JLabel("Choisir un emprunt :");
+
+    private JTextField durationJtf = new JTextField();
 
     private JScrollPane scrollPane;
 
@@ -28,10 +47,67 @@ public class WindowModify extends JFrame {
 
     public WindowModify(Commande commande) {
         setTitle("Modification d'une Commande");
-        setSize(800, 500);
+        setSize(1200, 500);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+
+        JComboBox<String> liProductJcbx = new JComboBox<>();
+        for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
+            liProductJcbx.addItem(produit);
+        }
+
+        JComboBox<String> liEmpruntJcbx = new JComboBox<>();
+        liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
+        ArrayList<Emprunt> emprunts = new ArrayList<>(commande.getListEmprunt());
+
+        backProductBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+
+        plusProductBtn.addActionListener(e -> {
+            addparameter(liProductJcbx);
+        });
+
+        minusProductBtn.addActionListener(e -> {
+            liEmpruntJcbx.removeAllItems();
+            for (Emprunt emp : emprunts) {
+                liEmpruntJcbx.addItem(emp.getProduitId());
+            }
+            removeParameter(liEmpruntJcbx);
+        });
+
+        cancelDelBtn.addActionListener(e -> {
+            mainPage(commande, emprunts);
+        });
+
+        cancelProductBtn.addActionListener(e -> {
+            mainPage(commande, emprunts);
+        });
+
+        confirmDelBtn.addActionListener(e -> {
+            emprunts.remove(liEmpruntJcbx.getSelectedIndex());
+            JOptionPane.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
+            createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+            listProdPnl.repaint();
+        });
+
+        confirmProductBtn.addActionListener(e -> {
+            if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {
+                emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
+                listProdPnl.repaint();
+                createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+
+                //liste produit panel-----------------------------------------------------------------------
+                JOptionPane.showMessageDialog(this, "Le produit " +
+                        liProductJcbx.getSelectedItem() +
+                        " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                durationJtf.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Valeur invalide ou quantité insuffisante", "Attention", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+
+
 
         addDelPnl.add(plusProductBtn);
         addDelPnl.add(minusProductBtn);
@@ -41,9 +117,14 @@ public class WindowModify extends JFrame {
         backPnl.add(backProductBtn);
         backProductBtn.setBackground(Color.white);
 
-        mainPage(commande);
+        mainPage(commande, emprunts);
         defineEmpruntTable(modelEmprunt, tableEmprunt);
 
+        managePnl.setPreferredSize(new Dimension(400, 500));
+        listProdPnl.setPreferredSize(new Dimension(800, 500));
+
+        displayPnl.setOpaque(true);
+        displayPnl.setLayout(new BorderLayout());
         displayPnl.add(managePnl, BorderLayout.WEST);
         displayPnl.add(listProdPnl, BorderLayout.EAST);
 
@@ -51,12 +132,87 @@ public class WindowModify extends JFrame {
         setVisible(true);
     }
 
-    private void mainPage(Commande commande) {
+    private void removeParameter(JComboBox<String> liEmpruntJcbx) {
+        managePnl.removeAll();
+        listProdPnl.removeAll();
+
+        managePnl.add(titlePnl);
+        managePnl.add(selectLoaningPnl);
+        managePnl.add(confirmMinusPnl);
+
+        //select loaning panel-----------------------------------------------------------------------
+
+        selectLoaningPnl.setBackground(Color.white);
+        selectLoaningPnl.setLayout(new GridLayout(2, 1, 5, 0));
+        selectLoaningPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        selectLoaningPnl.add(choiceEmpLbl);
+        selectLoaningPnl.add(liEmpruntJcbx);
+        liEmpruntJcbx.setBackground(Color.white);
+
+        //confirm minus panel------------------------------------------------------------------------
+
+        confirmMinusPnl.setBackground(Color.white);
+        confirmMinusPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        confirmMinusPnl.add(confirmDelBtn);
+        confirmMinusPnl.add(cancelDelBtn);
+        confirmDelBtn.setBackground(Color.white);
+        cancelDelBtn.setBackground(Color.white);
+
+        revalidate();
+        managePnl.repaint();
+        listProdPnl.repaint();
+    }
+
+    private void addparameter(JComboBox<String> liProductJcbx) {
+        managePnl.removeAll();
+
+        //select product panel----------------------------------------------------------------------
+        selectProductPnl.setLayout(new GridLayout(2, 1));
+        selectProductPnl.setBackground(Color.white);
+        selectProductPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        selectProductPnl.add(choicePrdLbl);
+        selectProductPnl.add(liProductJcbx);
+        liProductJcbx.setBackground(Color.white);
+
+        //select time panel----------------------------------------------------------------------
+        selectTimePnl.setLayout(new GridLayout(2, 1));
+        selectTimePnl.setBackground(Color.white);
+        selectTimePnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        selectTimePnl.add(durationLbl);
+        selectTimePnl.add(durationJtf);
+        durationJtf.setBackground(Color.white);
+
+        //confirm add product panel----------------------------------------------------------------
+        confirmPlusPnl.setBackground(Color.white);
+        confirmPlusPnl.setBorder(BorderFactory.createLineBorder(Color.black));
+        confirmPlusPnl.add(confirmProductBtn);
+        confirmPlusPnl.add(cancelProductBtn);
+        confirmProductBtn.setBackground(Color.white);
+        cancelProductBtn.setBackground(Color.white);
+
+        //manage panel ----------------------------------------------------------------------------
+        managePnl.removeAll();
+        managePnl.add(titlePnl);
+        managePnl.add(selectProductPnl);
+        managePnl.add(selectTimePnl);
+        managePnl.add(confirmPlusPnl);
+
+        revalidate();
+        managePnl.repaint();
+        listProdPnl.repaint();
+    }
+
+    private void mainPage(Commande commande, ArrayList<Emprunt> emprunts) {
         listProdPnl.removeAll();
         managePnl.removeAll();
 
-        listProdPnl.setPreferredSize(new Dimension(600, 500));
         listProdPnl.setBackground(Color.white);
+
+        titlePnl.add(titleLbl);
+        titlePnl.setBackground(Color.darkGray);
+        titleLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLbl.setAlignmentY(Component.CENTER_ALIGNMENT);
+        titleLbl.setForeground(Color.white);
 
         addDelPnl.setPreferredSize(new Dimension(200, 500));
         addDelPnl.setBackground(Color.white);
@@ -66,13 +222,17 @@ public class WindowModify extends JFrame {
         backPnl.setBackground(Color.white);
         backPnl.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        managePnl.setPreferredSize(new Dimension(200, 500));
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
+        managePnl.add(titlePnl);
         managePnl.add(addDelPnl);
         managePnl.add(backPnl);
 
-        createEmpruntTable(modelEmprunt, tableEmprunt, commande.getListEmprunt());
+        createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+
+        revalidate();
+        managePnl.repaint();
+        listProdPnl.repaint();
     }
 
     private void defineEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt) {
@@ -80,7 +240,7 @@ public class WindowModify extends JFrame {
         modelEmprunt.addColumn("Produit");
         modelEmprunt.addColumn("Durée");
 
-        tableEmprunt.getColumnModel().getColumn(0).setPreferredWidth(295);
+        tableEmprunt.getColumnModel().getColumn(0).setPreferredWidth(300);
         tableEmprunt.getColumnModel().getColumn(1).setPreferredWidth(400);
         tableEmprunt.getColumnModel().getColumn(2).setPreferredWidth(50);
     }
@@ -102,5 +262,8 @@ public class WindowModify extends JFrame {
         listProdPnl.repaint();
     }
 
+    private boolean produitEnStock(String produitId) {
+        return Videotheque.getInstance().getListStockProduit().get(produitId) > 0;
+    }
 
 }
