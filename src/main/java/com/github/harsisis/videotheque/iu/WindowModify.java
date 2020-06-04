@@ -55,7 +55,7 @@ public class WindowModify extends JFrame {
         listProdPnl.removeAll();
         managePnl.removeAll();
 
-        listProdPnl.setPreferredSize(new Dimension(200, 500));
+        listProdPnl.setPreferredSize(new Dimension(600, 500));
         listProdPnl.setBackground(Color.white);
 
         addDelPnl.setPreferredSize(new Dimension(200, 500));
@@ -66,7 +66,7 @@ public class WindowModify extends JFrame {
         backPnl.setBackground(Color.white);
         backPnl.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        managePnl.setPreferredSize(new Dimension(600, 500));
+        managePnl.setPreferredSize(new Dimension(200, 500));
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
         managePnl.add(addDelPnl);
@@ -101,4 +101,6 @@ public class WindowModify extends JFrame {
         revalidate();
         listProdPnl.repaint();
     }
+
+
 }
