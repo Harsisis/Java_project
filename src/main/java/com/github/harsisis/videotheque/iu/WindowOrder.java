@@ -91,6 +91,10 @@ public class WindowOrder extends JFrame {
         cellSelectionModel = tableCommande.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        DefaultTableModel modelEmprunt = new DefaultTableModel();
+        JTable tableEmprunt = new JTable(modelEmprunt);
+        defineEmpruntTable(modelEmprunt, tableEmprunt);
+
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
@@ -102,7 +106,7 @@ public class WindowOrder extends JFrame {
         //buttons on the add loan page
         plusProductBtn.addActionListener(e -> {
             addParameter(liProductJcbx);
-            createEmpruntTable(emprunts);
+            createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
         });
 
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
@@ -111,7 +115,7 @@ public class WindowOrder extends JFrame {
             if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {
                 emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
                 listProdPnl.repaint();
-                createEmpruntTable(emprunts);
+                createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
@@ -133,9 +137,8 @@ public class WindowOrder extends JFrame {
             for (Emprunt emp : emprunts) {
                 liEmpruntJcbx.addItem(emp.getProduitId());
             }
-            emprunts.remove(liEmpruntJcbx.getSelectedObjects());
             removeParameter(liEmpruntJcbx);
-            createEmpruntTable(emprunts);
+            createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
         });
         cancelDelBtn.addActionListener(e -> {
             mainPage(liClientJcbx, modelCommande, tableCommande);
@@ -144,8 +147,8 @@ public class WindowOrder extends JFrame {
         confirmDelBtn.addActionListener(e -> {
             emprunts.remove(liEmpruntJcbx.getSelectedObjects());
             jop3.showMessageDialog(null, "Le produit à bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
+            createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
             listProdPnl.repaint();
-            createEmpruntTable(emprunts);
         });
         //display panel-----------------------------------------------------------------------------
         mainPage(liClientJcbx, modelCommande, tableCommande);
@@ -191,33 +194,6 @@ public class WindowOrder extends JFrame {
                 return commande;
         }
         return null;
-    }
-
-    private void defineEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt) {
-        modelEmprunt.addColumn("ID emprunt");
-        modelEmprunt.addColumn("Produit");
-        modelEmprunt.addColumn("Durée");
-
-        tableEmprunt.getColumnModel().getColumn(0).setPreferredWidth(295);
-        tableEmprunt.getColumnModel().getColumn(1).setPreferredWidth(400);
-        tableEmprunt.getColumnModel().getColumn(2).setPreferredWidth(50);
-    }
-
-    private void createEmpruntTable(ArrayList<Emprunt> emprunts) {
-        listProdPnl.removeAll();
-        DefaultTableModel modelEmprunt = new DefaultTableModel();
-        JTable tableEmprunt = new JTable(modelEmprunt);
-        defineEmpruntTable(modelEmprunt, tableEmprunt);
-        for (Emprunt emp : emprunts) {
-            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId(), emp.getDureeLocation()});
-        }
-        scrollPane = new JScrollPane(tableEmprunt);
-        scrollPane.setPreferredSize(new Dimension(750, 450));
-        tableEmprunt.setFillsViewportHeight(true);
-        listProdPnl.add(scrollPane);
-        listProdPnl.setVisible(true);
-        revalidate();
-        listProdPnl.repaint();
     }
 
     public void mainPage(JComboBox liClientJcbx, DefaultTableModel modelCommande, JTable tableCommande) {
@@ -375,6 +351,7 @@ public class WindowOrder extends JFrame {
 
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listProdPnl.removeAll();
+        modelCommande.setRowCount(0);
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
             modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
         }
@@ -382,6 +359,31 @@ public class WindowOrder extends JFrame {
         scrollPane.setPreferredSize(new Dimension(750, 450));
         tableCommande.setFillsViewportHeight(true);
         listProdPnl.add(scrollPane);
+        revalidate();
+        listProdPnl.repaint();
+    }
+
+    private void defineEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt) {
+        modelEmprunt.addColumn("ID emprunt");
+        modelEmprunt.addColumn("Produit");
+        modelEmprunt.addColumn("Durée");
+
+        tableEmprunt.getColumnModel().getColumn(0).setPreferredWidth(295);
+        tableEmprunt.getColumnModel().getColumn(1).setPreferredWidth(400);
+        tableEmprunt.getColumnModel().getColumn(2).setPreferredWidth(50);
+    }
+
+    private void createEmpruntTable(DefaultTableModel modelEmprunt, JTable tableEmprunt, ArrayList<Emprunt> emprunts) {
+        listProdPnl.removeAll();
+        modelEmprunt.setRowCount(0);
+        for (Emprunt emp : emprunts) {
+            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId(), emp.getDureeLocation()});
+        }
+        scrollPane = new JScrollPane(tableEmprunt);
+        scrollPane.setPreferredSize(new Dimension(750, 450));
+        tableEmprunt.setFillsViewportHeight(true);
+        listProdPnl.add(scrollPane);
+        listProdPnl.setVisible(true);
         revalidate();
         listProdPnl.repaint();
     }
