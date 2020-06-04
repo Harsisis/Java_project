@@ -145,7 +145,7 @@ public class WindowOrder extends JFrame {
         });
 
         confirmDelBtn.addActionListener(e -> {
-            emprunts.remove(liEmpruntJcbx.getSelectedObjects());
+            emprunts.remove(liEmpruntJcbx.getSelectedIndex());
             jop3.showMessageDialog(null, "Le produit à bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
             listProdPnl.repaint();
