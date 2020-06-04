@@ -134,6 +134,7 @@ public class WindowOrder extends JFrame {
         });
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
+            liEmpruntJcbx.removeAllItems();
             for (Emprunt emp : emprunts) {
                 liEmpruntJcbx.addItem(emp.getProduitId());
             }
@@ -377,7 +378,9 @@ public class WindowOrder extends JFrame {
         listProdPnl.removeAll();
         modelEmprunt.setRowCount(0);
         for (Emprunt emp : emprunts) {
-            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(), emp.getProduitId(), emp.getDureeLocation()});
+            modelEmprunt.addRow(new Object[]{emp.getEmpruntId(),
+                    Videotheque.getInstance().getProduit(emp.getProduitId()).getProduitNom(Videotheque.getInstance().getProduit(emp.getProduitId())),
+                    emp.getDureeLocation()});
         }
         scrollPane = new JScrollPane(tableEmprunt);
         scrollPane.setPreferredSize(new Dimension(750, 450));
