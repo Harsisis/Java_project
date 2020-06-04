@@ -16,7 +16,6 @@ public class WindowHome extends JFrame {
     private JPanel listPnl = new JPanel();// panel where customers, products or orders list are
 
     private JLabel indicationLbl = new JLabel(""); // Label where i write all
-    private JLabel amountLbl = new JLabel("");
 
     private JButton addClientBtn = new JButton("Ajouter un client");
     private JButton addOrderBtn = new JButton("Ajouter une commande");
@@ -47,7 +46,6 @@ public class WindowHome extends JFrame {
         addOrderBtn.addActionListener(e -> new WindowOrder());
         addProductBtn.addActionListener(e -> new WindowProduct());
         addQtyProductBtn.addActionListener(e -> new WindowStock());
-        amountLbl.setVisible(false);
 
 
         //items menu ------------------------------------------------------------------------------
@@ -81,35 +79,22 @@ public class WindowHome extends JFrame {
 
         listUser.addActionListener(e -> {
             createClientTable(modelClient, tableClient);
-            amountLbl.setVisible(false);
         });
 
         listCommand.addActionListener(e -> {
             createCommandeTable(modelCommande, tableCommande);
-            amountLbl.setVisible(false);
         });
 
         listProduct.addActionListener(e -> {
             createProduitTable(modelProduit, tableProduit);
-            amountLbl.setVisible(false);
         });
 
         listEmpty.addActionListener(e -> {
             listPnl.removeAll();
             indicationLbl.setText("");
-            amountLbl.setVisible(false);
             revalidate();
             listPnl.repaint();
         });
-
-       // cellSelectionModel.addListSelectionListener(e -> {
-            //if(!e.getValueIsAdjusting()) {
-                //double total = WindowOrder.getTotal(tableCommande);
-                //amountLbl.setText("Total : " + total + " €");
-               // amountLbl.setVisible(true);
-               // Commande commande = WindowOrder.trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
-           // }
-       // });
 
         quit.addActionListener(e -> {
 
@@ -140,7 +125,6 @@ public class WindowHome extends JFrame {
         addQtyProductBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         addQtyProductBtn.setPreferredSize(new Dimension(140, 20));
 
-        amountLbl.setForeground(Color.white);
         indicationLbl.setForeground(Color.white);
 
         //panel
@@ -152,7 +136,6 @@ public class WindowHome extends JFrame {
         workPlacePnl.add(addOrderBtn);
         workPlacePnl.add(addProductBtn);
         workPlacePnl.add(addQtyProductBtn);
-        workPlacePnl.add(amountLbl);
 
         //panel display----------------------------------------------------------------------------
         // I can display only one panel then all the other panels are stocked in displayPnl
