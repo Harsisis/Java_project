@@ -107,10 +107,10 @@ public class WindowOrder extends JFrame {
         cellSelectionModel.addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting()) {
                 modifyCommandeBtn.setEnabled(true);
-                double total = WindowOrder.getTotal(tableCommande);
+                double total = getTotal(tableCommande);
                 amountLbl.setText("Total : " + total + " €");
                 amountLbl.setVisible(true);
-                Commande commande = WindowOrder.trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
+                Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
                 modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
             }
         });
