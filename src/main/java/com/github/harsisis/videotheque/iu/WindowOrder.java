@@ -79,6 +79,7 @@ public class WindowOrder extends JFrame {
         for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
             liProductJcbx.addItem(produit);
         }
+
         liProductJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
         JComboBox<String> liEmpruntJcbx = new JComboBox<>();
         liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
