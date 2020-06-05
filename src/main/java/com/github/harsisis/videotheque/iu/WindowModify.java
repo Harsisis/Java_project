@@ -52,42 +52,44 @@ public class WindowModify extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-
+        Videotheque.getInstance().getListCommande().remove(commande);
         JComboBox<String> liProductJcbx = new JComboBox<>();
         for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
             liProductJcbx.addItem(produit);
         }
 
         JComboBox<String> liEmpruntJcbx = new JComboBox<>();
-        liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
+        //liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
         ArrayList<Emprunt> emprunts = new ArrayList<>(commande.getListEmprunt());
 
-        backProductBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
-
-        plusProductBtn.addActionListener(e -> {
-            addparameter(liProductJcbx);
+        backProductBtn.addActionListener(e -> {
+            Videotheque.getInstance().ajoutCommande(commande.getClient(), emprunts);
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
+
+        plusProductBtn.addActionListener(e -> addparameter(liProductJcbx));
 
         minusProductBtn.addActionListener(e -> {
             liEmpruntJcbx.removeAllItems();
             for (Emprunt emp : emprunts) {
-                liEmpruntJcbx.addItem(emp.getProduitId());
+                liEmpruntJcbx.addItem(emp.getEmpruntId());
             }
             removeParameter(liEmpruntJcbx);
         });
 
         cancelDelBtn.addActionListener(e -> {
-            mainPage(commande, emprunts);
+            mainPage(emprunts);
         });
 
         cancelProductBtn.addActionListener(e -> {
-            mainPage(commande, emprunts);
+            mainPage(emprunts);
         });
 
         confirmDelBtn.addActionListener(e -> {
-            emprunts.remove(liEmpruntJcbx.getSelectedIndex());
+            emprunts.remove(trouverEmprunt((String) liEmpruntJcbx.getSelectedItem(),commande));
             JOptionPane.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+            revalidate();
             listProdPnl.repaint();
         });
 
@@ -107,8 +109,6 @@ public class WindowModify extends JFrame {
             }
         });
 
-
-
         addDelPnl.add(plusProductBtn);
         addDelPnl.add(minusProductBtn);
         plusProductBtn.setBackground(Color.white);
@@ -117,7 +117,7 @@ public class WindowModify extends JFrame {
         backPnl.add(backProductBtn);
         backProductBtn.setBackground(Color.white);
 
-        mainPage(commande, emprunts);
+        mainPage(emprunts);
         defineEmpruntTable(modelEmprunt, tableEmprunt);
 
         managePnl.setPreferredSize(new Dimension(400, 500));
@@ -131,7 +131,13 @@ public class WindowModify extends JFrame {
         setContentPane(displayPnl);
         setVisible(true);
     }
-
+    public Emprunt trouverEmprunt(String id, Commande commande) {
+        for (Emprunt emprunt : commande.getListEmprunt()) {
+            if (emprunt.getEmpruntId().equals(id))
+                return emprunt;
+        }
+        return null;
+    }
     private void removeParameter(JComboBox<String> liEmpruntJcbx) {
         managePnl.removeAll();
         listProdPnl.removeAll();
@@ -202,7 +208,7 @@ public class WindowModify extends JFrame {
         listProdPnl.repaint();
     }
 
-    private void mainPage(Commande commande, ArrayList<Emprunt> emprunts) {
+    private void mainPage(ArrayList<Emprunt> emprunts) {
         listProdPnl.removeAll();
         managePnl.removeAll();
 
