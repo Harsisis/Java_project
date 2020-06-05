@@ -106,7 +106,6 @@ public class WindowOrder extends JFrame {
 
         cellSelectionModel.addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting()) {
-                modifyCommandeBtn.setEnabled(true);
                 double total = getTotal(tableCommande);
                 amountLbl.setText("Total : " + total + " €");
                 amountLbl.setVisible(true);
@@ -119,6 +118,7 @@ public class WindowOrder extends JFrame {
         plusProductBtn.addActionListener(e -> {
             addParameter(liProductJcbx);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+            modifyCommandeBtn.setEnabled(true);
         });
 
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
@@ -164,6 +164,7 @@ public class WindowOrder extends JFrame {
             emprunts.remove(liEmpruntJcbx.getSelectedIndex());
             jop3.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+            minusProductBtn.setEnabled(true);
             listProdPnl.repaint();
         });
 
