@@ -79,11 +79,12 @@ public class WindowOrder extends JFrame {
         for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
             liProductJcbx.addItem(produit);
         }
-        liProductJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
+        liProductJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
         JComboBox<String> liEmpruntJcbx = new JComboBox<>();
-        liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
+        liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
         ListSelectionModel cellSelectionModel;
         ArrayList<Emprunt> emprunts = new ArrayList<>();
+
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
         defineCommandeTable(modelCommande, tableCommande);
@@ -112,14 +113,16 @@ public class WindowOrder extends JFrame {
                 Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
                 modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
                 modifyCommandeBtn.setEnabled(true);
+                plusProductBtn.setEnabled(false);
+                minusProductBtn.setEnabled(false);
             }
         });
 
         //buttons on the add loan page
         plusProductBtn.addActionListener(e -> {
+            tableCommande.clearSelection();
             addParameter(liProductJcbx);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
-
         });
 
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));

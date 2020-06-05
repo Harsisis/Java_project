@@ -32,7 +32,7 @@ public class WindowStock extends JFrame {
             for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
                 cBox.addItem(produit);
             }
-            cBox.setRenderer(ComboBoxRenderer.createListRenderer());
+            cBox.setRenderer(ComboBoxRenderer.createListRendererProduit());
             // add to Action Listener-------------------------------------------------------------------
             // by default set the text field to blank and add some procedure
             //confirmStockButton verify if textFields are not blank and if is the case it create a Stock else it display error message
