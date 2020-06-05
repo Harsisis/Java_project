@@ -106,6 +106,7 @@ public class WindowOrder extends JFrame {
 
         cellSelectionModel.addListSelectionListener(e -> {
             if(!e.getValueIsAdjusting()) {
+                modifyCommandeBtn.setEnabled(true);
                 double total = getTotal(tableCommande);
                 amountLbl.setText("Total : " + total + " €");
                 amountLbl.setVisible(true);
@@ -118,7 +119,7 @@ public class WindowOrder extends JFrame {
         plusProductBtn.addActionListener(e -> {
             addParameter(liProductJcbx);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
-            modifyCommandeBtn.setEnabled(true);
+            minusProductBtn.setEnabled(true);
         });
 
         cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
@@ -137,12 +138,6 @@ public class WindowOrder extends JFrame {
             } else {
                 jop3.showMessageDialog(null, "Valeur invalide ou quantité insuffisante", "Attention", JOptionPane.WARNING_MESSAGE);
             }
-        });
-        cellSelectionModel.addListSelectionListener(listSelectionEvent -> {
-            double total = getTotal(tableCommande);
-            System.out.println(total);
-            amountLbl.setText("Total : " + total + " €");
-            amountLbl.setVisible(true);
         });
         //buttons on the delete loaning page
         minusProductBtn.addActionListener(e -> {
