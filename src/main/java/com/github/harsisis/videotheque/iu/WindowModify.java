@@ -57,9 +57,9 @@ public class WindowModify extends JFrame {
         for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
             liProductJcbx.addItem(produit);
         }
-
+        liProductJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
         JComboBox<String> liEmpruntJcbx = new JComboBox<>();
-        //liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRenderer());
+        liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRendererEmprunt(commande));
         ArrayList<Emprunt> emprunts = new ArrayList<>(commande.getListEmprunt());
 
         backProductBtn.addActionListener(e -> {
