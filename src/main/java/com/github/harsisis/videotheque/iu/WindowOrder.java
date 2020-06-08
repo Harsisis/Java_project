@@ -41,11 +41,13 @@ public class WindowOrder extends JFrame {
     private JButton minusProductBtn = new JButton("-");
     private JButton confirmOrderBtn = new JButton("Valider");
     private JButton cancelOrderBtn = new JButton("Retour");
+    private JButton deselectBtn = new JButton("Désélection");
     private JButton confirmProductBtn = new JButton("Ajouter");
     private JButton cancelProductBtn = new JButton("Retour");
     private JButton confirmDelBtn = new JButton("Supprimer");
     private JButton cancelDelBtn = new JButton("Annuler");
     private JButton modifyCommandeBtn = new JButton("Modifier la commande");
+    private JButton supCommandeBtn = new JButton("Supprimer la commande");
 
     private JTextField durationJtf = new JTextField();
 
@@ -65,13 +67,15 @@ public class WindowOrder extends JFrame {
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
         confirmOrderBtn.setEnabled(false);
         modifyCommandeBtn.setEnabled(false);
+        deselectBtn.setEnabled(false);
+        supCommandeBtn.setEnabled(false);
 
         JComboBox<Client> liClientJcbx = new JComboBox<>();
         for (Client client : Videotheque.getInstance().getListClient()) {
             liClientJcbx.addItem(client);
         }
 
-        if(!Videotheque.getInstance().getListClient().isEmpty()){
+        if(!Videotheque.getInstance().getListClient().isEmpty() && !Videotheque.getInstance().getListProduit().isEmpty()){
             confirmOrderBtn.setEnabled(true);
         }
 
@@ -99,9 +103,14 @@ public class WindowOrder extends JFrame {
         //buttons on the main page
         cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
+        deselectBtn.addActionListener(e -> {
+            tableCommande.clearSelection();
+                });
+
         confirmOrderBtn.addActionListener(e -> {
             Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
             JOptionPane.showMessageDialog(this, "La commande a bien été ajouté à la liste des commandes",  "Succès", JOptionPane.INFORMATION_MESSAGE);
+            createCommandeTable(modelCommande, tableCommande);
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         });
 
@@ -111,16 +120,23 @@ public class WindowOrder extends JFrame {
                 amountLbl.setText("Total : " + total + " €");
                 amountLbl.setVisible(true);
                 Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
-                modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
                 modifyCommandeBtn.setEnabled(true);
+                modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
+                supCommandeBtn.setEnabled(true);
+                supCommandeBtn.addActionListener(actionEvent -> {
+                    Videotheque.getInstance().supprimeCommande(commande);
+                    JOptionPane.showMessageDialog(this, "La commande a bien été supprimé de la liste des commandes", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                });
                 plusProductBtn.setEnabled(false);
                 minusProductBtn.setEnabled(false);
+                confirmOrderBtn.setEnabled(false);
+                deselectBtn.setEnabled(true);
             }
         });
 
         //buttons on the add loan page
         plusProductBtn.addActionListener(e -> {
-            tableCommande.clearSelection();
             addParameter(liProductJcbx);
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
         });
@@ -135,7 +151,7 @@ public class WindowOrder extends JFrame {
 
                 //liste produit panel-----------------------------------------------------------------------
                 JOptionPane.showMessageDialog(this, "Le produit " +
-                        liProductJcbx.getSelectedItem() +
+                        Videotheque.getInstance().getProduit((String) liProductJcbx.getSelectedItem()).getProduitNom(Videotheque.getInstance().getProduit((String) liProductJcbx.getSelectedItem())) +
                         " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 durationJtf.setText("");
             } else {
@@ -184,6 +200,7 @@ public class WindowOrder extends JFrame {
         modifyCommandeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         modifyCommandeBtn.setPreferredSize(new Dimension(200, 30));
         modifyPnl.add(modifyCommandeBtn);
+        modifyPnl.add(supCommandeBtn);
 
         // set visible------------------------------------------------------------------------------
         setContentPane(displayPnl);
@@ -237,6 +254,7 @@ public class WindowOrder extends JFrame {
         //confirm panel-----------------------------------------------------------------------------
         confirmPnl.add(confirmOrderBtn);
         confirmPnl.add(cancelOrderBtn);
+        confirmPnl.add(deselectBtn);
         confirmPnl.setBackground(Color.white);
         confirmPnl.setBorder(BorderFactory.createLineBorder(Color.black));
         confirmOrderBtn.setBackground(Color.white);

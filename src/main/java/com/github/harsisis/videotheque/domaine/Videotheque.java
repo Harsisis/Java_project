@@ -57,6 +57,10 @@ public class Videotheque {
         return commande;
     }
 
+    public boolean supprimeCommande(Commande commande) {
+        return listCommande.remove(commande);
+    }
+
     public void ajoutStockProduit(String produitId, int quantity) {
         if (listStockProduit.containsKey(produitId)) {
             listStockProduit.put(produitId, listStockProduit.get(produitId) + quantity);
