@@ -106,7 +106,9 @@ public class WindowOrder extends JFrame {
                     dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 }
             }
-            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            else {
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            }
         });
 
         confirmOrderBtn.addActionListener(e -> {
