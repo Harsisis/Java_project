@@ -41,7 +41,6 @@ public class WindowOrder extends JFrame {
     private JButton minusProductBtn = new JButton("-");
     private JButton confirmOrderBtn = new JButton("Valider");
     private JButton cancelOrderBtn = new JButton("Retour");
-    private JButton deselectBtn = new JButton("Désélection");
     private JButton confirmProductBtn = new JButton("Ajouter");
     private JButton cancelProductBtn = new JButton("Retour");
     private JButton confirmDelBtn = new JButton("Supprimer");
@@ -67,7 +66,6 @@ public class WindowOrder extends JFrame {
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
         confirmOrderBtn.setEnabled(false);
         modifyCommandeBtn.setEnabled(false);
-        deselectBtn.setEnabled(false);
         supCommandeBtn.setEnabled(false);
 
         JComboBox<Client> liClientJcbx = new JComboBox<>();
@@ -86,13 +84,13 @@ public class WindowOrder extends JFrame {
         liProductJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
         JComboBox<String> liEmpruntJcbx = new JComboBox<>();
         liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
-        ListSelectionModel cellSelectionModel;
         ArrayList<Emprunt> emprunts = new ArrayList<>();
 
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
         defineCommandeTable(modelCommande, tableCommande);
         tableCommande.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel;
         cellSelectionModel = tableCommande.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -101,11 +99,15 @@ public class WindowOrder extends JFrame {
         defineEmpruntTable(modelEmprunt, tableEmprunt);
 
         //buttons on the main page
-        cancelOrderBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
-
-        deselectBtn.addActionListener(e -> {
-            tableCommande.clearSelection();
-                });
+        cancelOrderBtn.addActionListener(e -> {
+            if(!emprunts.isEmpty()) {
+                int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ? Vous avez un emprunt non sauvegardé !", "Quitter", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                }
+            }
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        });
 
         confirmOrderBtn.addActionListener(e -> {
             Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
@@ -120,18 +122,19 @@ public class WindowOrder extends JFrame {
                 amountLbl.setText("Total : " + total + " €");
                 amountLbl.setVisible(true);
                 Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
-                modifyCommandeBtn.setEnabled(true);
+
                 modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
-                supCommandeBtn.setEnabled(true);
+
                 supCommandeBtn.addActionListener(actionEvent -> {
                     Videotheque.getInstance().supprimeCommande(commande);
                     JOptionPane.showMessageDialog(this, "La commande a bien été supprimé de la liste des commandes", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 });
+                modifyCommandeBtn.setEnabled(true);
+                supCommandeBtn.setEnabled(true);
                 plusProductBtn.setEnabled(false);
                 minusProductBtn.setEnabled(false);
                 confirmOrderBtn.setEnabled(false);
-                deselectBtn.setEnabled(true);
             }
         });
 
@@ -254,7 +257,6 @@ public class WindowOrder extends JFrame {
         //confirm panel-----------------------------------------------------------------------------
         confirmPnl.add(confirmOrderBtn);
         confirmPnl.add(cancelOrderBtn);
-        confirmPnl.add(deselectBtn);
         confirmPnl.setBackground(Color.white);
         confirmPnl.setBorder(BorderFactory.createLineBorder(Color.black));
         confirmOrderBtn.setBackground(Color.white);

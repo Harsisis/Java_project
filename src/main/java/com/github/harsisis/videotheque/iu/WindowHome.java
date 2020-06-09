@@ -97,7 +97,6 @@ public class WindowHome extends JFrame {
         });
 
         quit.addActionListener(e -> {
-
             int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
