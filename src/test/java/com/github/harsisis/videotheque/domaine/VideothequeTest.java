@@ -2,6 +2,8 @@ package com.github.harsisis.videotheque.domaine;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,21 +30,52 @@ public class VideothequeTest {
     }
 
     @Test
+    public void given_produit_when_getProduit_returns_produit_then_both_produit_equals(){
+        //GIVEN
+        Videotheque videotheque = Videotheque.getInstance();
+        Produit livre = new Livre("Harry Potter and the Chamber of Secrets", 5, "JK. Rowling", CategorieLivre.ROMAN);
+
+        //WHEN
+        videotheque.ajoutProduit(livre.getProduitId(),livre);
+        Produit produit = videotheque.getProduit(livre.getProduitId());
+
+        //THEN
+        assertEquals(livre, produit);
+    }
+
+    @Test
     public void given_validInputParams_when_ajoutProduit_then_true() {
         //GIVEN
         Videotheque videotheque = Videotheque.getInstance();
-        DVD dvd = new DVD("Lion King", 5, "Jon Favreau");
+        DVD dvd = new DVD("Lion King", 2, "Jon Favreau");
 
         //WHEN
         videotheque.ajoutProduit(dvd.getProduitId(), dvd);
 
         //THEN
-        assertTrue(!Videotheque.getInstance().getListProduit().isEmpty());
+        assertTrue(!videotheque.getListProduit().isEmpty());
+    }
+
+    @Test
+    public void given_validInputParams_when_ajoutCommand_then_true() {
+        //GIVEN
+        Videotheque videotheque = Videotheque.getInstance();
+        Client client = new Client("Homo", "Sapien", false);
+        CD cd = new CD("Your Name", 6, 2016);
+        Emprunt emprunt = new Emprunt(cd.getProduitId(),1);
+        ArrayList<Emprunt> emprunts = new ArrayList<Emprunt>();
+        emprunts.add(emprunt);
+
+        //WHEN
+        videotheque.ajoutCommande(client,emprunts);
+
+        //THEN
+        assertTrue(!videotheque.getListCommande().isEmpty());
     }
 
     @Test
     public void given_produitAndQuantity_when_ajoutStockProduit_then_listStockProduitShouldNotBeEmpty() {
-        // GIVEN
+        //GIVEN
         Produit p1 = new CD("titre", 10D, 1983);
         int quantity = 10;
         Videotheque videotheque = Videotheque.getInstance();
@@ -54,5 +87,21 @@ public class VideothequeTest {
         assertFalse(videotheque.getListStockProduit().isEmpty());
     }
 
+    @Test
+    public void given_command_when_supprimeCommande_then_command_should_not_exist() {
+        //GIVEN
+        Videotheque videotheque = Videotheque.getInstance();
+        Client client = new Client("Will", "Smith", true);
+        Dictionnaire dictionnaire = new Dictionnaire("Wembley", 2, "Français");
+        Emprunt emprunt = new Emprunt(dictionnaire.getProduitId(),1);
+        ArrayList<Emprunt> emprunts = new ArrayList<Emprunt>();
+        emprunts.add(emprunt);
 
+        //WHEN
+        Commande commande = videotheque.ajoutCommande(client,emprunts);
+        videotheque.supprimeCommande(commande);
+
+        //THEN
+        assertFalse(videotheque.getListCommande().contains(commande));
+    }
 }

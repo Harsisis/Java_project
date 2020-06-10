@@ -59,12 +59,14 @@ public class WindowHome extends JFrame {
         //Table definition ---------------------------------------------------------------------------
         DefaultTableModel modelClient = new DefaultTableModel();
         JTable tableClient = new JTable(modelClient);
+        tableClient.setAutoCreateRowSorter(true);
 
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
 
         DefaultTableModel modelProduit = new DefaultTableModel();
         JTable tableProduit = new JTable(modelProduit);
+        tableProduit.setAutoCreateRowSorter(true);
 
         ListSelectionModel cellSelectionModel;
         tableCommande.setCellSelectionEnabled(true);
