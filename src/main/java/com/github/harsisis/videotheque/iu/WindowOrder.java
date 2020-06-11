@@ -55,161 +55,166 @@ public class WindowOrder extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
     public WindowOrder() {
-        // set window settings --------------------------------------------------------------------
-        setTitle("Ajout d'une Commande");
-        setSize(1200, 600);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        managePnl.setPreferredSize(new Dimension(400, 600));
-        managePnl.setBackground(Color.darkGray);
-        managePnl.setLayout(new GridLayout(7, 1, 10, 10));
-        confirmOrderBtn.setEnabled(false);
-        modifyCommandeBtn.setEnabled(false);
-        supCommandeBtn.setEnabled(false);
+        if(!Videotheque.getInstance().getListProduit().isEmpty() && !Videotheque.getInstance().getListClient().isEmpty()) {
+            // set window settings --------------------------------------------------------------------
+            setTitle("Ajout d'une Commande");
+            setSize(1200, 600);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            managePnl.setPreferredSize(new Dimension(400, 600));
+            managePnl.setBackground(Color.darkGray);
+            managePnl.setLayout(new GridLayout(7, 1, 10, 10));
+            confirmOrderBtn.setEnabled(false);
+            modifyCommandeBtn.setEnabled(false);
+            supCommandeBtn.setEnabled(false);
 
-        JComboBox<Client> liClientJcbx = new JComboBox<>();
-        for (Client client : Videotheque.getInstance().getListClient()) {
-            liClientJcbx.addItem(client);
-        }
+            JComboBox<Client> liClientJcbx = new JComboBox<>();
+            for (Client client : Videotheque.getInstance().getListClient()) {
+                liClientJcbx.addItem(client);
+            }
 
-        if(!Videotheque.getInstance().getListClient().isEmpty() && !Videotheque.getInstance().getListProduit().isEmpty()){
-            confirmOrderBtn.setEnabled(true);
-        }
+            if (!Videotheque.getInstance().getListClient().isEmpty() && !Videotheque.getInstance().getListProduit().isEmpty()) {
+                confirmOrderBtn.setEnabled(true);
+            }
 
-        JComboBox<String> liProductJcbx = new JComboBox<>();
-        for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
-            liProductJcbx.addItem(produit);
-        }
-        liProductJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
-        JComboBox<String> liEmpruntJcbx = new JComboBox<>();
-        liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
-        ArrayList<Emprunt> emprunts = new ArrayList<>();
+            JComboBox<String> liProductJcbx = new JComboBox<>();
+            for (String produit : Videotheque.getInstance().getListProduit().keySet()) {
+                liProductJcbx.addItem(produit);
+            }
+            liProductJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
+            JComboBox<String> liEmpruntJcbx = new JComboBox<>();
+            liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRendererProduit());
+            ArrayList<Emprunt> emprunts = new ArrayList<>();
 
-        DefaultTableModel modelCommande = new DefaultTableModel();
-        JTable tableCommande = new JTable(modelCommande);
-        defineCommandeTable(modelCommande, tableCommande);
-        tableCommande.setCellSelectionEnabled(true);
-        ListSelectionModel cellSelectionModel;
-        cellSelectionModel = tableCommande.getSelectionModel();
-        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            DefaultTableModel modelCommande = new DefaultTableModel();
+            JTable tableCommande = new JTable(modelCommande);
+            defineCommandeTable(modelCommande, tableCommande);
+            tableCommande.setCellSelectionEnabled(true);
+            ListSelectionModel cellSelectionModel;
+            cellSelectionModel = tableCommande.getSelectionModel();
+            cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        DefaultTableModel modelEmprunt = new DefaultTableModel();
-        JTable tableEmprunt = new JTable(modelEmprunt);
-        defineEmpruntTable(modelEmprunt, tableEmprunt);
+            DefaultTableModel modelEmprunt = new DefaultTableModel();
+            JTable tableEmprunt = new JTable(modelEmprunt);
+            defineEmpruntTable(modelEmprunt, tableEmprunt);
 
-        //buttons on the main page
-        cancelOrderBtn.addActionListener(e -> {
-            if(!emprunts.isEmpty()) {
-                int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ? Vous avez un emprunt non sauvegardé !", "Quitter", JOptionPane.YES_NO_OPTION);
-                if (reply == JOptionPane.YES_OPTION) {
+            //buttons on the main page
+            cancelOrderBtn.addActionListener(e -> {
+                if (!emprunts.isEmpty()) {
+                    int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ? Vous avez un emprunt non sauvegardé !", "Quitter", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                    }
+                } else {
                     dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 }
-            }
-            else {
+            });
+
+            confirmOrderBtn.addActionListener(e -> {
+                Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
+                JOptionPane.showMessageDialog(this, "La commande a bien été ajouté à la liste des commandes", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                createCommandeTable(modelCommande, tableCommande);
                 dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+            });
 
-        confirmOrderBtn.addActionListener(e -> {
-            Videotheque.getInstance().ajoutCommande((Client) liClientJcbx.getSelectedItem(), emprunts);
-            JOptionPane.showMessageDialog(this, "La commande a bien été ajouté à la liste des commandes",  "Succès", JOptionPane.INFORMATION_MESSAGE);
-            createCommandeTable(modelCommande, tableCommande);
-            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-        });
+            cellSelectionModel.addListSelectionListener(e -> {
+                if (!e.getValueIsAdjusting()) {
+                    double total = getTotal(tableCommande);
+                    amountLbl.setText("Total : " + total + " €");
+                    amountLbl.setVisible(true);
+                    Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(), 0));
 
-        cellSelectionModel.addListSelectionListener(e -> {
-            if(!e.getValueIsAdjusting()) {
-                double total = getTotal(tableCommande);
-                amountLbl.setText("Total : " + total + " €");
-                amountLbl.setVisible(true);
-                Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(),0));
+                    modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
 
-                modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
+                    supCommandeBtn.addActionListener(actionEvent -> {
+                        Videotheque.getInstance().supprimeCommande(commande);
+                        JOptionPane.showMessageDialog(this, "La commande a bien été supprimé de la liste des commandes", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                    });
+                    modifyCommandeBtn.setEnabled(true);
+                    supCommandeBtn.setEnabled(true);
+                    plusProductBtn.setEnabled(false);
+                    minusProductBtn.setEnabled(false);
+                    confirmOrderBtn.setEnabled(false);
+                }
+            });
 
-                supCommandeBtn.addActionListener(actionEvent -> {
-                    Videotheque.getInstance().supprimeCommande(commande);
-                    JOptionPane.showMessageDialog(this, "La commande a bien été supprimé de la liste des commandes", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-                });
-                modifyCommandeBtn.setEnabled(true);
-                supCommandeBtn.setEnabled(true);
-                plusProductBtn.setEnabled(false);
-                minusProductBtn.setEnabled(false);
-                confirmOrderBtn.setEnabled(false);
-            }
-        });
-
-        //buttons on the add loan page
-        plusProductBtn.addActionListener(e -> {
-            addParameter(liProductJcbx);
-            createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
-        });
-
-        cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
-
-        confirmProductBtn.addActionListener(e -> {
-            if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {
-                emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
-                listProdPnl.repaint();
+            //buttons on the add loan page
+            plusProductBtn.addActionListener(e -> {
+                addParameter(liProductJcbx);
                 createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+            });
 
-                //liste produit panel-----------------------------------------------------------------------
-                JOptionPane.showMessageDialog(this, "Le produit " +
-                        Videotheque.getInstance().getProduit((String) liProductJcbx.getSelectedItem()).getProduitNom(Videotheque.getInstance().getProduit((String) liProductJcbx.getSelectedItem())) +
-                        " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                durationJtf.setText("");
-            } else {
-                jop3.showMessageDialog(null, "Valeur invalide ou quantité insuffisante", "Attention", JOptionPane.WARNING_MESSAGE);
-            }
-        });
-        //buttons on the delete loaning page
-        minusProductBtn.addActionListener(e -> {
-            liEmpruntJcbx.removeAllItems();
-            for (Emprunt emp : emprunts) {
-                liEmpruntJcbx.addItem(emp.getProduitId());
-            }
-            removeParameter(liEmpruntJcbx);
-            createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
-        });
-        cancelDelBtn.addActionListener(e -> {
+            cancelProductBtn.addActionListener(e -> mainPage(liClientJcbx, modelCommande, tableCommande));
+
+            confirmProductBtn.addActionListener(e -> {
+                if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {
+                    emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
+                    listProdPnl.repaint();
+                    createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+
+                    //liste produit panel-----------------------------------------------------------------------
+                    JOptionPane.showMessageDialog(this, "Le produit " +
+                            Videotheque.getInstance().getProduit((String) liProductJcbx.getSelectedItem()).getProduitNom(Videotheque.getInstance().getProduit((String) liProductJcbx.getSelectedItem())) +
+                            " a bien été ajouté à la liste des emprunts.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    durationJtf.setText("");
+                } else {
+                    jop3.showMessageDialog(null, "Valeur invalide ou quantité insuffisante", "Attention", JOptionPane.WARNING_MESSAGE);
+                }
+            });
+            //buttons on the delete loaning page
+            minusProductBtn.addActionListener(e -> {
+                liEmpruntJcbx.removeAllItems();
+                for (Emprunt emp : emprunts) {
+                    liEmpruntJcbx.addItem(emp.getProduitId());
+                }
+                removeParameter(liEmpruntJcbx);
+                createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+            });
+            cancelDelBtn.addActionListener(e -> {
+                mainPage(liClientJcbx, modelCommande, tableCommande);
+                revalidate();
+                managePnl.repaint();
+                listProdPnl.repaint();
+            });
+
+            confirmDelBtn.addActionListener(e -> {
+                emprunts.remove(liEmpruntJcbx.getSelectedIndex());
+                jop3.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
+                createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
+                minusProductBtn.setEnabled(true);
+                listProdPnl.repaint();
+            });
+
+            //display panel-----------------------------------------------------------------------------
             mainPage(liClientJcbx, modelCommande, tableCommande);
-            revalidate();
-            managePnl.repaint();
-            listProdPnl.repaint();
-        });
+            displayPnl.setBackground(Color.white);
+            displayPnl.setOpaque(true);
+            displayPnl.setLayout(new BorderLayout());
+            displayPnl.add(managePnl, BorderLayout.WEST);
+            displayPnl.add(workplacePnl, BorderLayout.EAST);
 
-        confirmDelBtn.addActionListener(e -> {
-            emprunts.remove(liEmpruntJcbx.getSelectedIndex());
-            jop3.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
-            createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
-            minusProductBtn.setEnabled(true);
-            listProdPnl.repaint();
-        });
+            amountLbl.setBorder(new EmptyBorder(0, 10, 0, 20));
+            listProdPnl.setPreferredSize(new Dimension(800, 500));
+            totalPnl.setPreferredSize(new Dimension(800, 100));
+            totalPnl.add(amountLbl, BorderLayout.EAST);
+            amountLbl.setPreferredSize(new Dimension(800, 0));
+            amountLbl.setVisible(false);
+            modifyCommandeBtn.setBackground(Color.white);
+            modifyCommandeBtn.setPreferredSize(new Dimension(180, 30));
+            supCommandeBtn.setBackground(Color.white);
+            supCommandeBtn.setPreferredSize(new Dimension(180, 30));
+            modifyPnl.add(modifyCommandeBtn);
+            modifyPnl.add(supCommandeBtn);
 
-        //display panel-----------------------------------------------------------------------------
-        mainPage(liClientJcbx, modelCommande, tableCommande);
-        displayPnl.setBackground(Color.white);
-        displayPnl.setOpaque(true);
-        displayPnl.setLayout(new BorderLayout());
-        displayPnl.add(managePnl, BorderLayout.WEST);
-        displayPnl.add(workplacePnl, BorderLayout.EAST);
-
-        amountLbl.setBorder(new EmptyBorder(0, 10, 0, 20));
-        listProdPnl.setPreferredSize(new Dimension(800, 500));
-        totalPnl.setPreferredSize(new Dimension(800, 100));
-        totalPnl.add(amountLbl, BorderLayout.EAST);
-        amountLbl.setPreferredSize(new Dimension(800, 0));
-        amountLbl.setVisible(false);
-        modifyCommandeBtn.setBackground(Color.white);
-        modifyCommandeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        modifyCommandeBtn.setPreferredSize(new Dimension(200, 30));
-        modifyPnl.add(modifyCommandeBtn);
-        modifyPnl.add(supCommandeBtn);
-
-        // set visible------------------------------------------------------------------------------
-        setContentPane(displayPnl);
-        setVisible(true);
+            // set visible------------------------------------------------------------------------------
+            setContentPane(displayPnl);
+            setVisible(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Impossible, aucun produit ni aucun client n'est enregistré", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 
