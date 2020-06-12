@@ -36,3 +36,16 @@ A faire :
 - [x] Afficher les emprunts dans une comboBox
 - [ ] Afficher le produit concerné par l'emprunt dans la comboBox pour enlever l'emprunt
 
+
+- private static CategorieLivre categorieLivre;  -> why static ??
+- stop writing lambdas with more than 2 loines of code : refactor to move the code to functions.
+- stop writing constructors with hundreds of lines of code -> move the code to functions too
+- produit.getClassName() : dont use class name as front end text ! What if I rename the class ?? It will change the actual text displayed. And also :
+
+    public String getClassName() {
+        String on;
+        on = this.getClass().getSimpleName();
+        return on;
+    }
+-> Don't you think there is a simpler way to do that ??
+
