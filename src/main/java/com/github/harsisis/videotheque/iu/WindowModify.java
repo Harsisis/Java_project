@@ -58,6 +58,7 @@ public class WindowModify extends JFrame {
         liEmpruntJcbx.setRenderer(ComboBoxRenderer.createListRendererEmprunt(commande));
         ArrayList<Emprunt> emprunts = new ArrayList<>(commande.getListEmprunt());
 
+        defineEmpruntTable(modelEmprunt, tableEmprunt);
         backProductBtn.addActionListener(e -> {
             Videotheque.getInstance().ajoutCommande(commande.getClient(), emprunts);
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -67,16 +68,16 @@ public class WindowModify extends JFrame {
 
         minusProductBtn.addActionListener(e -> minusProductBtnAction(liEmpruntJcbx, emprunts));
 
-        cancelDelBtn.addActionListener(e -> mainPage(emprunts));
+        cancelDelBtn.addActionListener(e -> mainPage(modelEmprunt, tableEmprunt, emprunts));
 
-        cancelProductBtn.addActionListener(e -> mainPage(emprunts));
+        cancelProductBtn.addActionListener(e -> mainPage(modelEmprunt, tableEmprunt, emprunts));
 
         confirmDelBtn.addActionListener(e -> confirmDelBtnAction(commande, liEmpruntJcbx, emprunts));
 
         confirmProductBtn.addActionListener(e -> confirmProductBtnAction(liProductJcbx, emprunts));
 
-        mainPage(emprunts);
-        defineEmpruntTable(modelEmprunt, tableEmprunt);
+        mainPage(modelEmprunt, tableEmprunt, emprunts);
+
 
         displayPnl.setOpaque(true);
         displayPnl.setLayout(new BorderLayout());
@@ -90,6 +91,7 @@ public class WindowModify extends JFrame {
     private void confirmProductBtnAction(JComboBox<String> liProductJcbx, ArrayList<Emprunt> emprunts) {
         if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {
             emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
+            Videotheque.getInstance().retirerStockProduit((String) liProductJcbx.getSelectedItem());
             listProdPnl.repaint();
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
@@ -147,7 +149,6 @@ public class WindowModify extends JFrame {
     }
     private void removeParameter(JComboBox<String> liEmpruntJcbx) {
         managePnl.removeAll();
-        listProdPnl.removeAll();
 
         managePnl.add(titlePnl);
         managePnl.add(selectLoaningPnl);
@@ -215,7 +216,7 @@ public class WindowModify extends JFrame {
         listProdPnl.repaint();
     }
 
-    private void mainPage(ArrayList<Emprunt> emprunts) {
+    private void mainPage(DefaultTableModel modelEmprunt, JTable tableEmprunt, ArrayList<Emprunt> emprunts) {
         listProdPnl.setBackground(Color.white);
 
         titlePnl.add(titleLbl);
@@ -235,14 +236,12 @@ public class WindowModify extends JFrame {
         managePnl.setBackground(Color.darkGray);
         managePnl.setLayout(new GridLayout(7, 1, 10, 10));
 
-        listProdPnl.removeAll();
         managePnl.removeAll();
-
+        listProdPnl.removeAll();
+        createEmpruntTable(modelEmprunt, tableEmprunt,emprunts);
         managePnl.add(titlePnl);
         managePnl.add(addDelPnl);
         managePnl.add(backPnl);
-
-        createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
 
         revalidate();
         managePnl.repaint();

@@ -157,6 +157,7 @@ public class WindowOrder extends JFrame {
     private void confirmProductBtnAction(JComboBox<String> liProductJcbx, DefaultTableModel modelEmprunt, JTable tableEmprunt, ArrayList<Emprunt> emprunts) {
         if (ValidatorUtil.isValidInteger(durationJtf.getText()) && produitEnStock((String) liProductJcbx.getSelectedItem())) {
             emprunts.add(new Emprunt((String) liProductJcbx.getSelectedItem(), Integer.parseInt(durationJtf.getText())));
+            Videotheque.getInstance().retirerStockProduit((String) liProductJcbx.getSelectedItem());
             listProdPnl.repaint();
             createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
             //liste produit panel-----------------------------------------------------------------------
