@@ -1,14 +1,15 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.*;
+import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.Commande;
+import com.github.harsisis.videotheque.domaine.Produit;
+import com.github.harsisis.videotheque.domaine.Videotheque;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 public class WindowHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
@@ -17,10 +18,10 @@ public class WindowHome extends JFrame {
 
     private JLabel indicationLbl = new JLabel(""); // Label where i write all
 
-    private JButton addClientBtn = new JButton("Ajouter un client");
-    private JButton addOrderBtn = new JButton("Ajouter une commande");
-    private JButton addProductBtn = new JButton("Ajouter un produit");
-    private JButton addQtyProductBtn = new JButton("Ajouter du stock");
+    private JButton addClientBtn = new JButton("Gestion des clients");
+    private JButton addOrderBtn = new JButton("Gestion des commandes");
+    private JButton addProductBtn = new JButton("Gestion des produits");
+    private JButton addQtyProductBtn = new JButton("Gestion des stocks");
 
     private JMenuBar menuBar = new JMenuBar();
     private JMenuItem listUser = new JMenuItem("Liste des clients");
@@ -34,27 +35,7 @@ public class WindowHome extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
     public WindowHome() {
-
-        // set window settings --------------------------------------------------------------------
-        setTitle("Application");
-        setSize(1000, 600);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        addClientBtn.addActionListener(e -> new WindowClient());//add procedure to addClientBtn
-        addOrderBtn.addActionListener(e -> new WindowOrder());
-        addProductBtn.addActionListener(e -> new WindowProduct());
-        addQtyProductBtn.addActionListener(e -> new WindowStock());
-
-
-        //items menu ------------------------------------------------------------------------------
-        //create a menu with tables
-        menuBar.add(listUser);
-        menuBar.add(listCommand);
-        menuBar.add(listProduct);
-        menuBar.add(listEmpty);
-        menuBar.add(quit);
+        defWindow();
 
         //Table definition ---------------------------------------------------------------------------
         DefaultTableModel modelClient = new DefaultTableModel();
@@ -63,6 +44,7 @@ public class WindowHome extends JFrame {
 
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
+        tableCommande.setAutoCreateRowSorter(true);
 
         DefaultTableModel modelProduit = new DefaultTableModel();
         JTable tableProduit = new JTable(modelProduit);
@@ -79,31 +61,15 @@ public class WindowHome extends JFrame {
 
         defineProduitTable(modelProduit, tableProduit);
 
-        listUser.addActionListener(e -> {
-            createClientTable(modelClient, tableClient);
-        });
+        listUser.addActionListener(e -> createClientTable(modelClient, tableClient));
 
-        listCommand.addActionListener(e -> {
-            createCommandeTable(modelCommande, tableCommande);
-        });
+        listCommand.addActionListener(e -> createCommandeTable(modelCommande, tableCommande));
 
-        listProduct.addActionListener(e -> {
-            createProduitTable(modelProduit, tableProduit);
-        });
+        listProduct.addActionListener(e -> createProduitTable(modelProduit, tableProduit));
 
-        listEmpty.addActionListener(e -> {
-            listPnl.removeAll();
-            indicationLbl.setText("");
-            revalidate();
-            listPnl.repaint();
-        });
+        listEmpty.addActionListener(e -> clearList());
 
-        quit.addActionListener(e -> {
-            int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+        quit.addActionListener(e -> quitAction());
 
         setJMenuBar(menuBar);
 
@@ -112,6 +78,14 @@ public class WindowHome extends JFrame {
         listPnl.setPreferredSize(new Dimension(750, 600));
 
         //panel buttons (workplace)----------------------------------------------------------------
+        defButtons();
+
+        // set visible------------------------------------------------------------------------------
+        setContentPane(displayPnl);
+        setVisible(true);
+    }
+
+    private void defButtons() {
         //buttons to create customers, orders and products, they are stocked in a gridLayout
         addClientBtn.setBackground(Color.white);
         addClientBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -144,10 +118,43 @@ public class WindowHome extends JFrame {
         displayPnl.setLayout(new BorderLayout());
         displayPnl.add(workPlacePnl, BorderLayout.WEST);
         displayPnl.add(listPnl, BorderLayout.EAST);
+    }
 
-        // set visible------------------------------------------------------------------------------
-        setContentPane(displayPnl);
-        setVisible(true);
+    private void quitAction() {
+        int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
+    }
+
+    private void clearList() {
+        listPnl.removeAll();
+        indicationLbl.setText("");
+        revalidate();
+        listPnl.repaint();
+    }
+
+    private void defWindow() {
+        // set window settings --------------------------------------------------------------------
+        setTitle("Application");
+        setSize(1000, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        addClientBtn.addActionListener(e -> new WindowClient());//add procedure to addClientBtn
+        addOrderBtn.addActionListener(e -> new WindowOrder());
+        addProductBtn.addActionListener(e -> new WindowProduct());
+        addQtyProductBtn.addActionListener(e -> new WindowStock());
+
+
+        //items menu ------------------------------------------------------------------------------
+        //create a menu with tables
+        menuBar.add(listUser);
+        menuBar.add(listCommand);
+        menuBar.add(listProduct);
+        menuBar.add(listEmpty);
+        menuBar.add(quit);
     }
 
     private void defineClientTable(DefaultTableModel modelClient, JTable tableClient) {
@@ -172,8 +179,12 @@ public class WindowHome extends JFrame {
     private void createClientTable(DefaultTableModel modelClient, JTable tableClient) {
         listPnl.removeAll();
         modelClient.setRowCount(0);//clear the table
+        String fidele = "";
         for (Client client : Videotheque.getInstance().getListClient()) {
-            modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
+            if (client.isFidele()) {
+                fidele = "Oui";
+            } else fidele = "Non";
+            modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), fidele});
         }
         scrollPane = new JScrollPane(tableClient);
         scrollPane.setPreferredSize(new Dimension(720, 500));

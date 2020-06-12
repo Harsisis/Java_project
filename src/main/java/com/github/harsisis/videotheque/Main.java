@@ -1,5 +1,8 @@
 package com.github.harsisis.videotheque;
 
+import com.github.harsisis.videotheque.domaine.Client;
+import com.github.harsisis.videotheque.domaine.DVD;
+import com.github.harsisis.videotheque.domaine.Videotheque;
 import com.github.harsisis.videotheque.iu.WindowHome;
 
 //Convention nommage
@@ -17,6 +20,9 @@ public class Main {
     public static void main(String[] args) {
         //create window
         WindowHome video = new WindowHome();
-
+        DVD dvd = new DVD("Leo", 5, "death");
+        Videotheque.getInstance().ajoutClient("NOM", "Prénom", false);
+        Videotheque.getInstance().ajoutProduit(dvd.getProduitId(),dvd);
+        Videotheque.getInstance().ajoutStockProduit(dvd.getProduitId(),4);
     }
 }

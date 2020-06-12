@@ -31,21 +31,19 @@ public abstract class Produit {
     public String getProduitNom(Produit produit) {
         String result = "";
         if (produit instanceof Livre) {
-            result = produit.getCategorieProduit().getLibelle() + " | " + produit.getClassName() + " | " + Livre.getCategorieLivre().getLibelle() + " | " + produit.getTitre();
-        } else {
-            result = produit.getCategorieProduit().getLibelle() + " | " + produit.getClassName() + " | " + produit.getTitre();
+            result = produit.getCategorieProduit().getLibelle() + " | " + "Livre" + " | " + ((Livre) produit).getCategorieLivre().getLibelle() + " | " + produit.getTitre();
+        } else if (produit instanceof Dictionnaire) {
+            result = produit.getCategorieProduit().getLibelle() + " | " + "Dictionnaire" + " | " + ((Dictionnaire) produit).getLangue() + " | " + produit.getTitre();
+        } else if (produit instanceof DVD) {
+            result = produit.getCategorieProduit().getLibelle() + " | " + "DVD" + " | " + ((DVD) produit).getRealisateur() + " | " + produit.getTitre();
+        } else if (produit instanceof CD) {
+            result = produit.getCategorieProduit().getLibelle() + " | " + "CD" + " | " + ((CD) produit).getAnneeSortie() + " | " + produit.getTitre();
         }
         return result;
     }
 
     public CategorieProduit getCategorieProduit() {
         return categorieProduit;
-    }
-
-    public String getClassName() {
-        String on;
-        on = this.getClass().getSimpleName();
-        return on;
     }
 
     @Override

@@ -33,42 +33,7 @@ public class WindowStock extends JFrame {
                 cBox.addItem(produit);
             }
             cBox.setRenderer(ComboBoxRenderer.createListRendererProduit());
-            // add to Action Listener-------------------------------------------------------------------
-            // by default set the text field to blank and add some procedure
-            //confirmStockButton verify if textFields are not blank and if is the case it create a Stock else it display error message
-            saisiQuantityJtf.setText("");
-            cancelStockBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
-            confirmStockBtn.addActionListener(e -> processInput(cBox));
-
-            // title panel--------------------------------------------------------------------------------
-            titleLbl.setForeground(Color.white);
-            titlePnl.add(titleLbl);
-            titlePnl.setBackground(Color.darkGray);
-            titlePnl.setPreferredSize(new Dimension(500, 30));
-
-            // workPlace panel----------------------------------------------------------------------------
-            saisiQuantityJtf.setPreferredSize(new Dimension(150, 30));
-
-            workPlacePnl.setLayout(new GridLayout(4, 1, 0, 5));
-            workPlacePnl.add(ProductLbl);
-            workPlacePnl.add(cBox);
-
-            cBox.setBackground(Color.white);
-            workPlacePnl.add(QuantityLbl);
-            workPlacePnl.add(saisiQuantityJtf);
-
-
-            // confirm panel------------------------------------------------------------------------------
-            confirmPnl.add(confirmStockBtn);
-            confirmPnl.add(cancelStockBtn);
-            confirmPnl.setPreferredSize(new Dimension(500, 200));
-            confirmStockBtn.setBackground(Color.white);
-            cancelStockBtn.setBackground(Color.white);
-
-            // display panel------------------------------------------------------------------------------
-            displayPnl.add(titlePnl, BorderLayout.NORTH);
-            displayPnl.add(workPlacePnl, BorderLayout.CENTER);
-            displayPnl.add(confirmPnl, BorderLayout.SOUTH);
+            defWindow(cBox);
 
             // set visible------------------------------------------------------------------------------
             setContentPane(displayPnl);
@@ -77,6 +42,45 @@ public class WindowStock extends JFrame {
         else {
             JOptionPane.showMessageDialog(this, "Impossible, aucun produit n'est enregistré", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void defWindow(JComboBox<String> cBox) {
+        // add to Action Listener-------------------------------------------------------------------
+        // by default set the text field to blank and add some procedure
+        //confirmStockButton verify if textFields are not blank and if is the case it create a Stock else it display error message
+        saisiQuantityJtf.setText("");
+        cancelStockBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+        confirmStockBtn.addActionListener(e -> processInput(cBox));
+
+        // title panel--------------------------------------------------------------------------------
+        titleLbl.setForeground(Color.white);
+        titlePnl.add(titleLbl);
+        titlePnl.setBackground(Color.darkGray);
+        titlePnl.setPreferredSize(new Dimension(500, 30));
+
+        // workPlace panel----------------------------------------------------------------------------
+        saisiQuantityJtf.setPreferredSize(new Dimension(150, 30));
+
+        workPlacePnl.setLayout(new GridLayout(4, 1, 0, 5));
+        workPlacePnl.add(ProductLbl);
+        workPlacePnl.add(cBox);
+
+        cBox.setBackground(Color.white);
+        workPlacePnl.add(QuantityLbl);
+        workPlacePnl.add(saisiQuantityJtf);
+
+
+        // confirm panel------------------------------------------------------------------------------
+        confirmPnl.add(confirmStockBtn);
+        confirmPnl.add(cancelStockBtn);
+        confirmPnl.setPreferredSize(new Dimension(500, 200));
+        confirmStockBtn.setBackground(Color.white);
+        cancelStockBtn.setBackground(Color.white);
+
+        // display panel------------------------------------------------------------------------------
+        displayPnl.add(titlePnl, BorderLayout.NORTH);
+        displayPnl.add(workPlacePnl, BorderLayout.CENTER);
+        displayPnl.add(confirmPnl, BorderLayout.SOUTH);
     }
 
     private void processInput(JComboBox<String> cBox) {
