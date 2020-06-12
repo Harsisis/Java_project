@@ -226,7 +226,7 @@ public class WindowHome extends JFrame {
         modelProduit.addColumn("Catégorie produit");
         modelProduit.addColumn("Objet");
         modelProduit.addColumn("Titre");
-        modelProduit.addColumn("Caractéristique Spécial");
+        modelProduit.addColumn("Caractéristique spéciale");
         modelProduit.addColumn("Stock");
 
 //        tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);

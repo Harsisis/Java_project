@@ -195,7 +195,7 @@ public class WindowProduct extends JFrame {
 
     private Produit buildDictionnaire() throws ValidationException {
         if (!StringUtils.isEmpty(saisiTitleJtf.getText())) {
-            return new Dictionnaire(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), String.valueOf(selectLangJcbx.getSelectedIndex()));
+            return new Dictionnaire(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), (Langue) selectLangJcbx.getSelectedItem());
         } else {
             throw new ValidationException("Veuillez saisir un titre", "Attention");
         }

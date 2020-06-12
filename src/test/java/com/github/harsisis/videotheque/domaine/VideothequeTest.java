@@ -92,13 +92,13 @@ public class VideothequeTest {
         //GIVEN
         Videotheque videotheque = Videotheque.getInstance();
         Client client = new Client("Will", "Smith", true);
-        Dictionnaire dictionnaire = new Dictionnaire("Wembley", 2, "Français");
+        Dictionnaire dictionnaire = new Dictionnaire("Wembley", 2, Langue.FR);
         Emprunt emprunt = new Emprunt(dictionnaire.getProduitId(),1);
         ArrayList<Emprunt> emprunts = new ArrayList<Emprunt>();
+        Commande commande = videotheque.ajoutCommande(client,emprunts);
         emprunts.add(emprunt);
 
         //WHEN
-        Commande commande = videotheque.ajoutCommande(client,emprunts);
         videotheque.supprimeCommande(commande);
 
         //THEN

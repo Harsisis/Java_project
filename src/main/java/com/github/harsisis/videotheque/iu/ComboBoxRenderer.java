@@ -23,28 +23,6 @@ public class ComboBoxRenderer {
         };
     }
 
-    static ListCellRenderer<? super Client> createListRendererClient(Client client) {
-        return new DefaultListCellRenderer() {
-
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-                String fidele;
-
-                if (client.isFidele()) {
-                    fidele = "Fidèle";
-                } else fidele = "Pas fidèle";
-
-                String result = client.getNom() + " | " + client.getPrenom() + " | " + fidele;
-
-                this.setText(result);
-                return this;
-            }
-        };
-    }
-
     static ListCellRenderer<? super String> createListRendererEmprunt(Commande commande) {
         return new DefaultListCellRenderer() {
 

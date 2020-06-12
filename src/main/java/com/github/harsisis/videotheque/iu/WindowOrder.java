@@ -47,7 +47,7 @@ public class WindowOrder extends JFrame {
     private JButton confirmDelBtn = new JButton("Supprimer");
     private JButton modifyCommandeBtn = new JButton("Modifier la commande");
     private JButton supCommandeBtn = new JButton("Supprimer la commande");
-    private JButton newCommandeBtn = new JButton("NOUVEAU COMMANDE");
+    private JButton newCommandeBtn = new JButton("Nouvelle commande");
 
     private JTextField durationJtf = new JTextField();
 
@@ -238,8 +238,6 @@ public class WindowOrder extends JFrame {
         for (Client client : Videotheque.getInstance().getListClient()) {
             liClientJcbx.addItem(client);
         }
-        Client client = (Client) liClientJcbx.getSelectedItem();
-        liClientJcbx.setRenderer(ComboBoxRenderer.createListRendererClient(client));
         return liClientJcbx;
     }
 //        else {
@@ -514,5 +512,4 @@ public class WindowOrder extends JFrame {
         revalidate();
         listProdPnl.repaint();
     }
-
 }
