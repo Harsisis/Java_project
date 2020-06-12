@@ -5,7 +5,7 @@ public class Dictionnaire extends Produit {
     private String langue;
 
     public Dictionnaire(String titre, double tarifJournalier, String langue) {
-        super(titre, tarifJournalier, CategorieProduit.DOCUMENT);
+        super(titre, "Dictionnaire", tarifJournalier, CategorieProduit.DOCUMENT);
         this.langue = langue;
     }
 

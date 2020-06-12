@@ -50,8 +50,7 @@ public class WindowProduct extends JFrame {
 
     String[] nameCat = new String[]{"CD", "DVD", "Dictionnaire", "Livre"};
     private final JComboBox<String> selectCatJcbx = new JComboBox<>(nameCat);
-    String[] nameLang = new String[]{"Français", "Anglais", "Espagnol", "Italien", "Allemand"};
-    private final JComboBox<String> selectLangJcbx = new JComboBox<>(nameLang);
+    private final JComboBox<String> selectLangJcbx = new JComboBox(Langue.values());
 
     public WindowProduct() {
         saisiYearJtf.setDocument(new JTextFieldLimit(4));

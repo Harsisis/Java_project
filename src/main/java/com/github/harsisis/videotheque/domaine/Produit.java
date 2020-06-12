@@ -5,15 +5,21 @@ import java.util.UUID;
 
 public abstract class Produit {
     private final UUID produitId;
+    private String type;
     private String titre;
     private double tarifJournalier;
     private CategorieProduit categorieProduit;
 
-    public Produit(String titre, double tarifJournalier, CategorieProduit categorieProduit) {
+    public Produit(String titre, String type, double tarifJournalier, CategorieProduit categorieProduit) {
         this.produitId = UUID.randomUUID();
+        this.type = type;
         this.titre = titre;
         this.tarifJournalier = tarifJournalier;
         this.categorieProduit = categorieProduit;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getProduitId() {
@@ -31,17 +37,16 @@ public abstract class Produit {
     public String getProduitNom(Produit produit) {
         String result = "";
         if (produit instanceof Livre) {
-            result = produit.getCategorieProduit().getLibelle() + " | " + "Livre" + " | " + ((Livre) produit).getCategorieLivre().getLibelle() + " | " + produit.getTitre();
+            result = produit.getCategorieProduit().getLibelle() + " | " + "Livre" + " | " + produit.getTitre() + " | " + ((Livre) produit).getCategorieLivre().getLibelle();
         } else if (produit instanceof Dictionnaire) {
-            result = produit.getCategorieProduit().getLibelle() + " | " + "Dictionnaire" + " | " + ((Dictionnaire) produit).getLangue() + " | " + produit.getTitre();
+            result = produit.getCategorieProduit().getLibelle() + " | " + "Dictionnaire" + " | " + produit.getTitre() + " | " + ((Dictionnaire) produit).getLangue();
         } else if (produit instanceof DVD) {
-            result = produit.getCategorieProduit().getLibelle() + " | " + "DVD" + " | " + ((DVD) produit).getRealisateur() + " | " + produit.getTitre();
+            result = produit.getCategorieProduit().getLibelle() + " | " + "DVD" + " | " + produit.getTitre() + " | " + ((DVD) produit).getRealisateur();
         } else if (produit instanceof CD) {
-            result = produit.getCategorieProduit().getLibelle() + " | " + "CD" + " | " + ((CD) produit).getAnneeSortie() + " | " + produit.getTitre();
+            result = produit.getCategorieProduit().getLibelle() + " | " + "CD" + " | " + produit.getTitre() + " | " + ((CD) produit).getAnneeSortie();
         }
         return result;
     }
-
     public CategorieProduit getCategorieProduit() {
         return categorieProduit;
     }

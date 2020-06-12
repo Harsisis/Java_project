@@ -6,7 +6,7 @@ public class Livre extends Produit {
     private String auteur;
 
     public Livre(String titre, double tarifJournalier, String auteur, CategorieLivre categorieLivre) {
-        super(titre, tarifJournalier, CategorieProduit.DOCUMENT);
+        super(titre, "Livre", tarifJournalier, CategorieProduit.DOCUMENT);
         this.auteur = auteur;
         this.categorieLivre = categorieLivre;
     }

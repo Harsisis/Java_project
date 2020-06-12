@@ -238,6 +238,8 @@ public class WindowOrder extends JFrame {
         for (Client client : Videotheque.getInstance().getListClient()) {
             liClientJcbx.addItem(client);
         }
+        Client client = (Client) liClientJcbx.getSelectedItem();
+        liClientJcbx.setRenderer(ComboBoxRenderer.createListRendererClient(client));
         return liClientJcbx;
     }
 //        else {

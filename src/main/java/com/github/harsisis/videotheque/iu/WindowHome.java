@@ -1,9 +1,6 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.Client;
-import com.github.harsisis.videotheque.domaine.Commande;
-import com.github.harsisis.videotheque.domaine.Produit;
-import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.domaine.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -197,18 +194,15 @@ public class WindowHome extends JFrame {
 
     private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         modelCommande.addColumn("ID commande");
-        modelCommande.addColumn("Client");
+        modelCommande.addColumn("Nom du client");
+        modelCommande.addColumn("Prénom du client");
         modelCommande.addColumn("Date de début de la commande");
 
         TableColumn column = null;
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i <= 3; i++) {
             column = tableCommande.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(300);//column ID
-            } else if (i == 1) {
-                column.setPreferredWidth(500);//column Client
-            } else {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(250);//column ID
             }
         }
     }
@@ -217,7 +211,7 @@ public class WindowHome extends JFrame {
         listPnl.removeAll();
         modelCommande.setRowCount(0);
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
-            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
+            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
         scrollPane.setPreferredSize(new Dimension(720, 500));
@@ -229,11 +223,14 @@ public class WindowHome extends JFrame {
     }
 
     private void defineProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
-        modelProduit.addColumn("Produit");
-        modelProduit.addColumn("Quantité");
+        modelProduit.addColumn("Catégorie produit");
+        modelProduit.addColumn("Objet");
+        modelProduit.addColumn("Titre");
+        modelProduit.addColumn("Caractéristique Spécial");
+        modelProduit.addColumn("Stock");
 
-        tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);
-        tableProduit.getColumnModel().getColumn(1).setPreferredWidth(150);
+//        tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);
+//        tableProduit.getColumnModel().getColumn(1).setPreferredWidth(150);
     }
 
     private void createProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
@@ -241,7 +238,12 @@ public class WindowHome extends JFrame {
         modelProduit.setRowCount(0);
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
             Produit prod = Videotheque.getInstance().getProduit(produit);
-            modelProduit.addRow(new Object[]{prod.getProduitNom(prod), Videotheque.getInstance().getListStockProduit().get(produit)});
+            modelProduit.addRow(new Object[] {
+                    prod.getCategorieProduit().getLibelle(),
+                    prod.getType(),
+                    prod.getTitre(),
+                    getProduitNom(prod),
+                    Videotheque.getInstance().getListStockProduit().get(produit)});
         }
 
         scrollPane = new JScrollPane(tableProduit);
@@ -251,5 +253,19 @@ public class WindowHome extends JFrame {
         indicationLbl.setText("Liste des Produits :");
         revalidate();
         listPnl.repaint();
+    }
+
+    public String getProduitNom(Produit produit) {
+        String result = "";
+        if (produit instanceof Livre) {
+            result = "Catégorie de Livre : " +((Livre) produit).getCategorieLivre().getLibelle();
+        } else if (produit instanceof Dictionnaire) {
+            result = "Langue : " + ((Dictionnaire) produit).getLangue();
+        } else if (produit instanceof DVD) {
+            result = "Réalisateur : " + ((DVD) produit).getRealisateur();
+        } else if (produit instanceof CD) {
+            result = "Année de sortie : " + ((CD) produit).getAnneeSortie();
+        }
+        return result;
     }
 }

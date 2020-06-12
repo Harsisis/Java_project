@@ -2,6 +2,7 @@ package com.github.harsisis.videotheque;
 
 import com.github.harsisis.videotheque.domaine.Client;
 import com.github.harsisis.videotheque.domaine.DVD;
+import com.github.harsisis.videotheque.domaine.Dictionnaire;
 import com.github.harsisis.videotheque.domaine.Videotheque;
 import com.github.harsisis.videotheque.iu.WindowHome;
 
