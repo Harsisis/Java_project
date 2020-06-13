@@ -45,7 +45,7 @@ public class WindowOrder extends JFrame {
     private JButton confirmProductBtn = new JButton("Ajouter");
     private JButton cancelProductBtn = new JButton("Retour");
     private JButton confirmDelBtn = new JButton("Supprimer");
-    private JButton modifyCommandeBtn = new JButton("Modifier la commande");
+    private JButton modifyCommandeBtn = new JButton("Voir la commande");
     private JButton supCommandeBtn = new JButton("Supprimer la commande");
     private JButton newCommandeBtn = new JButton("Nouvelle commande");
 
