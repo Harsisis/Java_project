@@ -21,9 +21,5 @@ public class Main {
     public static void main(String[] args) {
         //create window
         WindowHome video = new WindowHome();
-        DVD dvd = new DVD("Leo", 5, "death");
-        Videotheque.getInstance().ajoutClient("NOM", "Prénom", false);
-        Videotheque.getInstance().ajoutProduit(dvd.getProduitId(),dvd);
-        Videotheque.getInstance().ajoutStockProduit(dvd.getProduitId(),4);
     }
 }
