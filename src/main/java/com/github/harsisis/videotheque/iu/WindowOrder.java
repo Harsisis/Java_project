@@ -88,9 +88,8 @@ public class WindowOrder extends JFrame {
 
                     modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
 
-                    supCommandeBtn.addActionListener(actionEvent -> supCommandeBtnAction(commande));
+                    supCommandeBtn.addActionListener(actionEvent -> supCommandeBtnAction(commande, modelCommande, tableCommande));
 
-                    newCommandeBtn.setEnabled(false);
                     modifyCommandeBtn.setEnabled(true);
                     supCommandeBtn.setEnabled(true);
                 }
@@ -202,11 +201,12 @@ public class WindowOrder extends JFrame {
         createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
     }
 
-    private void supCommandeBtnAction(Commande commande) {
+    private void supCommandeBtnAction(Commande commande, DefaultTableModel modelCommande, JTable tableCommande) {
         Videotheque.getInstance().supprimeCommande(commande);
         for (Emprunt emprunt : commande.getListEmprunt()) {
             Videotheque.getInstance().ajoutStockProduit(emprunt.getProduitId(), 1);
         }
+        createCommandeTable(modelCommande, tableCommande);
         JOptionPane.showMessageDialog(this, "La commande a bien été supprimé de la liste des commandes", "Succès", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -475,10 +475,21 @@ public class WindowOrder extends JFrame {
 
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listProdPnl.removeAll();
-        modelCommande.setRowCount(0);
-        for (Commande commande : Videotheque.getInstance().getListCommande()) {
-            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
+        try{
+            modelCommande.setRowCount(0);
+            ArrayList<Commande> list = new ArrayList<>(Videotheque.getInstance().getListCommande());
+            Object rowData[] = new Object[3];
+            for(int i = 0; i < Videotheque.getInstance().getListCommande().size(); i++) {
+                rowData[0] = list.get(i).getCommandeId();
+                rowData[1] = list.get(i).getClient();
+                rowData[2] = list.get(i).getDebutDate();
+                modelCommande.addRow(rowData);
+            }
+        } catch (ArrayIndexOutOfBoundsException exception) {
         }
+//        for (Commande commande : Videotheque.getInstance().getListCommande()) {
+//            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
+//        }
         scrollPane = new JScrollPane(tableCommande);
         scrollPane.setPreferredSize(new Dimension(750, 450));
         tableCommande.setFillsViewportHeight(true);
