@@ -107,6 +107,7 @@ public class WindowModify extends JFrame {
 
     private void confirmDelBtnAction(Commande commande, JComboBox<String> liEmpruntJcbx, ArrayList<Emprunt> emprunts) {
         emprunts.remove(trouverEmprunt((String) liEmpruntJcbx.getSelectedItem(),commande));
+        Videotheque.getInstance().ajoutStockProduit((String) liEmpruntJcbx.getSelectedItem(), 1);
         JOptionPane.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
         createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
         revalidate();

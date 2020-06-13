@@ -56,72 +56,75 @@ public class WindowOrder extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
     public WindowOrder() {
-        //if(!Videotheque.getInstance().getListProduit().isEmpty() && !Videotheque.getInstance().getListClient().isEmpty()) {
-        // set window settings --------------------------------------------------------------------
-        defWindow();
+        if (!Videotheque.getInstance().getListProduit().isEmpty() && !Videotheque.getInstance().getListClient().isEmpty()) {
+            // set window settings --------------------------------------------------------------------
+            defWindow();
 
-        JComboBox<Client> liClientJcbx = getClientJComboBox();
+            JComboBox<Client> liClientJcbx = getClientJComboBox();
 
-        JComboBox<String> liProductJcbx = getProductJComboBox();
+            JComboBox<String> liProductJcbx = getProductJComboBox();
 
-        ArrayList<Emprunt> emprunts = new ArrayList<>();
+            ArrayList<Emprunt> emprunts = new ArrayList<>();
 
-        JComboBox<String> liEmpruntJcbx = new JComboBox<>();
+            JComboBox<String> liEmpruntJcbx = new JComboBox<>();
 
-        DefaultTableModel modelEmprunt = new DefaultTableModel();
+            DefaultTableModel modelEmprunt = new DefaultTableModel();
 
-        JTable tableEmprunt = getEmpruntJTable(liEmpruntJcbx, modelEmprunt);
+            JTable tableEmprunt = getEmpruntJTable(liEmpruntJcbx, modelEmprunt);
 
-        DefaultTableModel modelCommande = new DefaultTableModel();
-        JTable tableCommande = getCommandeJTable(modelCommande);
-        ListSelectionModel cellSelectionModel = getCommandeListSelectionModel(tableCommande);
+            DefaultTableModel modelCommande = new DefaultTableModel();
+            JTable tableCommande = getCommandeJTable(modelCommande);
+            ListSelectionModel cellSelectionModel = getCommandeListSelectionModel(tableCommande);
 
-        //buttons on the main page
-        cancelBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+            //buttons on the main page
+            cancelBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
-        cellSelectionModel.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                double total = getTotal(tableCommande);
-                amountLbl.setText("Total : " + total + " €");
-                amountLbl.setVisible(true);
-                Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(), 0));
+            cellSelectionModel.addListSelectionListener(e -> {
+                if (!e.getValueIsAdjusting()) {
+                    double total = getTotal(tableCommande);
+                    amountLbl.setText("Total : " + total + " €");
+                    amountLbl.setVisible(true);
+                    Commande commande = trouverCommande((String) tableCommande.getValueAt(tableCommande.getSelectedRow(), 0));
 
-                modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
+                    modifyCommandeBtn.addActionListener(actionEvent -> new WindowModify(commande));
 
-                supCommandeBtn.addActionListener(actionEvent -> supCommandeBtnAction(commande));
+                    supCommandeBtn.addActionListener(actionEvent -> supCommandeBtnAction(commande));
 
-                newCommandeBtn.setEnabled(false);
-                modifyCommandeBtn.setEnabled(true);
-                supCommandeBtn.setEnabled(true);
-            }
-        });
+                    newCommandeBtn.setEnabled(false);
+                    modifyCommandeBtn.setEnabled(true);
+                    supCommandeBtn.setEnabled(true);
+                }
+            });
 
-        newCommandeBtn.addActionListener(e -> newCommandeBtnAction( liClientJcbx, modelEmprunt, tableEmprunt, emprunts));
+            newCommandeBtn.addActionListener(e -> newCommandeBtnAction(liClientJcbx, modelEmprunt, tableEmprunt, emprunts));
 
-        cancelOrderBtn.addActionListener(e -> cancelOrderBtnAction(emprunts, modelCommande, tableCommande));
+            cancelOrderBtn.addActionListener(e -> cancelOrderBtnAction(emprunts, modelCommande, tableCommande));
 
-        confirmOrderBtn.addActionListener(e -> confirmOrderBtnAction(liClientJcbx, emprunts, modelCommande, tableCommande));
+            confirmOrderBtn.addActionListener(e -> confirmOrderBtnAction(liClientJcbx, emprunts, modelCommande, tableCommande));
 
-        //buttons on the add loan page
-        cancelProductBtn.addActionListener(e -> commandePage(liClientJcbx));
+            //buttons on the add loan page
+            cancelProductBtn.addActionListener(e -> commandePage(liClientJcbx));
 
-        plusProductBtn.addActionListener(e -> plusProductBtnAction(liProductJcbx, modelEmprunt, tableEmprunt, emprunts));
+            plusProductBtn.addActionListener(e -> plusProductBtnAction(liProductJcbx, modelEmprunt, tableEmprunt, emprunts));
 
 
-        confirmProductBtn.addActionListener(e -> confirmProductBtnAction(liProductJcbx, modelEmprunt, tableEmprunt, emprunts));
+            confirmProductBtn.addActionListener(e -> confirmProductBtnAction(liProductJcbx, modelEmprunt, tableEmprunt, emprunts));
 
-        //buttons on the delete loaning page
-        minusProductBtn.addActionListener(e -> minusProductBtnAction(liEmpruntJcbx, modelEmprunt, tableEmprunt, emprunts));
+            //buttons on the delete loaning page
+            minusProductBtn.addActionListener(e -> minusProductBtnAction(liEmpruntJcbx, modelEmprunt, tableEmprunt, emprunts));
 
-        confirmDelBtn.addActionListener(e -> confirmDelBtnAction(liEmpruntJcbx, modelEmprunt, tableEmprunt, emprunts));
+            confirmDelBtn.addActionListener(e -> confirmDelBtnAction(liEmpruntJcbx, modelEmprunt, tableEmprunt, emprunts));
 
-        createCommandeTable(modelCommande, tableCommande);
+            createCommandeTable(modelCommande, tableCommande);
 
-        //display panel-----------------------------------------------------------------------------
-        mainPage(modelCommande, tableCommande);
-        // set visible------------------------------------------------------------------------------
-        setContentPane(displayPnl);
-        setVisible(true);
+            //display panel-----------------------------------------------------------------------------
+            mainPage(modelCommande, tableCommande);
+            // set visible------------------------------------------------------------------------------
+            setContentPane(displayPnl);
+            setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Impossible, aucun produit ni aucun client n'est enregistré", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void defWindow() {
@@ -139,6 +142,7 @@ public class WindowOrder extends JFrame {
 
     private void confirmDelBtnAction(JComboBox<String> liEmpruntJcbx, DefaultTableModel modelEmprunt, JTable tableEmprunt, ArrayList<Emprunt> emprunts) {
         emprunts.remove(liEmpruntJcbx.getSelectedIndex());
+        Videotheque.getInstance().ajoutStockProduit((String) liEmpruntJcbx.getSelectedItem(), 1);
         jop3.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
         createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
         minusProductBtn.setEnabled(true);
@@ -200,6 +204,9 @@ public class WindowOrder extends JFrame {
 
     private void supCommandeBtnAction(Commande commande) {
         Videotheque.getInstance().supprimeCommande(commande);
+        for (Emprunt emprunt : commande.getListEmprunt()) {
+            Videotheque.getInstance().ajoutStockProduit(emprunt.getProduitId(), 1);
+        }
         JOptionPane.showMessageDialog(this, "La commande a bien été supprimé de la liste des commandes", "Succès", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -240,11 +247,6 @@ public class WindowOrder extends JFrame {
         }
         return liClientJcbx;
     }
-//        else {
-//            JOptionPane.showMessageDialog(this, "Impossible, aucun produit ni aucun client n'est enregistré", "Erreur", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
-
 
     double getTotal(JTable tableCommande) {
         Client client = (Client) tableCommande.getModel().getValueAt(tableCommande.getSelectedRow(), 1);
@@ -445,7 +447,6 @@ public class WindowOrder extends JFrame {
 
         //manage panel left side of the model-------------------------------------------------------
         managePnl.removeAll();
-        listProdPnl.removeAll();
         createCommandeTable(modelCommande, tableCommande);
         managePnl.add(titlePnl);
         managePnl.add(confirmPnl);
