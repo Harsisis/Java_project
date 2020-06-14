@@ -490,11 +490,11 @@ public class WindowOrder extends JFrame {
 
     private void createCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         listProdPnl.removeAll();
-        try{
+        try {
             modelCommande.setRowCount(0);
             ArrayList<Commande> list = new ArrayList<>(Videotheque.getInstance().getListCommande());
             Object rowData[] = new Object[3];
-            for(int i = 0; i < Videotheque.getInstance().getListCommande().size(); i++) {
+            for (int i = 0; i < Videotheque.getInstance().getListCommande().size(); i++) {
                 rowData[0] = list.get(i).getCommandeId();
                 rowData[1] = list.get(i).getClient();
                 rowData[2] = list.get(i).getDebutDate();

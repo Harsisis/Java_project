@@ -13,6 +13,14 @@ import java.util.ArrayList;
 
 public class WindowModify extends JFrame {
 
+    DefaultTableModel modelEmprunt = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            //all cells false
+            return false;
+        }
+    };
+    JTable tableEmprunt = new JTable(modelEmprunt);
     private JPanel displayPnl = new JPanel();
     private JPanel managePnl = new JPanel();
     private JPanel listProdPnl = new JPanel();
@@ -24,7 +32,6 @@ public class WindowModify extends JFrame {
     private JPanel confirmPlusPnl = new JPanel();
     private JPanel selectLoaningPnl = new JPanel();// panel with add and delete button for product
     private JPanel confirmMinusPnl = new JPanel();
-
     private JButton plusProductBtn = new JButton("+");
     private JButton minusProductBtn = new JButton("-");
     private JButton backProductBtn = new JButton("Retour");
@@ -32,24 +39,12 @@ public class WindowModify extends JFrame {
     private JButton cancelProductBtn = new JButton("Retour");
     private JButton confirmDelBtn = new JButton("Supprimer");
     private JButton cancelDelBtn = new JButton("Retour");
-
     private JLabel titleLbl = new JLabel("Modification d'une commande");
     private JLabel choicePrdLbl = new JLabel("Choisir un produit :");
     private JLabel durationLbl = new JLabel("Saisir une durée (en jour) :");
     private JLabel choiceEmpLbl = new JLabel("Choisir un emprunt :");
-
     private JTextField durationJtf = new JTextField();
-
     private JScrollPane scrollPane;
-
-    DefaultTableModel modelEmprunt = new DefaultTableModel() {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            //all cells false
-            return false;
-        }
-    };
-    JTable tableEmprunt = new JTable(modelEmprunt);
 
     public WindowModify(Commande commande) {
         defWindow();
@@ -112,8 +107,10 @@ public class WindowModify extends JFrame {
     }
 
     private void confirmDelBtnAction(Commande commande, JComboBox<String> liEmpruntJcbx, ArrayList<Emprunt> emprunts) {
-        emprunts.remove(trouverEmprunt((String) liEmpruntJcbx.getSelectedItem(),commande));
-        Videotheque.getInstance().ajoutStockProduit((String) liEmpruntJcbx.getSelectedItem(), 1);
+        Emprunt emp = (trouverEmprunt((String) liEmpruntJcbx.getSelectedItem(), commande));
+        String produitId = emp.getProduitId();
+        Videotheque.getInstance().ajoutStockProduit(produitId, 1);
+        emprunts.remove(emp);
         JOptionPane.showMessageDialog(null, "Le produit a bien été supprimé de la commande", "Attention", JOptionPane.WARNING_MESSAGE);
         createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
         revalidate();
@@ -154,6 +151,7 @@ public class WindowModify extends JFrame {
         }
         return null;
     }
+
     private void removeParameter(JComboBox<String> liEmpruntJcbx) {
         managePnl.removeAll();
 
@@ -245,7 +243,7 @@ public class WindowModify extends JFrame {
 
         managePnl.removeAll();
         listProdPnl.removeAll();
-        createEmpruntTable(modelEmprunt, tableEmprunt,emprunts);
+        createEmpruntTable(modelEmprunt, tableEmprunt, emprunts);
         managePnl.add(titlePnl);
         managePnl.add(addDelPnl);
         managePnl.add(backPnl);
