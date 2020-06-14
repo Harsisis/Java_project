@@ -29,9 +29,9 @@ public class WindowModify extends JFrame {
     private JButton minusProductBtn = new JButton("-");
     private JButton backProductBtn = new JButton("Retour");
     private JButton confirmProductBtn = new JButton("Valider");
-    private JButton cancelProductBtn = new JButton("Annuler");
+    private JButton cancelProductBtn = new JButton("Retour");
     private JButton confirmDelBtn = new JButton("Supprimer");
-    private JButton cancelDelBtn = new JButton("Annuler");
+    private JButton cancelDelBtn = new JButton("Retour");
 
     private JLabel titleLbl = new JLabel("Modification d'une commande");
     private JLabel choicePrdLbl = new JLabel("Choisir un produit :");

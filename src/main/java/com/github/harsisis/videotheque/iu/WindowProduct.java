@@ -145,7 +145,7 @@ public class WindowProduct extends JFrame {
             System.out.println("Titre : " + saisiTitleJtf.getText() + "\nPrix : " + saisiPriceJtf.getText());
             JOptionPane.showMessageDialog(this, "Le produit " +
                     CapitalizeUtil.getCapitalize(saisiTitleJtf.getText()) +
-                    " a bien été crée.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    " a bien été créé.", "Succès", JOptionPane.INFORMATION_MESSAGE);
             dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         } catch (ValidationException ve) {
             JOptionPane.showMessageDialog(this, ve.getMessage(), ve.getTitle(), JOptionPane.WARNING_MESSAGE);

@@ -336,6 +336,8 @@ public class WindowOrder extends JFrame {
         confirmPnl.add(cancelProductBtn);
         confirmOrderBtn.setBackground(Color.white);
         cancelOrderBtn.setBackground(Color.white);
+        confirmProductBtn.setBackground(Color.white);
+        cancelProductBtn.setBackground(Color.white);
 
         //manage panel ----------------------------------------------------------------------------
         managePnl.removeAll();
