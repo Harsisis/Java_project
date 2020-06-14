@@ -68,7 +68,13 @@ public class WindowOrder extends JFrame {
 
             JComboBox<String> liEmpruntJcbx = new JComboBox<>();
 
-            DefaultTableModel modelEmprunt = new DefaultTableModel();
+            DefaultTableModel modelEmprunt = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
 
             JTable tableEmprunt = getEmpruntJTable(liEmpruntJcbx, modelEmprunt);
 

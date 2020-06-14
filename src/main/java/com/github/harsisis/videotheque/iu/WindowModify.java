@@ -42,7 +42,13 @@ public class WindowModify extends JFrame {
 
     private JScrollPane scrollPane;
 
-    DefaultTableModel modelEmprunt = new DefaultTableModel();
+    DefaultTableModel modelEmprunt = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            //all cells false
+            return false;
+        }
+    };
     JTable tableEmprunt = new JTable(modelEmprunt);
 
     public WindowModify(Commande commande) {
