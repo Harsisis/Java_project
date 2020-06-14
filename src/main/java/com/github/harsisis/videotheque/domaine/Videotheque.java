@@ -75,7 +75,7 @@ public class Videotheque {
         return listProduit.get(produitId);
     }
 
-    public void retirerStockProduit(String produitId, int quantity) {
-        listStockProduit.put(produitId, listStockProduit.get(produitId) - quantity);
+    public void retirerStockProduit(String produitId) {
+        listStockProduit.put(produitId, listStockProduit.get(produitId) - 1);
     }
 }

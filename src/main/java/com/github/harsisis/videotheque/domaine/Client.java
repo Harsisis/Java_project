@@ -48,6 +48,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return clientId + " | " + nom + " | " + prenom;
+        return nom + " | " + prenom;
     }
 }

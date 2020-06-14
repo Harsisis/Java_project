@@ -1,9 +1,6 @@
 package com.github.harsisis.videotheque.iu;
 
-import com.github.harsisis.videotheque.domaine.Commande;
-import com.github.harsisis.videotheque.domaine.Emprunt;
-import com.github.harsisis.videotheque.domaine.Produit;
-import com.github.harsisis.videotheque.domaine.Videotheque;
+import com.github.harsisis.videotheque.domaine.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +17,7 @@ public class ComboBoxRenderer {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
                 Produit produit = Videotheque.getInstance().getProduit((String) value);
-                this.setText(String.format(produit.getProduitNom(produit)));
+                this.setText(produit.getProduitNom(produit));
                 return this;
             }
         };
@@ -36,7 +33,7 @@ public class ComboBoxRenderer {
 
                 ArrayList<Emprunt> emprunts = commande.getListEmprunt();
                 for (Emprunt emp : emprunts) {
-                    this.setText(String.format(Videotheque.getInstance().getProduit(emp.getProduitId()).getProduitNom(Videotheque.getInstance().getProduit(emp.getProduitId()))));
+                    this.setText(Videotheque.getInstance().getProduit(emp.getProduitId()).getProduitNom(Videotheque.getInstance().getProduit(emp.getProduitId())));
                 }
                 return this;
             }

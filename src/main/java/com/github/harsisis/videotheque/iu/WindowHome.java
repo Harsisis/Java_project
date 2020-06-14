@@ -6,9 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 public class WindowHome extends JFrame {
     private JPanel displayPnl = new JPanel();// display all the panels, buttons...
@@ -17,10 +15,10 @@ public class WindowHome extends JFrame {
 
     private JLabel indicationLbl = new JLabel(""); // Label where i write all
 
-    private JButton addClientBtn = new JButton("Ajouter un client");
-    private JButton addOrderBtn = new JButton("Ajouter une commande");
-    private JButton addProductBtn = new JButton("Ajouter un produit");
-    private JButton addQtyProductBtn = new JButton("Ajouter du stock");
+    private JButton addClientBtn = new JButton("Gestion des clients");
+    private JButton addOrderBtn = new JButton("Gestion des commandes");
+    private JButton addProductBtn = new JButton("Gestion des produits");
+    private JButton addQtyProductBtn = new JButton("Gestion des stocks");
 
     private JMenuBar menuBar = new JMenuBar();
     private JMenuItem listUser = new JMenuItem("Liste des clients");
@@ -34,27 +32,7 @@ public class WindowHome extends JFrame {
     private JOptionPane jop3 = new JOptionPane();
 
     public WindowHome() {
-
-        // set window settings --------------------------------------------------------------------
-        setTitle("Application");
-        setSize(1000, 600);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        addClientBtn.addActionListener(e -> new WindowClient());//add procedure to addClientBtn
-        addOrderBtn.addActionListener(e -> new WindowOrder());
-        addProductBtn.addActionListener(e -> new WindowProduct());
-        addQtyProductBtn.addActionListener(e -> new WindowStock());
-
-
-        //items menu ------------------------------------------------------------------------------
-        //create a menu with tables
-        menuBar.add(listUser);
-        menuBar.add(listCommand);
-        menuBar.add(listProduct);
-        menuBar.add(listEmpty);
-        menuBar.add(quit);
+        defWindow();
 
         //Table definition ---------------------------------------------------------------------------
         DefaultTableModel modelClient = new DefaultTableModel();
@@ -63,6 +41,7 @@ public class WindowHome extends JFrame {
 
         DefaultTableModel modelCommande = new DefaultTableModel();
         JTable tableCommande = new JTable(modelCommande);
+        tableCommande.setAutoCreateRowSorter(true);
 
         DefaultTableModel modelProduit = new DefaultTableModel();
         JTable tableProduit = new JTable(modelProduit);
@@ -79,31 +58,15 @@ public class WindowHome extends JFrame {
 
         defineProduitTable(modelProduit, tableProduit);
 
-        listUser.addActionListener(e -> {
-            createClientTable(modelClient, tableClient);
-        });
+        listUser.addActionListener(e -> createClientTable(modelClient, tableClient));
 
-        listCommand.addActionListener(e -> {
-            createCommandeTable(modelCommande, tableCommande);
-        });
+        listCommand.addActionListener(e -> createCommandeTable(modelCommande, tableCommande));
 
-        listProduct.addActionListener(e -> {
-            createProduitTable(modelProduit, tableProduit);
-        });
+        listProduct.addActionListener(e -> createProduitTable(modelProduit, tableProduit));
 
-        listEmpty.addActionListener(e -> {
-            listPnl.removeAll();
-            indicationLbl.setText("");
-            revalidate();
-            listPnl.repaint();
-        });
+        listEmpty.addActionListener(e -> clearList());
 
-        quit.addActionListener(e -> {
-            int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+        quit.addActionListener(e -> quitAction());
 
         setJMenuBar(menuBar);
 
@@ -112,6 +75,14 @@ public class WindowHome extends JFrame {
         listPnl.setPreferredSize(new Dimension(750, 600));
 
         //panel buttons (workplace)----------------------------------------------------------------
+        defButtons();
+
+        // set visible------------------------------------------------------------------------------
+        setContentPane(displayPnl);
+        setVisible(true);
+    }
+
+    private void defButtons() {
         //buttons to create customers, orders and products, they are stocked in a gridLayout
         addClientBtn.setBackground(Color.white);
         addClientBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -144,10 +115,43 @@ public class WindowHome extends JFrame {
         displayPnl.setLayout(new BorderLayout());
         displayPnl.add(workPlacePnl, BorderLayout.WEST);
         displayPnl.add(listPnl, BorderLayout.EAST);
+    }
 
-        // set visible------------------------------------------------------------------------------
-        setContentPane(displayPnl);
-        setVisible(true);
+    private void quitAction() {
+        int reply = jop3.showConfirmDialog(null, "Êtes vous sûr de vouloir quitter ?", "Quitter", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
+    }
+
+    private void clearList() {
+        listPnl.removeAll();
+        indicationLbl.setText("");
+        revalidate();
+        listPnl.repaint();
+    }
+
+    private void defWindow() {
+        // set window settings --------------------------------------------------------------------
+        setTitle("Application");
+        setSize(1000, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        addClientBtn.addActionListener(e -> new WindowClient());//add procedure to addClientBtn
+        addOrderBtn.addActionListener(e -> new WindowOrder());
+        addProductBtn.addActionListener(e -> new WindowProduct());
+        addQtyProductBtn.addActionListener(e -> new WindowStock());
+
+
+        //items menu ------------------------------------------------------------------------------
+        //create a menu with tables
+        menuBar.add(listUser);
+        menuBar.add(listCommand);
+        menuBar.add(listProduct);
+        menuBar.add(listEmpty);
+        menuBar.add(quit);
     }
 
     private void defineClientTable(DefaultTableModel modelClient, JTable tableClient) {
@@ -172,8 +176,12 @@ public class WindowHome extends JFrame {
     private void createClientTable(DefaultTableModel modelClient, JTable tableClient) {
         listPnl.removeAll();
         modelClient.setRowCount(0);//clear the table
+        String fidele = "";
         for (Client client : Videotheque.getInstance().getListClient()) {
-            modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), client.isFidele()});
+            if (client.isFidele()) {
+                fidele = "Oui";
+            } else fidele = "Non";
+            modelClient.addRow(new Object[]{client.getClientId(), client.getNom(), client.getPrenom(), fidele});
         }
         scrollPane = new JScrollPane(tableClient);
         scrollPane.setPreferredSize(new Dimension(720, 500));
@@ -182,22 +190,20 @@ public class WindowHome extends JFrame {
         indicationLbl.setText("Liste des Clients :");
         revalidate();
         listPnl.repaint();
+        tableClient.setEnabled(false);
     }
 
     private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
         modelCommande.addColumn("ID commande");
-        modelCommande.addColumn("Client");
+        modelCommande.addColumn("Nom du client");
+        modelCommande.addColumn("Prénom du client");
         modelCommande.addColumn("Date de début de la commande");
 
         TableColumn column = null;
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i <= 3; i++) {
             column = tableCommande.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(300);//column ID
-            } else if (i == 1) {
-                column.setPreferredWidth(500);//column Client
-            } else {
-                column.setPreferredWidth(100);
+                column.setPreferredWidth(250);//column ID
             }
         }
     }
@@ -206,7 +212,7 @@ public class WindowHome extends JFrame {
         listPnl.removeAll();
         modelCommande.setRowCount(0);
         for (Commande commande : Videotheque.getInstance().getListCommande()) {
-            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient(), commande.getDebutDate()});
+            modelCommande.addRow(new Object[]{commande.getCommandeId(), commande.getClient().getNom(), commande.getClient().getPrenom(), commande.getDebutDate()});
         }
         scrollPane = new JScrollPane(tableCommande);
         scrollPane.setPreferredSize(new Dimension(720, 500));
@@ -215,14 +221,18 @@ public class WindowHome extends JFrame {
         indicationLbl.setText("Liste des Commandes :");
         revalidate();
         listPnl.repaint();
+        tableCommande.setEnabled(false);
     }
 
     private void defineProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
-        modelProduit.addColumn("Produit");
-        modelProduit.addColumn("Quantité");
+        modelProduit.addColumn("Catégorie produit");
+        modelProduit.addColumn("Objet");
+        modelProduit.addColumn("Titre");
+        modelProduit.addColumn("Caractéristique spéciale");
+        modelProduit.addColumn("Stock");
 
-        tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);
-        tableProduit.getColumnModel().getColumn(1).setPreferredWidth(150);
+//        tableProduit.getColumnModel().getColumn(0).setPreferredWidth(650);
+//        tableProduit.getColumnModel().getColumn(1).setPreferredWidth(150);
     }
 
     private void createProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
@@ -230,9 +240,13 @@ public class WindowHome extends JFrame {
         modelProduit.setRowCount(0);
         for (String produit : Videotheque.getInstance().getListStockProduit().keySet()) {
             Produit prod = Videotheque.getInstance().getProduit(produit);
-            modelProduit.addRow(new Object[]{prod.getProduitNom(prod), Videotheque.getInstance().getListStockProduit().get(produit)});
+            modelProduit.addRow(new Object[] {
+                    prod.getCategorieProduit().getLibelle(),
+                    prod.getType(),
+                    prod.getTitre(),
+                    getProduitNom(prod),
+                    Videotheque.getInstance().getListStockProduit().get(produit)});
         }
-
         scrollPane = new JScrollPane(tableProduit);
         scrollPane.setPreferredSize(new Dimension(720, 500));
         tableProduit.setFillsViewportHeight(true);
@@ -240,5 +254,20 @@ public class WindowHome extends JFrame {
         indicationLbl.setText("Liste des Produits :");
         revalidate();
         listPnl.repaint();
+        tableProduit.setEnabled(false);
+    }
+
+    public String getProduitNom(Produit produit) {
+        String result = "";
+        if (produit instanceof Livre) {
+            result = "Catégorie de Livre : " +((Livre) produit).getCategorieLivre().getLibelle();
+        } else if (produit instanceof Dictionnaire) {
+            result = "Langue : " + ((Dictionnaire) produit).getLangue();
+        } else if (produit instanceof DVD) {
+            result = "Réalisateur : " + ((DVD) produit).getRealisateur();
+        } else if (produit instanceof CD) {
+            result = "Année de sortie : " + ((CD) produit).getAnneeSortie();
+        }
+        return result;
     }
 }

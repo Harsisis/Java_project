@@ -50,8 +50,7 @@ public class WindowProduct extends JFrame {
 
     String[] nameCat = new String[]{"CD", "DVD", "Dictionnaire", "Livre"};
     private final JComboBox<String> selectCatJcbx = new JComboBox<>(nameCat);
-    String[] nameLang = new String[]{"Français", "Anglais", "Espagnol", "Italien", "Allemand"};
-    private final JComboBox<String> selectLangJcbx = new JComboBox<>(nameLang);
+    private final JComboBox<String> selectLangJcbx = new JComboBox(Langue.values());
 
     public WindowProduct() {
         saisiYearJtf.setDocument(new JTextFieldLimit(4));
@@ -196,7 +195,7 @@ public class WindowProduct extends JFrame {
 
     private Produit buildDictionnaire() throws ValidationException {
         if (!StringUtils.isEmpty(saisiTitleJtf.getText())) {
-            return new Dictionnaire(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), String.valueOf(selectLangJcbx.getSelectedIndex()));
+            return new Dictionnaire(saisiTitleJtf.getText(), Double.parseDouble(saisiPriceJtf.getText()), (Langue) selectLangJcbx.getSelectedItem());
         } else {
             throw new ValidationException("Veuillez saisir un titre", "Attention");
         }

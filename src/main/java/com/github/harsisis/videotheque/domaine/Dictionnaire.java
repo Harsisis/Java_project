@@ -2,14 +2,14 @@ package com.github.harsisis.videotheque.domaine;
 
 public class Dictionnaire extends Produit {
 
-    private String langue;
+    private Langue langue;
 
-    public Dictionnaire(String titre, double tarifJournalier, String langue) {
-        super(titre, tarifJournalier, CategorieProduit.DOCUMENT);
+    public Dictionnaire(String titre, double tarifJournalier, Langue langue) {
+        super(titre, "Dictionnaire", tarifJournalier, CategorieProduit.DOCUMENT);
         this.langue = langue;
     }
 
-    public String getLangue() {
+    public Langue getLangue() {
         return langue;
     }
 }

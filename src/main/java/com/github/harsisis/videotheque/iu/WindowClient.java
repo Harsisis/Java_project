@@ -28,22 +28,27 @@ public class WindowClient extends JFrame {
 
 
     public WindowClient() {
-        // set window settings --------------------------------------------------------------------
-        setTitle("Ajout d'un Client");
-        setSize(280, 400);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-
         // add to Action Listener-------------------------------------------------------------------
         // by default set the text field to blank and add some procedure
         //confirmClientButton verify if textFields are not blank and if is the case it create a client else it display error message
         saisiNomJtf.setText("");
         saisiPrenomJtf.setText("");
         cancelClientBtn.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
-        confirmClientBtn.addActionListener(e -> {
-            createClient();
-        });
+        confirmClientBtn.addActionListener(e -> createClient());
+        defWindow();
+
+        // set visible------------------------------------------------------------------------------
+        setContentPane(displayPnl);
+        setVisible(true);
+    }
+
+    private void defWindow() {
+        // set window settings --------------------------------------------------------------------
+        setTitle("Ajout d'un Client");
+        setSize(280, 400);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         // title panel--------------------------------------------------------------------------------
         titleLbl.setForeground(Color.white);
@@ -73,10 +78,6 @@ public class WindowClient extends JFrame {
         displayPnl.add(titlePnl, BorderLayout.NORTH);
         displayPnl.add(workPlacePnl, BorderLayout.CENTER);
         displayPnl.add(confirmPnl, BorderLayout.SOUTH);
-
-        // set visible------------------------------------------------------------------------------
-        setContentPane(displayPnl);
-        setVisible(true);
     }
 
     private void createClient() {
