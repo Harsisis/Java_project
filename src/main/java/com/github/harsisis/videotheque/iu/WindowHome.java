@@ -190,6 +190,7 @@ public class WindowHome extends JFrame {
         indicationLbl.setText("Liste des Clients :");
         revalidate();
         listPnl.repaint();
+        tableClient.setEnabled(false);
     }
 
     private void defineCommandeTable(DefaultTableModel modelCommande, JTable tableCommande) {
@@ -220,6 +221,7 @@ public class WindowHome extends JFrame {
         indicationLbl.setText("Liste des Commandes :");
         revalidate();
         listPnl.repaint();
+        tableCommande.setEnabled(false);
     }
 
     private void defineProduitTable(DefaultTableModel modelProduit, JTable tableProduit) {
@@ -245,7 +247,6 @@ public class WindowHome extends JFrame {
                     getProduitNom(prod),
                     Videotheque.getInstance().getListStockProduit().get(produit)});
         }
-
         scrollPane = new JScrollPane(tableProduit);
         scrollPane.setPreferredSize(new Dimension(720, 500));
         tableProduit.setFillsViewportHeight(true);
@@ -253,6 +254,7 @@ public class WindowHome extends JFrame {
         indicationLbl.setText("Liste des Produits :");
         revalidate();
         listPnl.repaint();
+        tableProduit.setEnabled(false);
     }
 
     public String getProduitNom(Produit produit) {

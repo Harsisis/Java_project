@@ -72,7 +72,13 @@ public class WindowOrder extends JFrame {
 
             JTable tableEmprunt = getEmpruntJTable(liEmpruntJcbx, modelEmprunt);
 
-            DefaultTableModel modelCommande = new DefaultTableModel();
+            DefaultTableModel modelCommande = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             JTable tableCommande = getCommandeJTable(modelCommande);
             ListSelectionModel cellSelectionModel = getCommandeListSelectionModel(tableCommande);
 
