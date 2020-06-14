@@ -54,6 +54,7 @@ public class WindowOrder extends JFrame {
 
     private JOptionPane jop3 = new JOptionPane();
 
+
     public WindowOrder() {
         if(!Videotheque.getInstance().getListProduit().isEmpty() && !Videotheque.getInstance().getListClient().isEmpty()) {
             // set window settings --------------------------------------------------------------------
